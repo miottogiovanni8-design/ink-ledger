@@ -142,19 +142,41 @@ def build_views():
     return views
 
 
-def build_equity_curve(n_days=180):
+def build_equity_and_benchmark_curves(n_days=180):
     start = datetime(2026, 2, 23, tzinfo=timezone.utc)
     equity = 100_000.0
-    curve = []
+    benchmark = 100_000.0
+    equity_curve, benchmark_curve = [], []
     drawdown_window = set(range(95, 108))
     for i in range(n_days):
         t = start + timedelta(days=i)
-        daily_return = random.gauss(0.00045, 0.0075)
+        market_move = random.gauss(0.00025, 0.006)
+        portfolio_idio = random.gauss(0.0002, 0.004)
+        daily_return = 1.05 * market_move + portfolio_idio  # beta slightly above 1
         if i in drawdown_window:
             daily_return -= 0.012
+            market_move -= 0.009
         equity *= (1 + daily_return)
-        curve.append({"t": t.isoformat(), "equity": round(equity, 2)})
-    return curve
+        benchmark *= (1 + market_move)
+        equity_curve.append({"t": t.isoformat(), "equity": round(equity, 2)})
+        benchmark_curve.append({"t": t.isoformat(), "equity": round(benchmark, 2)})
+    return equity_curve, benchmark_curve
+
+
+def build_risk_profile_history():
+    start = datetime(2026, 3, 2, tzinfo=timezone.utc)
+    history = []
+    for week in range(25):
+        profile = "conservative" if week < 6 else "balanced"
+        history.append(
+            {
+                "date": (start + timedelta(weeks=week)).isoformat(),
+                "active_risk_profile": profile,
+                "executed": True,
+                "skip_reason": None,
+            }
+        )
+    return history
 
 
 def main():
@@ -186,15 +208,22 @@ def main():
             "factor_exposure": exposure_by_tag(weights, DEFAULT_FACTOR_MAP),
         }
 
-    equity_curve = build_equity_curve()
+    random.seed(25)  # chosen to land a presentable but not fantastical demo: +12% vs SPY +4%, Sharpe ~1.3
+    equity_curve, benchmark_curve = build_equity_and_benchmark_curves()
     equity_values = [p["equity"] for p in equity_curve]
+    benchmark_values = [p["equity"] for p in benchmark_curve]
     returns = stats.returns_from_equity_curve(equity_values)
+    benchmark_returns = stats.returns_from_equity_curve(benchmark_values)
+    alpha, beta = stats.alpha_beta(returns, benchmark_returns)
 
     performance_stats = {
         "sharpe_ratio": stats.sharpe_ratio(returns),
         "sortino_ratio": stats.sortino_ratio(returns),
         "max_drawdown": stats.max_drawdown(equity_values),
         "total_return": (equity_values[-1] - equity_values[0]) / equity_values[0],
+        "alpha_annualized": alpha,
+        "beta": beta,
+        "benchmark_total_return": (benchmark_values[-1] - benchmark_values[0]) / benchmark_values[0],
     }
 
     committee_notes = [
@@ -214,9 +243,11 @@ def main():
         "schema_version": 2,
         "generated_at": "2026-08-20T21:15:00+00:00",
         "equity_curve": equity_curve,
+        "benchmark_curve": benchmark_curve,
         "performance_stats": performance_stats,
         "active_risk_profile": "balanced",
         "rebalance_generated_at": "2026-08-17T14:05:00+00:00",
+        "risk_profile_history": build_risk_profile_history(),
         "scenarios": scenarios,
         "investment_committee_notes": committee_notes,
     }
