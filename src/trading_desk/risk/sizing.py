@@ -40,3 +40,46 @@ def stop_loss_distance_pct(entry_price: float, stop_loss: float) -> float:
     if entry_price <= 0:
         raise ValueError("entry_price must be positive")
     return abs(entry_price - stop_loss) / entry_price
+
+
+def clamp_decision_to_risk_limits(
+    decision,
+    entry_price: float,
+    atr: float,
+    daily_budget_eur: float,
+    remaining_budget_eur: float,
+    risk_pct_per_trade: float,
+    max_position_pct_of_budget: float,
+    atr_multiplier: float,
+    rr_ratio: float,
+):
+    """The LLM proposes a size and stop/take-profit; this is where the
+    deterministic layer disposes. Never execute the model's numbers as-is —
+    always re-derive stop/take-profit if missing and cap size at the
+    fixed-fractional risk limit and whatever daily budget remains."""
+    if decision.direction == "hold":
+        return decision.model_copy(
+            update={"position_size_usd": 0.0, "stop_loss_price": None, "take_profit_price": None}
+        )
+
+    stop_loss = decision.stop_loss_price
+    if not stop_loss or stop_loss <= 0:
+        stop_loss = stop_loss_price(entry_price, atr, decision.direction, atr_multiplier)
+
+    take_profit = decision.take_profit_price
+    if not take_profit or take_profit <= 0:
+        take_profit = take_profit_price(entry_price, stop_loss, decision.direction, rr_ratio)
+
+    distance_pct = stop_loss_distance_pct(entry_price, stop_loss)
+    risk_based_cap = position_size_eur(
+        daily_budget_eur, risk_pct_per_trade, distance_pct, max_position_pct_of_budget
+    )
+    size = min(decision.position_size_usd or risk_based_cap, risk_based_cap, max(remaining_budget_eur, 0.0))
+
+    return decision.model_copy(
+        update={
+            "position_size_usd": max(size, 0.0),
+            "stop_loss_price": stop_loss,
+            "take_profit_price": take_profit,
+        }
+    )

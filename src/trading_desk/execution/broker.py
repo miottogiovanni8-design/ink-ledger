@@ -46,5 +46,12 @@ def get_account_cash(client: TradingClient) -> float:
     return float(account.cash)
 
 
+def get_daily_pnl(client: TradingClient) -> float:
+    """Equity change since the prior trading day's close (Alpaca tracks this
+    as `last_equity`) — this is what the daily loss circuit breaker watches."""
+    account = client.get_account()
+    return float(account.equity) - float(account.last_equity)
+
+
 def get_open_positions(client: TradingClient) -> List[Any]:
     return client.get_all_positions()

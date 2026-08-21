@@ -1,4 +1,9 @@
+from typing import List
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+DEFAULT_EQUITY_WATCHLIST = ["AAPL", "MSFT", "NVDA", "AMZN", "GOOGL"]
+DEFAULT_CRYPTO_WATCHLIST = ["BTC/USD", "ETH/USD"]
 
 
 class Settings(BaseSettings):
@@ -18,6 +23,7 @@ class Settings(BaseSettings):
     email_to: str = ""
 
     daily_budget_eur: float = 100.0
+    risk_pct_per_trade: float = 0.05
     max_position_pct_of_budget: float = 0.15
     max_concurrent_positions: int = 5
     daily_loss_circuit_breaker_pct: float = 1.0
@@ -27,6 +33,9 @@ class Settings(BaseSettings):
 
     db_path: str = "data/trading_desk.sqlite"
     snapshot_path: str = "data/dashboard_snapshot.json"
+
+    equity_watchlist: List[str] = DEFAULT_EQUITY_WATCHLIST
+    crypto_watchlist: List[str] = DEFAULT_CRYPTO_WATCHLIST
 
 
 settings = Settings()
