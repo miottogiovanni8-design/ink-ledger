@@ -180,3 +180,12 @@ pytest
   29-asset production universe, so every investment-committee rationale
   could be individually hand-written rather than templated — see
   `dashboard/generate_sample_data.py`.
+
+## License
+
+© 2026 Giovanni Miotto. All rights reserved.
+
+This project — architecture, code, methodology, and design — is the
+author's original work. Reproduction, copying, distribution, or creation
+of derivative works, in whole or in part, is prohibited without the
+author's written permission. See [LICENSE](LICENSE).

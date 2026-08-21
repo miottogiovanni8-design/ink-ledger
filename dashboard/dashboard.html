@@ -160,10 +160,39 @@
   .playhead-line { stroke: var(--accent); stroke-width: 1; stroke-dasharray: 3 3; }
   .playhead-dot { fill: var(--accent); stroke: var(--surface); stroke-width: 2; }
 
-  .scrub-row { display: flex; align-items: center; gap: 14px; }
-  .scrub-slider { flex: 1; -webkit-appearance: none; appearance: none; height: 4px; border-radius: 2px; background: var(--surface-2); outline: none; }
-  .scrub-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 15px; height: 15px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--border); }
-  .scrub-slider::-moz-range-thumb { width: 15px; height: 15px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--border); }
+  .scrub-row { display: flex; align-items: center; gap: 16px; padding: 2px 0; }
+
+  .scrub-slider {
+    flex: 1; -webkit-appearance: none; appearance: none; height: 4px; border-radius: 3px; outline: none;
+    background: linear-gradient(to right, var(--accent) 0%, var(--accent) 0%, var(--surface-2) 0%, var(--surface-2) 100%);
+    transition: height 0.12s ease;
+    cursor: pointer;
+  }
+  .scrub-slider:hover { height: 6px; }
+
+  .scrub-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--accent); cursor: grab; margin-top: 0;
+    border: 2.5px solid var(--surface);
+    box-shadow: 0 0 0 1px var(--border), 0 2px 6px rgba(0, 0, 0, 0.25);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .scrub-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+  .scrub-slider::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.1); box-shadow: 0 0 0 5px var(--accent-soft), 0 2px 6px rgba(0, 0, 0, 0.3); }
+
+  .scrub-slider::-moz-range-thumb {
+    width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: grab;
+    border: 2.5px solid var(--surface);
+    box-shadow: 0 0 0 1px var(--border), 0 2px 6px rgba(0, 0, 0, 0.25);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .scrub-slider::-moz-range-thumb:hover { transform: scale(1.2); }
+  .scrub-slider::-moz-range-thumb:active { cursor: grabbing; transform: scale(1.1); box-shadow: 0 0 0 5px var(--accent-soft), 0 2px 6px rgba(0, 0, 0, 0.3); }
+  .scrub-slider::-moz-range-track { background: transparent; border: none; }
+  .scrub-slider::-moz-range-progress { height: 4px; border-radius: 3px; background: var(--accent); }
+
+  .scrub-slider:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
   .scrub-readout { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--text-secondary); min-width: 168px; text-align: right; }
   .scrub-readout strong { color: var(--text-primary); }
 
@@ -277,7 +306,9 @@
   }
   .card { transition: border-color 0.15s ease; }
 
-  footer { border-top: 1px solid var(--border); padding-top: 18px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--text-muted); }
+  footer { border-top: 1px solid var(--border); padding-top: 18px; display: flex; flex-direction: column; gap: 10px; font-size: 12px; color: var(--text-muted); }
+  .footer-row { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .footer-legal { font-size: 11px; color: var(--text-muted); line-height: 1.6; padding-top: 10px; border-top: 1px solid var(--border); }
 
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
@@ -496,8 +527,11 @@
   </div>
 
   <footer>
-    <span data-i18n="footer_disclosure">Conto di investimento simulato — nessun fondo reale coinvolto.</span>
-    <span class="mono" id="schema-line">schema v4</span>
+    <div class="footer-row">
+      <span data-i18n="footer_disclosure">Conto di investimento simulato — nessun fondo reale coinvolto.</span>
+      <span class="mono" id="schema-line">schema v4</span>
+    </div>
+    <div class="footer-legal" data-i18n="footer_legal">© 2026 Giovanni Miotto. Tutti i diritti riservati. Questo progetto — architettura, codice, metodologia e design — è opera originale dell'autore. Sono vietate la riproduzione, copia, distribuzione o creazione di opere derivate, totali o parziali, senza autorizzazione scritta dell'autore.</div>
   </footer>
 
 </div>
@@ -546,6 +580,7 @@
       holdings_title: "Posizioni target", th_ticker: "Titolo", th_class: "Classe", th_tag: "Settore / Fattore", th_weight: "Peso target",
       notes_title: "Note del comitato investimenti", notes_sub: "Le view generate dall'AI, con motivazione — un output di ricerca, non un ordine",
       footer_disclosure: "Conto di investimento simulato — nessun fondo reale coinvolto.",
+      footer_legal: "© 2026 Giovanni Miotto. Tutti i diritti riservati. Questo progetto — architettura, codice, metodologia e design — è opera originale dell'autore. Sono vietate la riproduzione, copia, distribuzione o creazione di opere derivate, totali o parziali, senza autorizzazione scritta dell'autore.",
       stat_return: "Rendimento atteso", stat_vol: "Volatilità attesa", stat_sharpe: "Sharpe atteso",
       stat_var: "VaR 95% (1gg)", stat_cvar: "CVaR 95% (1gg)",
       stat_note_return: "annualizzato, posteriore BL", stat_note_vol: "annualizzata", stat_note_sharpe: "rf = 0%",
@@ -598,6 +633,7 @@
       holdings_title: "Target holdings", th_ticker: "Ticker", th_class: "Class", th_tag: "Sector / Factor", th_weight: "Target weight",
       notes_title: "Investment committee notes", notes_sub: "The AI's generated views, with rationale — a research output, not an order",
       footer_disclosure: "Simulated investment account — no real funds involved.",
+      footer_legal: "© 2026 Giovanni Miotto. All rights reserved. This project — architecture, code, methodology, and design — is the author's original work. Reproduction, copying, distribution, or creation of derivative works, in whole or in part, is prohibited without the author's written permission.",
       stat_return: "Expected return", stat_vol: "Expected volatility", stat_sharpe: "Expected Sharpe",
       stat_var: "VaR 95% (1-day)", stat_cvar: "CVaR 95% (1-day)",
       stat_note_return: "annualized, BL posterior", stat_note_vol: "annualized", stat_note_sharpe: "rf = 0%",
@@ -710,6 +746,14 @@
     el.appendChild(arrow); el.appendChild(val);
   }
 
+  function updateSliderFill(slider) {
+    var max = parseFloat(slider.max) || 1;
+    var pct = max > 0 ? (parseFloat(slider.value) / max) * 100 : 0;
+    slider.style.background =
+      "linear-gradient(to right, var(--accent) 0%, var(--accent) " + pct.toFixed(2) +
+      "%, var(--surface-2) " + pct.toFixed(2) + "%, var(--surface-2) 100%)";
+  }
+
   function renderChart() {
     var curve = activeCurve(DATA.equity_curve);
     var benchCurve = activeCurve(DATA.benchmark_curve || []);
@@ -774,6 +818,7 @@
     slider.max = String(n - 1);
     if (state.scrubIndex === null || state.scrubIndex > n - 1) state.scrubIndex = n - 1;
     slider.value = String(state.scrubIndex);
+    updateSliderFill(slider);
 
     var idx = state.scrubIndex;
     var px = x(idx), py = y(curve[idx].equity);
