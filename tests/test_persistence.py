@@ -3,7 +3,7 @@ import tempfile
 from pathlib import Path
 
 from trading_desk.persistence.db import get_session
-from trading_desk.persistence.models import EquitySnapshot, RebalanceEvent, ViewRecord
+from trading_desk.persistence.models import EquitySnapshot, RebalanceEvent, Transaction, ViewRecord
 
 
 def test_roundtrip_view_record():
@@ -51,6 +51,29 @@ def test_roundtrip_rebalance_event():
             stored = session.query(RebalanceEvent).one()
             assert stored.active_risk_profile == "balanced"
             assert json.loads(stored.scenarios_json)["balanced"]["expected_return"] == 0.09
+
+
+def test_roundtrip_transaction():
+    with tempfile.TemporaryDirectory() as tmp:
+        db_path = str(Path(tmp) / "test.sqlite")
+        with get_session(db_path) as session:
+            session.add(
+                Transaction(
+                    symbol="AAPL",
+                    asset_class="equity",
+                    side="buy",
+                    notional_usd=150.0,
+                    price=200.0,
+                    rationale="Strong iPhone cycle plus services growth.",
+                )
+            )
+
+        with get_session(db_path) as session:
+            stored = session.query(Transaction).one()
+            assert stored.symbol == "AAPL"
+            assert stored.side == "buy"
+            assert stored.notional_usd == 150.0
+            assert stored.rationale.startswith("Strong iPhone cycle")
 
 
 def test_equity_snapshot_persists():

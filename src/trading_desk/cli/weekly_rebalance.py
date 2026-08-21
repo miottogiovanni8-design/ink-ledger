@@ -37,7 +37,7 @@ from trading_desk.engine.views import request_portfolio_view
 from trading_desk.execution.broker import get_account_equity, get_open_positions
 from trading_desk.execution.rebalance import compute_rebalance_trades, positions_market_value, submit_rebalance_trades
 from trading_desk.persistence.db import get_session, init_db
-from trading_desk.persistence.models import RebalanceEvent, ViewRecord
+from trading_desk.persistence.models import RebalanceEvent, Transaction, ViewRecord
 from trading_desk.persistence.queries import peak_equity
 from trading_desk.reporting.snapshot import build_snapshot, write_snapshot
 from trading_desk.risk.circuit_breakers import drawdown_breaker
@@ -112,6 +112,9 @@ def run_weekly_rebalance(risk_profile_override: Optional[str] = None) -> None:
                 )
             )
 
+        views_by_symbol = {v.symbol: v for v in views}
+        latest_prices = price_panel.iloc[-1].to_dict()
+
         posterior_returns, posterior_cov = blend_views(cov_matrix, prior, views)
 
         scenarios = {}
@@ -139,8 +142,11 @@ def run_weekly_rebalance(risk_profile_override: Optional[str] = None) -> None:
             scenarios_json=json.dumps(scenarios),
             prior_returns_json=json.dumps(prior.to_dict()),
             posterior_returns_json=json.dumps(posterior_returns.to_dict()),
+            latest_prices_json=json.dumps(latest_prices),
             executed=False,
         )
+        session.add(rebalance_event)
+        session.flush()
 
         if gate.rebalancing_allowed:
             active_weights = scenarios[active_profile]["weights"]
@@ -149,12 +155,24 @@ def run_weekly_rebalance(risk_profile_override: Optional[str] = None) -> None:
             submit_rebalance_trades(trading_client, trades)
             rebalance_event.executed = True
             logger.info("executed rebalance: %d order(s)", len(trades))
+
+            for symbol, delta_usd in trades.items():
+                view = views_by_symbol.get(symbol)
+                rationale = view.rationale if view else "Rebalance toward target weight (no fresh view this cycle)."
+                session.add(
+                    Transaction(
+                        rebalance_event_id=rebalance_event.id,
+                        symbol=symbol,
+                        asset_class=_asset_class_for(symbol),
+                        side="buy" if delta_usd > 0 else "sell",
+                        notional_usd=abs(delta_usd),
+                        price=float(latest_prices.get(symbol, 0.0)),
+                        rationale=rationale,
+                    )
+                )
         else:
             rebalance_event.skip_reason = gate.reason
             logger.warning("rebalance skipped: %s", gate.reason)
-
-        session.add(rebalance_event)
-        session.flush()
 
         snapshot = build_snapshot(session)
 

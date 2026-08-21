@@ -3,8 +3,10 @@ import tempfile
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+import pytest
+
 from trading_desk.persistence.db import get_session
-from trading_desk.persistence.models import EquitySnapshot, RebalanceEvent, ViewRecord
+from trading_desk.persistence.models import EquitySnapshot, RebalanceEvent, Transaction, ViewRecord
 from trading_desk.reporting.snapshot import build_snapshot, read_snapshot, write_snapshot
 
 REBALANCE_TIME = datetime(2026, 8, 17, 9, 0, tzinfo=timezone.utc)
@@ -48,7 +50,20 @@ def _seed(session, include_older_rebalance=False):
             scenarios_json=json.dumps(SCENARIOS),
             prior_returns_json=json.dumps({"AAPL": 0.07}),
             posterior_returns_json=json.dumps({"AAPL": 0.09}),
+            latest_prices_json=json.dumps({"AAPL": 220.0}),
             executed=True,
+        )
+    )
+
+    session.add(
+        Transaction(
+            executed_at=REBALANCE_TIME,
+            symbol="AAPL",
+            asset_class="equity",
+            side="buy",
+            notional_usd=150.0,
+            price=200.0,
+            rationale="Strong iPhone cycle plus services growth.",
         )
     )
 
@@ -85,7 +100,7 @@ def test_build_snapshot_shape_and_content():
         with get_session(db_path) as session:
             snapshot = build_snapshot(session)
 
-    assert snapshot["schema_version"] == 2
+    assert snapshot["schema_version"] == 3
     assert len(snapshot["equity_curve"]) == 4
     assert snapshot["active_risk_profile"] == "balanced"
     assert snapshot["scenarios"]["aggressive"]["volatility"] == 0.22
@@ -144,6 +159,31 @@ def test_build_snapshot_with_no_rebalance_yet():
     assert snapshot["investment_committee_notes"] == []
     assert snapshot["benchmark_curve"] == []
     assert "alpha_annualized" not in snapshot["performance_stats"]
+
+
+def test_build_snapshot_holdings_detail_and_transaction_history():
+    with tempfile.TemporaryDirectory() as tmp:
+        db_path = str(Path(tmp) / "test.sqlite")
+        with get_session(db_path) as session:
+            _seed(session)
+
+        with get_session(db_path) as session:
+            snapshot = build_snapshot(session)
+
+    holdings = snapshot["holdings_detail"]
+    assert len(holdings) == 1
+    h = holdings[0]
+    assert h["symbol"] == "AAPL"
+    assert h["name"] == "Apple Inc."
+    assert h["current_price"] == 220.0
+    assert h["cost_basis"] == pytest.approx(200.0)
+    assert h["pct_since_purchase"] == pytest.approx(0.10)
+
+    history = snapshot["transaction_history"]
+    assert len(history) == 1
+    assert history[0]["symbol"] == "AAPL"
+    assert history[0]["side"] == "buy"
+    assert history[0]["rationale"].startswith("Strong iPhone cycle")
 
 
 def test_write_and_read_snapshot_roundtrip():

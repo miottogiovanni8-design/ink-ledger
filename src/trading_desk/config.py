@@ -35,6 +35,27 @@ DEFAULT_FACTOR_MAP: Dict[str, str] = {
     "MTUM": "Momentum", "VLUE": "Value", "QUAL": "Quality", "USMV": "Low Volatility",
 }
 
+# Static reference table — company/fund full names don't change often enough
+# to justify a live lookup, and ETFs aren't reliably covered by equity
+# profile endpoints anyway.
+DEFAULT_NAME_MAP: Dict[str, str] = {
+    "AAPL": "Apple Inc.", "MSFT": "Microsoft Corporation", "NVDA": "NVIDIA Corporation",
+    "GOOGL": "Alphabet Inc.", "JPM": "JPMorgan Chase & Co.", "BAC": "Bank of America Corporation",
+    "V": "Visa Inc.", "XOM": "Exxon Mobil Corporation", "CVX": "Chevron Corporation",
+    "JNJ": "Johnson & Johnson", "UNH": "UnitedHealth Group Incorporated",
+    "PG": "Procter & Gamble Company", "KO": "The Coca-Cola Company",
+    "HD": "The Home Depot Inc.", "MCD": "McDonald's Corporation",
+    "CAT": "Caterpillar Inc.", "HON": "Honeywell International Inc.",
+    "DIS": "The Walt Disney Company",
+    "XLK": "Technology Select Sector SPDR Fund", "XLF": "Financial Select Sector SPDR Fund",
+    "XLE": "Energy Select Sector SPDR Fund", "XLV": "Health Care Select Sector SPDR Fund",
+    "XLY": "Consumer Discretionary Select Sector SPDR Fund",
+    "XLP": "Consumer Staples Select Sector SPDR Fund", "XLI": "Industrial Select Sector SPDR Fund",
+    "MTUM": "iShares MSCI USA Momentum Factor ETF", "VLUE": "iShares MSCI USA Value Factor ETF",
+    "QUAL": "iShares MSCI USA Quality Factor ETF", "USMV": "iShares MSCI USA Min Vol Factor ETF",
+    "SPY": "SPDR S&P 500 ETF Trust",
+}
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")

@@ -44,8 +44,29 @@ class RebalanceEvent(Base):
     scenarios_json: Mapped[str] = mapped_column(Text)  # {"conservative": {...}, "balanced": {...}, "aggressive": {...}}
     prior_returns_json: Mapped[str] = mapped_column(Text)
     posterior_returns_json: Mapped[str] = mapped_column(Text)
+    latest_prices_json: Mapped[str] = mapped_column(Text, default="{}")  # {"AAPL": 231.42, ...} — the closes used this run
     executed: Mapped[bool] = mapped_column(default=False)
     skip_reason: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+
+
+class Transaction(Base):
+    """One executed buy/sell leg of a rebalance — the source of truth for
+    both the transaction history and each holding's cost basis (computed
+    at read time from these rows, not stored redundantly). Price is the
+    last known close at decision time, not a confirmed broker fill price —
+    see execution/rebalance.py for why that's the documented approximation."""
+
+    __tablename__ = "transactions"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    executed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    rebalance_event_id: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    symbol: Mapped[str] = mapped_column(String(16))
+    asset_class: Mapped[str] = mapped_column(String(8))
+    side: Mapped[str] = mapped_column(String(4))  # "buy" | "sell"
+    notional_usd: Mapped[float] = mapped_column(Float)
+    price: Mapped[float] = mapped_column(Float)
+    rationale: Mapped[str] = mapped_column(Text)
 
 
 class EquitySnapshot(Base):

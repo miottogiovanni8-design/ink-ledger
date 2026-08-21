@@ -14,10 +14,12 @@ from typing import Any, Dict, List, Optional
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from trading_desk.config import DEFAULT_NAME_MAP
 from trading_desk.metrics import stats
-from trading_desk.persistence.models import EquitySnapshot, RebalanceEvent, ViewRecord
+from trading_desk.persistence.models import EquitySnapshot, RebalanceEvent, Transaction, ViewRecord
+from trading_desk.reporting.holdings import build_holdings_detail
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 
 
 def _daily_marks(session: Session) -> List[EquitySnapshot]:
@@ -60,6 +62,37 @@ def _risk_profile_history(session: Session, limit: int = 26) -> List[Dict[str, A
     ]
 
 
+def _transactions_by_symbol(session: Session) -> Dict[str, List[Dict[str, Any]]]:
+    """Every transaction ever, oldest first per symbol — cost basis needs
+    the full history, not just a recent window."""
+    rows = session.execute(select(Transaction).order_by(Transaction.executed_at)).scalars().all()
+    by_symbol: Dict[str, List[Dict[str, Any]]] = {}
+    for tx in rows:
+        by_symbol.setdefault(tx.symbol, []).append(
+            {"side": tx.side, "notional_usd": tx.notional_usd, "price": tx.price}
+        )
+    return by_symbol
+
+
+def _transaction_history(session: Session, limit: int = 100) -> List[Dict[str, Any]]:
+    rows = session.execute(
+        select(Transaction).order_by(Transaction.executed_at.desc()).limit(limit)
+    ).scalars().all()
+    return [
+        {
+            "executed_at": tx.executed_at.isoformat(),
+            "symbol": tx.symbol,
+            "name": DEFAULT_NAME_MAP.get(tx.symbol, tx.symbol),
+            "asset_class": tx.asset_class,
+            "side": tx.side,
+            "notional_usd": tx.notional_usd,
+            "price": tx.price,
+            "rationale": tx.rationale,
+        }
+        for tx in rows
+    ]
+
+
 def _investment_committee_notes(session: Session, since: Optional[datetime], limit: int = 50) -> List[Dict[str, Any]]:
     query = select(ViewRecord).order_by(ViewRecord.created_at.desc()).limit(limit)
     if since is not None:
@@ -91,6 +124,16 @@ def build_snapshot(session: Session) -> Dict[str, Any]:
     scenarios = json.loads(rebalance.scenarios_json) if rebalance else {}
     notes = _investment_committee_notes(session, since=rebalance.created_at if rebalance else None)
 
+    holdings_detail: List[Dict[str, Any]] = []
+    if rebalance:
+        active_weights = scenarios.get(rebalance.active_risk_profile, {}).get("weights", {})
+        latest_prices = json.loads(rebalance.latest_prices_json) if rebalance.latest_prices_json else {}
+        current_equity = equity_values[-1] if equity_values else 0.0
+        holdings_detail = build_holdings_detail(
+            active_weights, current_equity, latest_prices, DEFAULT_NAME_MAP, _transactions_by_symbol(session)
+        )
+        holdings_detail.sort(key=lambda h: h["weight"], reverse=True)
+
     performance_stats: Dict[str, Any] = {
         "sharpe_ratio": stats.sharpe_ratio(returns),
         "sortino_ratio": stats.sortino_ratio(returns),
@@ -118,6 +161,8 @@ def build_snapshot(session: Session) -> Dict[str, Any]:
         "rebalance_generated_at": rebalance.created_at.isoformat() if rebalance else None,
         "risk_profile_history": _risk_profile_history(session),
         "scenarios": scenarios,
+        "holdings_detail": holdings_detail,
+        "transaction_history": _transaction_history(session),
         "investment_committee_notes": notes,
     }
 
