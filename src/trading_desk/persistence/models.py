@@ -50,7 +50,9 @@ class RebalanceEvent(Base):
 
 class EquitySnapshot(Base):
     """Daily mark-to-market equity point — feeds the equity curve and the
-    dashboard's day/week history scrubber."""
+    dashboard's day/week history scrubber. benchmark_price is the S&P 500
+    (SPY) close on the same day, stored raw (not indexed) so the snapshot
+    builder can index both series to the same starting point at read time."""
 
     __tablename__ = "equity_snapshots"
 
@@ -58,3 +60,4 @@ class EquitySnapshot(Base):
     taken_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
     equity_eur: Mapped[float] = mapped_column(Float)
     cash_eur: Mapped[float] = mapped_column(Float)
+    benchmark_price: Mapped[Optional[float]] = mapped_column(Float, nullable=True)

@@ -1,15 +1,25 @@
-"""Entrypoint: `python -m trading_desk.cli.weekly_rebalance`
+"""Entrypoint: `python -m trading_desk.cli.weekly_rebalance [--profile conservative|balanced|aggressive]`
 
 The full weekly pipeline: fetch prices + fundamentals, compute the CAPM
 equilibrium prior, get a Claude view for every asset in the universe, blend
-via Black-Litterman, optimize all three risk-profile scenarios, execute the
-active one (unless the drawdown breaker is tripped), and write the
-dashboard snapshot. Called by GitHub Actions — see
-.github/workflows/weekly-rebalance.yml.
+via Black-Litterman, optimize all three risk-profile scenarios, execute one
+of them (unless the drawdown breaker is tripped), and write the dashboard
+snapshot. Runs two ways:
+
+- Scheduled (GitHub Actions, weekly): executes `settings.active_risk_profile`.
+- On-demand (`--profile`, run from a chat request to switch risk profile
+  immediately rather than waiting for next week's cron): executes the
+  requested profile and makes it the new active one going forward.
+
+Either way, all three scenarios are recomputed and persisted every run —
+switching which one executes doesn't change what gets calculated, only
+which weights reach the broker.
 """
 
+import argparse
 import json
 import logging
+from typing import Optional
 
 import anthropic
 import httpx
@@ -62,7 +72,8 @@ def gather_views(anthropic_client, http_client, universe) -> list:
     return views
 
 
-def run_weekly_rebalance() -> None:
+def run_weekly_rebalance(risk_profile_override: Optional[str] = None) -> None:
+    active_profile = risk_profile_override or settings.active_risk_profile
     init_db(settings.db_path)
 
     universe = settings.equity_universe + settings.etf_universe
@@ -124,7 +135,7 @@ def run_weekly_rebalance() -> None:
         gate = drawdown_breaker(current_equity, current_peak, settings.max_drawdown_circuit_breaker_pct)
 
         rebalance_event = RebalanceEvent(
-            active_risk_profile=settings.active_risk_profile,
+            active_risk_profile=active_profile,
             scenarios_json=json.dumps(scenarios),
             prior_returns_json=json.dumps(prior.to_dict()),
             posterior_returns_json=json.dumps(posterior_returns.to_dict()),
@@ -132,7 +143,7 @@ def run_weekly_rebalance() -> None:
         )
 
         if gate.rebalancing_allowed:
-            active_weights = scenarios[settings.active_risk_profile]["weights"]
+            active_weights = scenarios[active_profile]["weights"]
             current_positions = positions_market_value(get_open_positions(trading_client))
             trades = compute_rebalance_trades(active_weights, current_positions, current_equity, settings.min_trade_usd)
             submit_rebalance_trades(trading_client, trades)
@@ -151,5 +162,12 @@ def run_weekly_rebalance() -> None:
     logger.info("weekly rebalance complete, snapshot written to %s", settings.snapshot_path)
 
 
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--profile", choices=RISK_PROFILES, default=None, help="Override the active risk profile for this run only (persists as the new active profile going forward).")
+    args = parser.parse_args()
+    run_weekly_rebalance(risk_profile_override=args.profile)
+
+
 if __name__ == "__main__":
-    run_weekly_rebalance()
+    main()

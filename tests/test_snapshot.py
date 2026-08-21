@@ -16,9 +16,30 @@ SCENARIOS = {
 }
 
 
-def _seed(session):
-    for i, equity in enumerate([1000.0, 1010.0, 990.0, 1025.0]):
-        session.add(EquitySnapshot(equity_eur=equity, cash_eur=equity * 0.5, taken_at=REBALANCE_TIME - timedelta(days=3 - i)))
+def _seed(session, include_older_rebalance=False):
+    equities = [1000.0, 1010.0, 990.0, 1025.0]
+    benchmarks = [500.0, 502.0, 498.0, 505.0]
+    for i, (equity, bench) in enumerate(zip(equities, benchmarks)):
+        session.add(
+            EquitySnapshot(
+                equity_eur=equity,
+                cash_eur=equity * 0.5,
+                benchmark_price=bench,
+                taken_at=REBALANCE_TIME - timedelta(days=3 - i),
+            )
+        )
+
+    if include_older_rebalance:
+        session.add(
+            RebalanceEvent(
+                created_at=REBALANCE_TIME - timedelta(days=7),
+                active_risk_profile="conservative",
+                scenarios_json=json.dumps(SCENARIOS),
+                prior_returns_json=json.dumps({"AAPL": 0.05}),
+                posterior_returns_json=json.dumps({"AAPL": 0.06}),
+                executed=True,
+            )
+        )
 
     session.add(
         RebalanceEvent(
@@ -75,6 +96,40 @@ def test_build_snapshot_shape_and_content():
     assert notes[0]["rationale"].startswith("Strong iPhone cycle")
 
 
+def test_build_snapshot_includes_benchmark_curve_and_alpha_beta():
+    with tempfile.TemporaryDirectory() as tmp:
+        db_path = str(Path(tmp) / "test.sqlite")
+        with get_session(db_path) as session:
+            _seed(session)
+
+        with get_session(db_path) as session:
+            snapshot = build_snapshot(session)
+
+    benchmark_curve = snapshot["benchmark_curve"]
+    assert len(benchmark_curve) == 4
+    # indexed to the portfolio's starting equity (1000.0), not the raw SPY price (500.0)
+    assert benchmark_curve[0]["equity"] == 1000.0
+
+    assert "alpha_annualized" in snapshot["performance_stats"]
+    assert "beta" in snapshot["performance_stats"]
+    assert "benchmark_total_return" in snapshot["performance_stats"]
+
+
+def test_build_snapshot_risk_profile_history_oldest_first():
+    with tempfile.TemporaryDirectory() as tmp:
+        db_path = str(Path(tmp) / "test.sqlite")
+        with get_session(db_path) as session:
+            _seed(session, include_older_rebalance=True)
+
+        with get_session(db_path) as session:
+            snapshot = build_snapshot(session)
+
+    history = snapshot["risk_profile_history"]
+    assert len(history) == 2
+    assert history[0]["active_risk_profile"] == "conservative"
+    assert history[1]["active_risk_profile"] == "balanced"
+
+
 def test_build_snapshot_with_no_rebalance_yet():
     with tempfile.TemporaryDirectory() as tmp:
         db_path = str(Path(tmp) / "test.sqlite")
@@ -87,6 +142,8 @@ def test_build_snapshot_with_no_rebalance_yet():
     assert snapshot["scenarios"] == {}
     assert snapshot["active_risk_profile"] == "balanced"
     assert snapshot["investment_committee_notes"] == []
+    assert snapshot["benchmark_curve"] == []
+    assert "alpha_annualized" not in snapshot["performance_stats"]
 
 
 def test_write_and_read_snapshot_roundtrip():
