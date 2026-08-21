@@ -1,114 +1,134 @@
-# AI Paper Trading Desk
+# Ink Ledger — AI-Augmented Black-Litterman Investment Desk
 
-An autonomous long/short trading agent that combines a technical/news
-screening pipeline with an LLM (Claude) reasoning layer, a deterministic risk
-management module, and real broker execution — running on **paper trading**
-(simulated money, real market mechanics) via [Alpaca](https://alpaca.markets).
+An autonomous investment desk that combines LLM-generated fundamental/macro
+research views with **Black-Litterman portfolio construction**, running on
+**paper investing** (simulated capital, real broker mechanics) via
+[Alpaca](https://alpaca.markets). The LLM never proposes a trade or a
+weight — it proposes an expected-return view with a confidence level, which
+is then blended with the market's equilibrium prior and optimized
+deterministically.
 
-Built as a portfolio project to demonstrate Finance + AI engineering: every
-trade carries a documented, LLM-generated rationale, and performance is
-tracked with the same statistics a quant desk would report (Sharpe, Sortino,
-max drawdown, win rate, profit factor, alpha/beta vs. a benchmark).
+Built as a portfolio project to demonstrate Finance + AI engineering for an
+investment-management audience: every allocation traces back to (1) a CAPM
+equilibrium prior, (2) a documented AI research view per asset, and (3) a
+risk-profile-constrained mean-variance optimization — the same vocabulary
+(VaR/CVaR, Sharpe, sector/factor exposure) a quant or IB recruiter reads
+daily.
 
-## Why paper trading, not real money
+## Why this design, not a technical trading bot
 
-This system executes automatically, without a human approving each trade. No
-real broker or bank account is connected — every order is a paper (simulated)
-order against Alpaca's paper trading API. That's a deliberate constraint, not
-a shortcut: it means the whole autonomy/risk-management/reasoning pipeline can
-be demonstrated and stress-tested with zero financial risk, while still using
-real market data, real broker mechanics, and real execution.
+An earlier version of this project ran short-horizon long/short trades off
+technical indicators. It was rebuilt around Black-Litterman because:
+
+- **It's the right audience fit.** IB/asset-management recruiters recognize
+  Markowitz/Black-Litterman/VaR instantly; RSI/MACD reads as retail trading.
+- **It's academically grounded, not invented.** The approach of feeding
+  LLM-generated views into Black-Litterman follows a published method —
+  [*Integrating LLM-Generated Views into Mean-Variance Optimization Using the
+  Black-Litterman Model*](https://arxiv.org/pdf/2504.14345) (ICLR 2025
+  workshop). The optimization math itself is delegated to
+  [PyPortfolioOpt](https://github.com/PyPortfolio/PyPortfolioOpt) rather than
+  reimplemented — a well-known library is a credibility signal to anyone
+  reading the code, not a shortcut.
+- **It matches "investment," not "trading."** Weekly rebalancing, long-only,
+  risk managed at the portfolio level (a volatility target and a drawdown
+  circuit breaker) rather than a stop-loss on every position — the way an
+  asset manager actually runs a book.
+
+## Why paper investing, not real money
+
+No real broker or bank account is connected. Every order is a paper
+(simulated) order against Alpaca's paper trading API — real market data,
+real broker mechanics, real weekly execution, zero financial risk.
 
 ## Architecture
 
 ```
-watchlist (equity + crypto)
+equity + ETF universe (29 assets: sector-diverse large caps + sector/factor ETFs)
         │
         ▼
- technical screening (RSI / MACD / Bollinger / fresh headline)  ─── no LLM call for non-candidates
-        │ candidates only
-        ▼
- risk gate check (daily loss / max drawdown / max positions)    ─── blocks the LLM call entirely if tripped
-        │ cleared
-        ▼
- Claude Sonnet 5 decision engine (structured tool-use output)
-        │ direction, size, stop/take-profit, rationale
-        ▼
- risk-layer clamp (re-derives stop/TP if missing, caps size)    ─── the model proposes, this disposes
+ price/volume panel + market caps (Alpaca + Finnhub)
         │
         ▼
- Alpaca bracket order (entry + stop-loss + take-profit, one call)
+ Ledoit-Wolf shrinkage covariance ──► CAPM-implied equilibrium prior (Pi)
         │
         ▼
- SQLite ledger (decisions, trades, equity snapshots)
+ Claude Sonnet 5 research view per asset (expected return + confidence)  ─── never a trade, never a weight
+        │
+        ▼
+ Black-Litterman blend (Idzorek's method — confidence becomes Ω directly)
+        │
+        ▼
+ EfficientFrontier optimization × 3 risk profiles (conservative/balanced/aggressive)
+        │
+        ▼
+ drawdown circuit breaker check ──► execute the active profile's weights (plain rebalance orders)
+        │
+        ▼
+ SQLite ledger (views, rebalance events, daily equity marks)
         │
         ▼
  dashboard snapshot JSON ──► Artifact dashboard / weekly email / on-demand chat recap
 ```
 
-The **LLM never has unchecked authority over capital** — even simulated
-capital. The risk layer evaluates circuit breakers *before* the LLM is
-called (skipping the call entirely if a breaker is tripped), and re-validates
-every proposed trade's size and stop/take-profit *after* the LLM responds,
-before anything reaches the broker.
+All three risk-profile scenarios are computed and persisted every week, not
+just the active one — that's what lets the dashboard's risk-profile selector
+switch live with zero backend calls.
 
 ## Cost-aware model tiering
 
-- **Claude Sonnet 5** for per-cycle trade decisions — high call volume (every
-  candidate, every ~15 minutes during market hours), so this is a Sonnet-tier
-  job, not a frontier-tier one.
+- **Claude Sonnet 5** for the weekly per-asset research view — moderate
+  volume (once per asset per week, ~29 calls), fundamentals/macro reasoning
+  doesn't need frontier-tier depth.
 - **Claude Opus 5** only for the weekly recap's narrative synthesis — low
   frequency, recruiter-facing prose, worth the premium tier.
-- A rule-based pre-filter (`engine/prefilter.py`) screens the entire watchlist
-  for free before any LLM call happens, so spend scales with genuinely
-  interesting market moves, not with watchlist size.
-- Prompt caching on the static system prompt/tool schema in every decision
-  call.
+- Prompt caching on the static system prompt/tool schema in every view call.
 
 ## Repository layout
 
 ```
 src/trading_desk/
-├── config.py                  settings (env-driven), risk defaults, watchlists
+├── config.py                    universe (equities/ETFs), sector & factor tag maps, risk settings
 ├── data/
-│   ├── indicators.py           RSI, MACD, Bollinger, ATR (pure pandas, no pandas-ta)
-│   ├── market_data.py          Alpaca bars → IndicatorSnapshot
-│   └── news.py                 Finnhub headlines + Alpha Vantage sentiment
+│   ├── market_data.py            Alpaca price/volume panels
+│   ├── fundamentals.py           Finnhub market cap (equities) + dollar-volume ETF proxy
+│   └── news.py                   Finnhub headlines feeding the view prompt
 ├── engine/
-│   ├── prefilter.py             rule-based candidate screening
-│   ├── schemas.py               TradeDecision / PortfolioState / tool schema
-│   └── decision.py              Claude Sonnet 5 call, structured tool-use, caching
-├── risk/
-│   ├── sizing.py                 fixed-fractional sizing + LLM-decision clamping
-│   └── circuit_breakers.py       daily loss / max drawdown / max positions gates
+│   ├── schemas.py                 PortfolioView + record_portfolio_view tool schema
+│   ├── views.py                   Claude Sonnet 5 call → PortfolioView
+│   ├── black_litterman.py         covariance, CAPM prior, BL blend, risk-profile optimization
+│   └── portfolio_risk.py          expected return/vol/Sharpe, historical VaR/CVaR, exposure-by-tag
+├── risk/circuit_breakers.py       drawdown-from-peak breaker (the one that survived the pivot)
 ├── execution/
-│   ├── broker.py                  Alpaca bracket order submission, account reads
-│   └── reconcile.py               closes DB trades when their bracket leg fills
+│   ├── broker.py                   Alpaca account/position reads
+│   └── rebalance.py                diffs holdings vs. target weights, submits notional orders
 ├── persistence/
-│   ├── models.py                  SQLAlchemy: decisions, trades, equity_snapshots
-│   ├── db.py, queries.py
-├── metrics/stats.py               Sharpe, Sortino, drawdown, win rate, alpha/beta
+│   ├── models.py                   SQLAlchemy: ViewRecord, RebalanceEvent, EquitySnapshot
+│   └── db.py, queries.py
+├── metrics/stats.py                Sharpe, Sortino, max drawdown on the equity curve
 ├── reporting/
-│   ├── snapshot.py                 builds the dashboard JSON (single source of truth)
-│   ├── recap.py                    shared weekly/on-demand recap builder
-│   └── email_sender.py             Resend HTML email
+│   ├── snapshot.py                  builds the dashboard JSON (single source of truth)
+│   ├── recap.py                     shared weekly/on-demand recap builder
+│   └── email_sender.py              Resend HTML email
 └── cli/
-    ├── run_cycle.py                one trading cycle — called by GitHub Actions cron
-    ├── weekly_recap.py             email + narrative — called by a scheduled routine
-    └── on_demand_recap.py          regenerates the snapshot on request
+    ├── daily_mark.py                cheap no-LLM equity mark — GitHub Actions, every market day
+    ├── weekly_rebalance.py          the full BL pipeline — GitHub Actions, weekly
+    ├── weekly_recap.py              narrative + email — Claude Code scheduled routine
+    └── on_demand_recap.py           regenerates the snapshot on request
 
-.github/workflows/                 equity (market hours) + crypto (24/7) cron jobs
-tests/                              94 tests, no live API keys required
+.github/workflows/                  daily-mark.yml + weekly-rebalance.yml
+dashboard/dashboard.html            the published Artifact — risk selector, IT/EN, history scrubber
+tests/                              77 tests, no live API keys required
 ```
 
 ## Scheduling — two mechanisms for two different needs
 
-- **Trading cycles** (timing-critical, high frequency): GitHub Actions cron.
-  Free, runs independently of any local machine, and more reliable than a
-  scheduler that depends on an app being open. `trading-cycle-equity.yml`
-  runs every 15 minutes during US market hours; `trading-cycle-crypto.yml`
-  runs every 15 minutes, 24/7. Both write to the same SQLite ledger, so they
-  share a concurrency group and never run in parallel.
+- **Daily mark + weekly rebalance** (GitHub Actions): free, runs
+  independently of any local machine. `daily-mark.yml` reads account equity
+  every market day (no LLM call, near-zero cost) so the dashboard's history
+  scrubber has daily granularity. `weekly-rebalance.yml` runs the full
+  pipeline once a week. Both write the same SQLite ledger, so they share a
+  concurrency group and never run in parallel.
 - **Weekly recap** (low frequency, delay-tolerant): a Claude Code scheduled
   routine that runs `weekly_recap.py`, since it needs to call the Artifact
   tool to republish the dashboard — something only a Claude Code session can
@@ -122,17 +142,15 @@ your behalf) and provide the API keys:
 
 1. [Alpaca](https://alpaca.markets) — enable paper trading, generate an API
    key/secret.
-2. [Anthropic](https://console.anthropic.com) — API key for the decision
-   engine (separate from any Claude Code usage).
-3. [Finnhub](https://finnhub.io) — free-tier API key for news headlines.
-4. [Alpha Vantage](https://www.alphavantage.co) — free-tier API key
-   (optional; secondary sentiment signal, not wired into the default cycle
-   yet — see `data/news.py`).
-5. [Resend](https://resend.com) — free-tier API key for the weekly email.
-6. A GitHub repository to host this code and run the Actions workflows —
+2. [Anthropic](https://console.anthropic.com) — API key for the view engine
+   (separate from any Claude Code usage).
+3. [Finnhub](https://finnhub.io) — free-tier API key for headlines and
+   equity market cap.
+4. [Resend](https://resend.com) — free-tier API key for the weekly email.
+5. A GitHub repository to host this code and run the Actions workflows —
    copy `.env.example` values into the repo's Actions secrets (`Settings →
-   Secrets and variables → Actions`), and set `DAILY_BUDGET_EUR` as a repo
-   variable.
+   Secrets and variables → Actions`), and set `ACTIVE_RISK_PROFILE` as a
+   repo variable.
 
 Locally:
 
@@ -145,15 +163,20 @@ pytest
 
 ## Known simplifications (documented, not hidden)
 
-- Alpha Vantage sentiment is implemented and tested but not called from
-  `run_cycle.py` by default — its free tier (25 req/day) is too thin for a
-  multi-times-daily cycle across a watchlist; wiring it in as a once-daily
-  cached signal is a natural next step.
-- The equity/crypto GitHub Actions workflows share one concurrency group so
-  they never write the SQLite ledger concurrently; at high cadence this can
-  queue runs behind each other. Acceptable at a 15-minute cadence for this
-  project's scale.
-- Realized P&L on reconciled trades is computed from notional-sized returns
-  (`execution/reconcile.py`), not from Alpaca's own fill-level P&L reporting
-  — a reasonable approximation given orders are submitted by notional value,
-  not share quantity.
+- ETFs don't have a traditional market cap, so their Black-Litterman
+  equilibrium weight is proxied by trailing average dollar trading volume
+  (`data/fundamentals.py::dollar_volume_proxy_weights`) — liquidity-weighted
+  rather than AUM-weighted. A documented approximation, not a hidden one.
+- Factor exposure grouping is a static tag map
+  (`config.DEFAULT_FACTOR_MAP`), not a regression-based factor-loading
+  model — equities and sector ETFs fall into "Other" on the factor view.
+  A real factor-loading model (e.g. Fama-French regression) is a natural
+  extension.
+- The daily-mark and weekly-rebalance GitHub Actions share one concurrency
+  group so they never write the SQLite ledger concurrently; at higher
+  cadence this could queue runs behind each other. Not a concern at
+  daily/weekly frequency.
+- The dashboard's sample data uses a curated 16-asset subset of the full
+  29-asset production universe, so every investment-committee rationale
+  could be individually hand-written rather than templated — see
+  `dashboard/generate_sample_data.py`.
