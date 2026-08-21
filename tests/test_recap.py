@@ -33,10 +33,20 @@ class FakeAnthropicClient:
 
 def make_snapshot():
     return {
-        "stats": {"sharpe_ratio": 1.2, "total_realized_pnl_eur": 12.0, "max_drawdown": 0.05},
-        "positions": [],
-        "trade_journal": [
-            {"symbol": "AAPL", "direction": "long", "confidence": 0.7, "rationale": "RSI oversold."},
+        "performance_stats": {"sharpe_ratio": 1.2, "max_drawdown": 0.05, "total_return": 0.06},
+        "active_risk_profile": "balanced",
+        "scenarios": {
+            "balanced": {
+                "weights": {"AAPL": 0.15},
+                "expected_return": 0.09,
+                "volatility": 0.14,
+                "sharpe": 0.64,
+                "var_95": 0.02,
+                "cvar_95": 0.03,
+            }
+        },
+        "investment_committee_notes": [
+            {"symbol": "AAPL", "expected_return_annualized": 0.09, "confidence": 0.55, "rationale": "Strong iPhone cycle."},
         ],
     }
 
@@ -52,9 +62,12 @@ def test_generate_narrative_extracts_text_block():
 
     narrative = generate_narrative(client, make_snapshot())
 
-    assert "Sharpe" not in client.messages.last_call_kwargs["model"]  # sanity: model is a string, not stats
     assert client.messages.last_call_kwargs["model"] == "claude-opus-5"
     assert narrative == "Modest gains this week, Sharpe of 1.2."
+    user_content = client.messages.last_call_kwargs["messages"][0]["content"]
+    assert "balanced" in user_content
+    assert "Strong iPhone cycle" in user_content
+    assert '"weights"' not in user_content  # weights excluded from the narrative prompt
 
 
 def test_build_recap_without_client_skips_narrative():

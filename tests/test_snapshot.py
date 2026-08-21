@@ -1,58 +1,61 @@
 import json
 import tempfile
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from trading_desk.persistence.db import get_session
-from trading_desk.persistence.models import Decision, EquitySnapshot, Trade
+from trading_desk.persistence.models import EquitySnapshot, RebalanceEvent, ViewRecord
 from trading_desk.reporting.snapshot import build_snapshot, read_snapshot, write_snapshot
+
+REBALANCE_TIME = datetime(2026, 8, 17, 9, 0, tzinfo=timezone.utc)
+
+SCENARIOS = {
+    "conservative": {"weights": {"AAPL": 0.10}, "expected_return": 0.06, "volatility": 0.08, "sharpe": 0.75, "var_95": 0.01, "cvar_95": 0.015, "sector_exposure": {"Technology": 0.10}, "factor_exposure": {}},
+    "balanced": {"weights": {"AAPL": 0.15}, "expected_return": 0.09, "volatility": 0.14, "sharpe": 0.64, "var_95": 0.02, "cvar_95": 0.03, "sector_exposure": {"Technology": 0.15}, "factor_exposure": {}},
+    "aggressive": {"weights": {"AAPL": 0.20}, "expected_return": 0.12, "volatility": 0.22, "sharpe": 0.55, "var_95": 0.035, "cvar_95": 0.05, "sector_exposure": {"Technology": 0.20}, "factor_exposure": {}},
+}
 
 
 def _seed(session):
-    for equity in [1000.0, 1010.0, 990.0, 1025.0]:
-        session.add(EquitySnapshot(equity_eur=equity, cash_eur=equity * 0.5, open_positions_count=1))
-
-    decision = Decision(
-        symbol="AAPL",
-        asset_class="equity",
-        direction="long",
-        confidence=0.7,
-        rationale="RSI oversold with a positive headline.",
-        key_signals=json.dumps(["RSI 28 oversold"]),
-        risk_flags=json.dumps([]),
-    )
-    session.add(decision)
-    session.flush()
+    for i, equity in enumerate([1000.0, 1010.0, 990.0, 1025.0]):
+        session.add(EquitySnapshot(equity_eur=equity, cash_eur=equity * 0.5, taken_at=REBALANCE_TIME - timedelta(days=3 - i)))
 
     session.add(
-        Trade(
-            decision_id=decision.id,
+        RebalanceEvent(
+            created_at=REBALANCE_TIME,
+            active_risk_profile="balanced",
+            scenarios_json=json.dumps(SCENARIOS),
+            prior_returns_json=json.dumps({"AAPL": 0.07}),
+            posterior_returns_json=json.dumps({"AAPL": 0.09}),
+            executed=True,
+        )
+    )
+
+    session.add(
+        ViewRecord(
+            created_at=REBALANCE_TIME + timedelta(minutes=5),
             symbol="AAPL",
             asset_class="equity",
-            direction="long",
-            entry_price=190.0,
-            stop_loss_price=185.0,
-            take_profit_price=200.0,
-            size_eur=15.0,
-            status="closed",
-            exit_price=198.0,
-            realized_pnl_eur=8.0,
+            expected_return_annualized=0.09,
+            confidence=0.55,
+            rationale="Strong iPhone cycle plus services growth.",
+            key_signals=json.dumps(["services revenue +15% YoY"]),
         )
     )
     session.add(
-        Trade(
-            symbol="MSFT",
+        ViewRecord(
+            created_at=REBALANCE_TIME - timedelta(days=10),
+            symbol="AAPL",
             asset_class="equity",
-            direction="short",
-            entry_price=400.0,
-            stop_loss_price=410.0,
-            take_profit_price=380.0,
-            size_eur=15.0,
-            status="open",
+            expected_return_annualized=0.03,
+            confidence=0.4,
+            rationale="Old view from a prior rebalance, should not appear.",
+            key_signals=json.dumps([]),
         )
     )
 
 
-def test_build_snapshot_shape_and_stats():
+def test_build_snapshot_shape_and_content():
     with tempfile.TemporaryDirectory() as tmp:
         db_path = str(Path(tmp) / "test.sqlite")
         with get_session(db_path) as session:
@@ -61,22 +64,34 @@ def test_build_snapshot_shape_and_stats():
         with get_session(db_path) as session:
             snapshot = build_snapshot(session)
 
-    assert snapshot["schema_version"] == 1
+    assert snapshot["schema_version"] == 2
     assert len(snapshot["equity_curve"]) == 4
-    assert snapshot["stats"]["closed_trades_count"] == 1
-    assert snapshot["stats"]["total_realized_pnl_eur"] == 8.0
-    assert snapshot["stats"]["win_rate"] == 1.0
-    assert len(snapshot["positions"]) == 1
-    assert snapshot["positions"][0]["symbol"] == "MSFT"
-    assert len(snapshot["trade_journal"]) == 1
-    assert snapshot["trade_journal"][0]["rationale"].startswith("RSI oversold")
-    assert snapshot["trade_journal"][0]["key_signals"] == ["RSI 28 oversold"]
+    assert snapshot["active_risk_profile"] == "balanced"
+    assert snapshot["scenarios"]["aggressive"]["volatility"] == 0.22
+    assert snapshot["performance_stats"]["total_return"] > 0
+
+    notes = snapshot["investment_committee_notes"]
+    assert len(notes) == 1
+    assert notes[0]["rationale"].startswith("Strong iPhone cycle")
+
+
+def test_build_snapshot_with_no_rebalance_yet():
+    with tempfile.TemporaryDirectory() as tmp:
+        db_path = str(Path(tmp) / "test.sqlite")
+        with get_session(db_path) as session:
+            session.add(EquitySnapshot(equity_eur=1000.0, cash_eur=1000.0))
+
+        with get_session(db_path) as session:
+            snapshot = build_snapshot(session)
+
+    assert snapshot["scenarios"] == {}
+    assert snapshot["active_risk_profile"] == "balanced"
+    assert snapshot["investment_committee_notes"] == []
 
 
 def test_write_and_read_snapshot_roundtrip():
     with tempfile.TemporaryDirectory() as tmp:
         path = str(Path(tmp) / "snapshot.json")
-        snapshot = {"schema_version": 1, "stats": {"sharpe_ratio": 1.23}}
+        snapshot = {"schema_version": 2, "performance_stats": {"sharpe_ratio": 1.23}}
         write_snapshot(snapshot, path)
-        loaded = read_snapshot(path)
-        assert loaded == snapshot
+        assert read_snapshot(path) == snapshot

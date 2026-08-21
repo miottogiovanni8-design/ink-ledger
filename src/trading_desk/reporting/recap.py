@@ -7,11 +7,12 @@ from typing import Any, Dict, Optional
 
 RECAP_MODEL = "claude-opus-5"
 
-NARRATIVE_SYSTEM_PROMPT = """You are writing a weekly recap narrative for an AI \
-paper-trading desk, read by a technical recruiter evaluating the project's \
-engineering and reasoning quality. Write 3-5 sentences, plain and honest — \
-cite the concrete numbers given, do not editorialize or hype. If performance \
-was poor, say so plainly and note what the risk layer did to contain it."""
+NARRATIVE_SYSTEM_PROMPT = """You are writing a weekly recap narrative for an AI-augmented \
+Black-Litterman investment desk, read by a technical recruiter evaluating the project's \
+engineering and reasoning quality. Write 3-5 sentences, plain and honest — cite the \
+concrete numbers given (expected return, volatility, Sharpe, VaR/CVaR for the active \
+risk profile), do not editorialize or hype. If performance was poor, say so plainly and \
+note what the drawdown circuit breaker did to contain it, if anything."""
 
 
 def period_label(start: date, end: date) -> str:
@@ -19,15 +20,23 @@ def period_label(start: date, end: date) -> str:
 
 
 def generate_narrative(client: Any, snapshot: Dict[str, Any], model: str = RECAP_MODEL) -> str:
+    active_profile = snapshot.get("active_risk_profile", "balanced")
+    active_scenario = snapshot.get("scenarios", {}).get(active_profile, {})
+
     user_content = (
-        "Stats:\n"
-        + json.dumps(snapshot["stats"], indent=2)
-        + "\n\nOpen positions: "
-        + str(len(snapshot["positions"]))
-        + "\n\nRecent trade journal entries:\n"
+        "Performance stats:\n"
+        + json.dumps(snapshot["performance_stats"], indent=2)
+        + f"\n\nActive risk profile: {active_profile}\n"
+        + "Active scenario metrics:\n"
+        + json.dumps(
+            {k: v for k, v in active_scenario.items() if k not in ("weights",)},
+            indent=2,
+        )
+        + "\n\nRecent investment committee notes:\n"
         + "\n".join(
-            f"- {e['symbol']} {e['direction']} (confidence {e['confidence']:.2f}): {e['rationale']}"
-            for e in snapshot["trade_journal"][:10]
+            f"- {n['symbol']} (expected return {n['expected_return_annualized']:.1%}, "
+            f"confidence {n['confidence']:.2f}): {n['rationale']}"
+            for n in snapshot["investment_committee_notes"][:10]
         )
     )
     response = client.messages.create(

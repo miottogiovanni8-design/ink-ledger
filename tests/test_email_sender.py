@@ -4,39 +4,15 @@ from trading_desk.reporting.email_sender import render_recap_html, send_recap_em
 def make_snapshot():
     return {
         "equity_curve": [{"t": "2026-08-14T00:00:00Z", "equity": 1000.0}, {"t": "2026-08-21T00:00:00Z", "equity": 1025.0}],
-        "stats": {
-            "sharpe_ratio": 1.5,
-            "sortino_ratio": 2.1,
-            "max_drawdown": 0.08,
-            "win_rate": 0.6,
-            "profit_factor": 1.8,
-            "closed_trades_count": 5,
-            "total_realized_pnl_eur": 25.0,
+        "performance_stats": {"sharpe_ratio": 1.5, "sortino_ratio": 2.1, "max_drawdown": 0.08, "total_return": 0.025},
+        "active_risk_profile": "balanced",
+        "scenarios": {
+            "balanced": {"weights": {"AAPL": 0.15}, "expected_return": 0.09, "volatility": 0.14, "sharpe": 0.64, "var_95": 0.02, "cvar_95": 0.03},
         },
-        "trade_journal": [
-            {
-                "symbol": "AAPL",
-                "direction": "long",
-                "confidence": 0.72,
-                "rationale": "RSI oversold with a positive earnings headline.",
-                "skipped_by_risk_layer": False,
-            },
-            {
-                "symbol": "TSLA",
-                "direction": "hold",
-                "confidence": 0.4,
-                "rationale": "Mixed signals.",
-                "skipped_by_risk_layer": False,
-            },
-            {
-                "symbol": "MSFT",
-                "direction": "short",
-                "confidence": 0.55,
-                "rationale": "Circuit breaker tripped.",
-                "skipped_by_risk_layer": True,
-            },
+        "investment_committee_notes": [
+            {"symbol": "AAPL", "expected_return_annualized": 0.09, "confidence": 0.55, "rationale": "Strong iPhone cycle plus services growth."},
+            {"symbol": "XLE", "expected_return_annualized": -0.02, "confidence": 0.3, "rationale": "Weak crude demand outlook."},
         ],
-        "positions": [],
     }
 
 
@@ -49,13 +25,18 @@ class FakeEmailsClient:
         return {"id": "fake-email-id"}
 
 
-def test_render_recap_html_includes_stats_and_filters_journal():
+def test_render_recap_html_includes_equity_and_notes():
     html = render_recap_html("Aug 14 - Aug 21, 2026", make_snapshot())
-
     assert "1025.00" in html
     assert "AAPL" in html
-    assert "TSLA" not in html  # holds are excluded from top trades
-    assert "MSFT" not in html  # skipped-by-risk-layer entries are excluded
+    assert "Strong iPhone cycle" in html
+    assert "Balanced" in html  # risk profile capitalized in the subtitle
+
+
+def test_render_recap_html_uses_active_scenario_metrics():
+    html = render_recap_html("Aug 14 - Aug 21, 2026", make_snapshot())
+    assert "14.0%" in html  # volatility of the active (balanced) scenario
+    assert "2.0%" in html  # VaR 95%
 
 
 def test_render_recap_html_includes_narrative_when_given():
