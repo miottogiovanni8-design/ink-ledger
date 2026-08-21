@@ -1,0 +1,705 @@
+<title>Ink Ledger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,440;9..144,560;9..144,640&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f7f4ec;
+    --surface: #ffffff;
+    --surface-2: #f1ede1;
+    --border: #e3dcc8;
+    --text-primary: #201c14;
+    --text-secondary: #5c5646;
+    --text-muted: #8c8570;
+    --brass: #8f5f18;
+    --brass-strong: #6e480f;
+    --brass-soft: #f1e2bf;
+    --series-portfolio: #2a78d6;
+    --series-portfolio-wash: rgba(42, 120, 214, 0.10);
+    --series-benchmark: #d15b26;
+    --status-good: #0b8f0b;
+    --status-good-soft: #e2f3df;
+    --status-warning-soft: #fdf1d9;
+    --status-warning-ink: #8a5a06;
+    --status-critical: #c53a3a;
+    --status-critical-soft: #fbe6e3;
+    --shadow: 0 1px 2px rgba(32, 28, 20, 0.04), 0 8px 24px -12px rgba(32, 28, 20, 0.18);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #14161c;
+      --surface: #1b1e26;
+      --surface-2: #22252e;
+      --border: #2d3038;
+      --text-primary: #f1eee3;
+      --text-secondary: #b8b2a0;
+      --text-muted: #837d6c;
+      --brass: #e0ac4c;
+      --brass-strong: #f0c877;
+      --brass-soft: #382b12;
+      --series-portfolio: #4c93ec;
+      --series-portfolio-wash: rgba(76, 147, 236, 0.14);
+      --series-benchmark: #e0703a;
+      --status-good: #35c235;
+      --status-good-soft: #163318;
+      --status-warning-soft: #3a2c0e;
+      --status-warning-ink: #f0bd52;
+      --status-critical: #e6685f;
+      --status-critical-soft: #3a1817;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -16px rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #14161c;
+    --surface: #1b1e26;
+    --surface-2: #22252e;
+    --border: #2d3038;
+    --text-primary: #f1eee3;
+    --text-secondary: #b8b2a0;
+    --text-muted: #837d6c;
+    --brass: #e0ac4c;
+    --brass-strong: #f0c877;
+    --brass-soft: #382b12;
+    --series-portfolio: #4c93ec;
+    --series-portfolio-wash: rgba(76, 147, 236, 0.14);
+    --series-benchmark: #e0703a;
+    --status-good: #35c235;
+    --status-good-soft: #163318;
+    --status-warning-soft: #3a2c0e;
+    --status-warning-ink: #f0bd52;
+    --status-critical: #e6685f;
+    --status-critical-soft: #3a1817;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -16px rgba(0, 0, 0, 0.6);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: "Public Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 40px 28px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  h1, h2 {
+    font-family: "Fraunces", Georgia, serif;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .mono { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  /* ---------- masthead ---------- */
+  .masthead {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .eyebrow {
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+  .masthead-top { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .masthead h1 { font-size: 34px; font-weight: 560; font-optical-sizing: auto; }
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.01em;
+    padding: 5px 10px 5px 8px; border-radius: 100px;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    background: var(--surface);
+  }
+  .badge .dot { width: 6px; height: 6px; border-radius: 50%; flex: none; }
+  .badge.live .dot { background: var(--status-good); box-shadow: 0 0 0 3px var(--status-good-soft); }
+  .badge.sample { color: var(--status-warning-ink); background: var(--status-warning-soft); border-color: transparent; }
+  .badge.sample .dot { background: var(--status-warning-ink); }
+
+  .meta-line { font-size: 13px; color: var(--text-muted); }
+
+  /* ---------- hero ---------- */
+  .hero {
+    display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 24px;
+  }
+  .hero-figure-block { display: flex; flex-direction: column; gap: 6px; }
+  .hero-label { font-size: 13px; color: var(--text-secondary); }
+  .hero-figure { font-size: 56px; font-weight: 600; letter-spacing: -0.01em; line-height: 1; }
+  .hero-delta { display: inline-flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 600; }
+  .hero-delta.pos { color: var(--status-good); }
+  .hero-delta.neg { color: var(--status-critical); }
+  .hero-delta-note { color: var(--text-muted); font-weight: 400; }
+
+  .universe-tags { display: flex; gap: 8px; }
+  .universe-tag {
+    font-size: 12px; color: var(--text-secondary); background: var(--surface-2);
+    border-radius: 8px; padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; min-width: 92px;
+  }
+  .universe-tag strong { font-size: 15px; color: var(--text-primary); font-weight: 600; }
+
+  /* ---------- stat grid ---------- */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  @media (max-width: 720px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+  .stat-tile {
+    background: var(--surface);
+    padding: 16px 18px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .stat-label { font-size: 12px; color: var(--text-secondary); }
+  .stat-value { font-size: 24px; font-weight: 600; letter-spacing: -0.005em; }
+  .stat-note { font-size: 11.5px; color: var(--text-muted); }
+  .stat-value.pos { color: var(--status-good); }
+  .stat-value.neg { color: var(--status-critical); }
+
+  /* ---------- card shell ---------- */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 22px 22px 18px;
+  }
+  .card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  .card-head h2 { font-size: 20px; font-weight: 560; }
+  .card-sub { font-size: 12.5px; color: var(--text-muted); }
+
+  /* ---------- chart legend ---------- */
+  .legend { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-secondary); }
+  .legend-key { width: 14px; height: 2px; border-radius: 2px; flex: none; }
+  .view-toggle {
+    font-size: 12px; color: var(--text-secondary); background: var(--surface-2);
+    border: 1px solid var(--border); border-radius: 8px; padding: 5px 10px; cursor: pointer;
+    font-family: inherit;
+  }
+  .view-toggle:hover { color: var(--text-primary); }
+  .view-toggle:focus-visible, button:focus-visible, .journal-entry:focus-visible {
+    outline: 2px solid var(--series-portfolio); outline-offset: 2px;
+  }
+
+  /* ---------- chart ---------- */
+  .chart-wrap { position: relative; }
+  #chart-svg { width: 100%; height: 280px; display: block; overflow: visible; }
+  .gridline { stroke: var(--border); stroke-width: 1; }
+  .axis-label { fill: var(--text-muted); font-size: 11px; font-family: "IBM Plex Mono", monospace; }
+  .end-label { font-size: 12px; font-weight: 600; font-family: "IBM Plex Mono", monospace; }
+  .crosshair-line { stroke: var(--text-muted); stroke-width: 1; stroke-dasharray: 2 3; opacity: 0; }
+  .hover-dot { opacity: 0; }
+
+  .tooltip {
+    position: absolute; pointer-events: none; opacity: 0; transition: opacity 0.08s ease;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 12px; box-shadow: var(--shadow); font-size: 12.5px; min-width: 168px;
+    transform: translate(-50%, -110%);
+  }
+  .tooltip-date { color: var(--text-muted); font-size: 11.5px; margin-bottom: 6px; }
+  .tooltip-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 2px 0; }
+  .tooltip-key { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); }
+  .tooltip-key .stroke { width: 12px; height: 2px; border-radius: 2px; }
+  .tooltip-val { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  table.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.data-table th { text-align: right; font-weight: 600; color: var(--text-secondary); font-size: 11.5px; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+  table.data-table th:first-child, table.data-table td:first-child { text-align: left; }
+  table.data-table td { text-align: right; padding: 6px 8px; border-bottom: 1px solid var(--border); font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+  .table-scroll { max-height: 320px; overflow: auto; }
+
+  /* ---------- two column ---------- */
+  .two-col { display: grid; grid-template-columns: 1fr 1.35fr; gap: 20px; align-items: start; }
+  @media (max-width: 860px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* positions */
+  .position-list { display: flex; flex-direction: column; gap: 10px; }
+  .position-row {
+    display: grid; grid-template-columns: auto 1fr; gap: 4px 14px;
+    padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px;
+  }
+  .position-top { display: flex; align-items: center; gap: 8px; grid-column: 1 / -1; }
+  .ticker-tag {
+    font-family: "IBM Plex Mono", monospace; font-size: 12.5px; font-weight: 600;
+    background: var(--surface-2); border-radius: 6px; padding: 3px 7px;
+  }
+  .dir-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; font-weight: 600; color: var(--text-secondary); }
+  .dir-chip svg { width: 11px; height: 11px; }
+  .dir-chip.long svg { fill: none; stroke: var(--series-portfolio); }
+  .dir-chip.short svg { fill: none; stroke: var(--series-benchmark); }
+  .position-meta { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px 10px; font-size: 11.5px; }
+  .position-meta div { display: flex; flex-direction: column; gap: 2px; }
+  .position-meta span:first-child { color: var(--text-muted); }
+  .position-meta span:last-child { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; font-size: 12.5px; color: var(--text-primary); }
+  .position-size { margin-left: auto; font-family: "IBM Plex Mono", monospace; font-size: 12.5px; color: var(--text-secondary); }
+
+  /* journal */
+  .journal-feed { display: flex; flex-direction: column; gap: 2px; max-height: 620px; overflow-y: auto; margin: -4px -6px 0; padding: 4px 6px 0; }
+  .journal-entry { padding: 13px 10px; border-radius: 10px; border-bottom: 1px solid var(--border); }
+  .journal-entry:last-child { border-bottom: none; }
+  .journal-top { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; flex-wrap: wrap; }
+  .journal-time { font-size: 11px; color: var(--text-muted); margin-left: auto; font-family: "IBM Plex Mono", monospace; }
+  .confidence-meter { display: flex; align-items: center; gap: 6px; }
+  .confidence-track { width: 52px; height: 5px; border-radius: 3px; background: var(--surface-2); overflow: hidden; }
+  .confidence-fill { height: 100%; background: var(--brass); border-radius: 3px; }
+  .confidence-value { font-size: 11px; color: var(--text-muted); font-family: "IBM Plex Mono", monospace; }
+  .risk-gated-chip {
+    display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600;
+    color: var(--status-warning-ink); background: var(--status-warning-soft); padding: 3px 8px; border-radius: 100px;
+  }
+  .rationale { font-size: 14px; line-height: 1.55; color: var(--text-secondary); margin: 0 0 8px; }
+  .signal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .signal-tag { font-size: 11px; color: var(--text-muted); background: var(--surface-2); padding: 3px 8px; border-radius: 100px; }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding-top: 18px;
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    font-size: 12px; color: var(--text-muted);
+  }
+
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">AI Paper Trading Desk</div>
+    <div class="masthead-top">
+      <h1>Ink Ledger</h1>
+      <div class="badge-row">
+        <span class="badge live"><span class="dot"></span>Paper trading — simulated funds</span>
+        <span class="badge sample" id="sample-badge"><span class="dot"></span>Sample data — awaiting first live cycle</span>
+      </div>
+    </div>
+    <div class="meta-line" id="generated-line">Generated —</div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-figure-block">
+      <div class="hero-label">Account equity</div>
+      <div class="hero-figure tabular" id="hero-equity">—</div>
+      <div class="hero-delta" id="hero-delta">—</div>
+    </div>
+    <div class="universe-tags">
+      <div class="universe-tag"><span>Equity book</span><strong id="tag-equity-count">—</strong></div>
+      <div class="universe-tag"><span>Crypto book</span><strong id="tag-crypto-count">—</strong></div>
+      <div class="universe-tag"><span>Closed trades</span><strong id="tag-closed-count">—</strong></div>
+    </div>
+  </section>
+
+  <section class="stat-grid" id="stat-grid" aria-label="Performance statistics"></section>
+
+  <section class="card">
+    <div class="card-head">
+      <div>
+        <h2>Equity vs. benchmark</h2>
+        <div class="card-sub">Indexed to 100 at inception — SPY as the equity benchmark</div>
+      </div>
+      <div class="legend" id="chart-controls">
+        <span class="legend-item"><span class="legend-key" style="background:var(--series-portfolio)"></span>Portfolio</span>
+        <span class="legend-item"><span class="legend-key" style="background:var(--series-benchmark)"></span>SPY (benchmark)</span>
+        <button class="view-toggle" id="view-toggle" aria-pressed="false">View as table</button>
+      </div>
+    </div>
+    <div class="chart-wrap" id="chart-wrap">
+      <svg id="chart-svg" role="img" aria-label="Line chart of portfolio equity versus SPY benchmark, indexed to 100 at inception"></svg>
+      <div class="tooltip" id="tooltip"></div>
+    </div>
+    <div class="table-scroll" id="table-wrap" style="display:none;">
+      <table class="data-table" id="equity-table">
+        <thead><tr><th>Date</th><th>Portfolio (idx)</th><th>SPY (idx)</th><th>Equity €</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="two-col">
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>Open positions</h2>
+          <div class="card-sub" id="positions-sub">—</div>
+        </div>
+      </div>
+      <div class="position-list" id="position-list"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>Trade journal</h2>
+          <div class="card-sub">Every decision, with the model's stated rationale</div>
+        </div>
+      </div>
+      <div class="journal-feed" id="journal-feed"></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Paper trading only — no real funds involved. Every order executes against Alpaca's simulated account.</span>
+    <span class="mono" id="schema-line">schema v1</span>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var DATA = {
+    "schema_version": 1,
+    "generated_at": "2026-08-20T14:00:00+00:00",
+    "equity_curve": [{"t":"2026-07-20T14:00:00+00:00","equity":1011.3},{"t":"2026-07-21T14:00:00+00:00","equity":1007.77},{"t":"2026-07-22T14:00:00+00:00","equity":1003.31},{"t":"2026-07-23T14:00:00+00:00","equity":1044.61},{"t":"2026-07-24T14:00:00+00:00","equity":1062.19},{"t":"2026-07-25T14:00:00+00:00","equity":1061.4},{"t":"2026-07-26T14:00:00+00:00","equity":1096.97},{"t":"2026-07-27T14:00:00+00:00","equity":1086.84},{"t":"2026-07-28T14:00:00+00:00","equity":1068.41},{"t":"2026-07-29T14:00:00+00:00","equity":1063.74},{"t":"2026-07-30T14:00:00+00:00","equity":1073.65},{"t":"2026-07-31T14:00:00+00:00","equity":1113.94},{"t":"2026-08-01T14:00:00+00:00","equity":1085.8},{"t":"2026-08-02T14:00:00+00:00","equity":1047.59},{"t":"2026-08-03T14:00:00+00:00","equity":1043.81},{"t":"2026-08-04T14:00:00+00:00","equity":1024.56},{"t":"2026-08-05T14:00:00+00:00","equity":986.9},{"t":"2026-08-06T14:00:00+00:00","equity":1030.59},{"t":"2026-08-07T14:00:00+00:00","equity":1042.73},{"t":"2026-08-08T14:00:00+00:00","equity":1036.72},{"t":"2026-08-09T14:00:00+00:00","equity":1036.05},{"t":"2026-08-10T14:00:00+00:00","equity":1033.84},{"t":"2026-08-11T14:00:00+00:00","equity":1021.79},{"t":"2026-08-12T14:00:00+00:00","equity":1056.05},{"t":"2026-08-13T14:00:00+00:00","equity":1063.26},{"t":"2026-08-14T14:00:00+00:00","equity":1065.35},{"t":"2026-08-15T14:00:00+00:00","equity":1043.35},{"t":"2026-08-16T14:00:00+00:00","equity":1039.02},{"t":"2026-08-17T14:00:00+00:00","equity":1021.65},{"t":"2026-08-18T14:00:00+00:00","equity":1033.34},{"t":"2026-08-19T14:00:00+00:00","equity":1065.89},{"t":"2026-08-20T14:00:00+00:00","equity":1062.33}],
+    "benchmark_curve": [{"t":"2026-07-20T14:00:00+00:00","equity":982.9},{"t":"2026-07-21T14:00:00+00:00","equity":987.94},{"t":"2026-07-22T14:00:00+00:00","equity":999.53},{"t":"2026-07-23T14:00:00+00:00","equity":1026.66},{"t":"2026-07-24T14:00:00+00:00","equity":1027.24},{"t":"2026-07-25T14:00:00+00:00","equity":1014.78},{"t":"2026-07-26T14:00:00+00:00","equity":1027.77},{"t":"2026-07-27T14:00:00+00:00","equity":1035.39},{"t":"2026-07-28T14:00:00+00:00","equity":1040.72},{"t":"2026-07-29T14:00:00+00:00","equity":1044.93},{"t":"2026-07-30T14:00:00+00:00","equity":1037.7},{"t":"2026-07-31T14:00:00+00:00","equity":1056.79},{"t":"2026-08-01T14:00:00+00:00","equity":1047.93},{"t":"2026-08-02T14:00:00+00:00","equity":1032.23},{"t":"2026-08-03T14:00:00+00:00","equity":1029.47},{"t":"2026-08-04T14:00:00+00:00","equity":1020.02},{"t":"2026-08-05T14:00:00+00:00","equity":1002.37},{"t":"2026-08-06T14:00:00+00:00","equity":1018.97},{"t":"2026-08-07T14:00:00+00:00","equity":1026.55},{"t":"2026-08-08T14:00:00+00:00","equity":1030.74},{"t":"2026-08-09T14:00:00+00:00","equity":1018.77},{"t":"2026-08-10T14:00:00+00:00","equity":1007.66},{"t":"2026-08-11T14:00:00+00:00","equity":995.84},{"t":"2026-08-12T14:00:00+00:00","equity":1015.6},{"t":"2026-08-13T14:00:00+00:00","equity":1015.8},{"t":"2026-08-14T14:00:00+00:00","equity":999.52},{"t":"2026-08-15T14:00:00+00:00","equity":992.03},{"t":"2026-08-16T14:00:00+00:00","equity":985.31},{"t":"2026-08-17T14:00:00+00:00","equity":978.77},{"t":"2026-08-18T14:00:00+00:00","equity":984.88},{"t":"2026-08-19T14:00:00+00:00","equity":999.52},{"t":"2026-08-20T14:00:00+00:00","equity":1014.04}],
+    "positions": [{"symbol":"NVDA","asset_class":"equity","direction":"long","entry_price":131.42,"stop_loss_price":128.66,"take_profit_price":136.26,"size_eur":15.0,"opened_at":"2026-08-20T15:32:00+00:00"},{"symbol":"ETH/USD","asset_class":"crypto","direction":"long","entry_price":4820.15,"stop_loss_price":4690.3,"take_profit_price":5047.8,"size_eur":15.0,"opened_at":"2026-08-18T16:11:00+00:00"},{"symbol":"BTC/USD","asset_class":"crypto","direction":"short","entry_price":98240.0,"stop_loss_price":100680.0,"take_profit_price":94480.0,"size_eur":10.0,"opened_at":"2026-08-20T09:05:00+00:00"}],
+    "trade_journal": [{"created_at":"2026-08-20T15:32:00+00:00","symbol":"NVDA","asset_class":"equity","direction":"long","confidence":0.78,"rationale":"RSI(14) at 27.4 with a bullish MACD crossover confirming; Finnhub headline flagged a data-center capacity expansion announced this morning. Sized at the fixed-fractional cap given ATR-based stop distance of 2.1%.","key_signals":["RSI 27.4 oversold","MACD bullish crossover","fresh headline: capacity expansion"],"risk_flags":[],"skipped_by_risk_layer":false,"skip_reason":null},{"created_at":"2026-08-20T09:05:00+00:00","symbol":"BTC/USD","asset_class":"crypto","direction":"short","confidence":0.61,"rationale":"Price broke below the lower Bollinger band on declining volume with RSI still neutral at 46 — reading this as a low-conviction mean-reversion setup, not a trend break, so sized below the risk cap and confidence reflects that.","key_signals":["price broke below lower Bollinger band"],"risk_flags":["low volume confirmation"],"skipped_by_risk_layer":false,"skip_reason":null},{"created_at":"2026-08-19T19:47:00+00:00","symbol":"TSLA","asset_class":"equity","direction":"hold","confidence":0.35,"rationale":"RSI overbought at 74 but MACD histogram still expanding and no bearish crossover yet — signals are mixed, holding rather than fading a trend that hasn't turned.","key_signals":["RSI 74.0 overbought"],"risk_flags":[],"skipped_by_risk_layer":false,"skip_reason":null},{"created_at":"2026-08-19T13:20:00+00:00","symbol":"AMZN","asset_class":"equity","direction":"long","confidence":0.0,"rationale":"Skipped by risk layer: max concurrent positions reached: 5/5","key_signals":["RSI 29.1 oversold"],"risk_flags":["max concurrent positions reached: 5/5"],"skipped_by_risk_layer":true,"skip_reason":"max concurrent positions reached: 5/5"},{"created_at":"2026-08-18T16:11:00+00:00","symbol":"ETH/USD","asset_class":"crypto","direction":"long","confidence":0.69,"rationale":"MACD bullish crossover on the 1h chart plus a positive funding-rate shift; RSI recovering through 34 from oversold territory. Stop placed at 1.5x ATR below entry.","key_signals":["MACD bullish crossover","RSI 34.2 recovering from oversold"],"risk_flags":[],"skipped_by_risk_layer":false,"skip_reason":null},{"created_at":"2026-08-18T10:02:00+00:00","symbol":"MSFT","asset_class":"equity","direction":"short","confidence":0.58,"rationale":"Price broke above the upper Bollinger band into an RSI of 71 with no supporting headline — treating this as an overextension in a range-bound name.","key_signals":["RSI 71.2 overbought","price broke above upper Bollinger band"],"risk_flags":[],"skipped_by_risk_layer":false,"skip_reason":null},{"created_at":"2026-08-11T11:40:00+00:00","symbol":"AAPL","asset_class":"equity","direction":"short","confidence":0.64,"rationale":"RSI 73 into an upper Bollinger breakout with no headline support — faded the extension; stopped out same day as the name kept running.","key_signals":["RSI 73.4 overbought","price broke above upper Bollinger band"],"risk_flags":[],"skipped_by_risk_layer":false,"skip_reason":null}],
+    "stats": {"sharpe_ratio":1.3397743740725157,"sortino_ratio":2.2827824985283685,"max_drawdown":0.11404563980106655,"win_rate":0.625,"profit_factor":2.7590909090909084,"closed_trades_count":16,"total_realized_pnl_eur":23.22,"equity_eur":1062.33,"alpha_annualized":0.09295718380585202,"beta":1.3389514105478189}
+  };
+
+  var fmtEUR = function (v) { return "€" + v.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+  var fmtPct = function (v, digits) { digits = digits === undefined ? 1 : digits; return (v * 100).toFixed(digits) + "%"; };
+  var fmtSigned = function (v, unit) { var s = v >= 0 ? "+" : ""; return s + v.toFixed(2) + (unit || ""); };
+  var fmtDate = function (iso) {
+    var d = new Date(iso);
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  };
+  var fmtDateTime = function (iso) {
+    var d = new Date(iso);
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric" }) + " · " +
+      d.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+  };
+
+  function renderMeta() {
+    document.getElementById("generated-line").textContent = "Generated " + fmtDateTime(DATA.generated_at) + " UTC · schema v" + DATA.schema_version;
+    document.getElementById("schema-line").textContent = "schema v" + DATA.schema_version + " · dashboard_snapshot.json";
+  }
+
+  function renderHero() {
+    var s = DATA.stats;
+    document.getElementById("hero-equity").textContent = fmtEUR(s.equity_eur);
+    var startEquity = DATA.equity_curve[0].equity;
+    var deltaPct = (s.equity_eur - startEquity) / startEquity;
+    var deltaEl = document.getElementById("hero-delta");
+    deltaEl.className = "hero-delta " + (deltaPct >= 0 ? "pos" : "neg");
+    deltaEl.innerHTML = "";
+    var arrow = document.createElement("span");
+    arrow.textContent = deltaPct >= 0 ? "↑" : "↓";
+    var val = document.createElement("span");
+    val.textContent = fmtSigned(deltaPct * 100, "%") + " since inception";
+    deltaEl.appendChild(arrow);
+    deltaEl.appendChild(val);
+
+    var equityCount = DATA.positions.filter(function (p) { return p.asset_class === "equity"; }).length;
+    var cryptoCount = DATA.positions.filter(function (p) { return p.asset_class === "crypto"; }).length;
+    document.getElementById("tag-equity-count").textContent = equityCount + " open";
+    document.getElementById("tag-crypto-count").textContent = cryptoCount + " open";
+    document.getElementById("tag-closed-count").textContent = s.closed_trades_count;
+  }
+
+  function statTile(label, value, note, cls) {
+    var tile = document.createElement("div");
+    tile.className = "stat-tile";
+    var l = document.createElement("div"); l.className = "stat-label"; l.textContent = label;
+    var v = document.createElement("div"); v.className = "stat-value tabular" + (cls ? " " + cls : ""); v.textContent = value;
+    var n = document.createElement("div"); n.className = "stat-note"; n.textContent = note;
+    tile.appendChild(l); tile.appendChild(v); tile.appendChild(n);
+    return tile;
+  }
+
+  function renderStats() {
+    var s = DATA.stats;
+    var grid = document.getElementById("stat-grid");
+    grid.appendChild(statTile("Sharpe ratio", s.sharpe_ratio.toFixed(2), "annualized, 252 periods"));
+    grid.appendChild(statTile("Sortino ratio", s.sortino_ratio.toFixed(2), "downside deviation only"));
+    grid.appendChild(statTile("Max drawdown", fmtPct(s.max_drawdown), "peak to trough", "neg"));
+    grid.appendChild(statTile("Win rate", fmtPct(s.win_rate, 0), s.closed_trades_count + " closed trades"));
+    grid.appendChild(statTile("Profit factor", s.profit_factor.toFixed(2), "gross profit ÷ gross loss"));
+    grid.appendChild(statTile("Alpha (ann.)", fmtSigned(s.alpha_annualized * 100, "%"), "vs. SPY", s.alpha_annualized >= 0 ? "pos" : "neg"));
+    grid.appendChild(statTile("Beta", s.beta.toFixed(2), "vs. SPY"));
+    var pnlSign = s.total_realized_pnl_eur >= 0 ? "+" : "−";
+    grid.appendChild(statTile("Realized P&L", pnlSign + fmtEUR(Math.abs(s.total_realized_pnl_eur)), "period total", s.total_realized_pnl_eur >= 0 ? "pos" : "neg"));
+  }
+
+  // ---------- chart ----------
+  function buildIndexed(curve) {
+    var base = curve[0].equity;
+    return curve.map(function (p) { return { t: p.t, raw: p.equity, idx: (p.equity / base) * 100 }; });
+  }
+
+  function renderChart() {
+    var svg = document.getElementById("chart-svg");
+    var wrap = document.getElementById("chart-wrap");
+    var tooltip = document.getElementById("tooltip");
+    var portfolio = buildIndexed(DATA.equity_curve);
+    var benchmark = buildIndexed(DATA.benchmark_curve);
+
+    var width = 1040, height = 280, padL = 44, padR = 54, padT = 16, padB = 26;
+    var innerW = width - padL - padR, innerH = height - padT - padB;
+
+    var allIdx = portfolio.concat(benchmark).map(function (p) { return p.idx; });
+    var minV = Math.min.apply(null, allIdx), maxV = Math.max.apply(null, allIdx);
+    var span = maxV - minV;
+    var yMin = minV - span * 0.12, yMax = maxV + span * 0.12;
+
+    var n = portfolio.length;
+    function x(i) { return padL + (innerW * i) / (n - 1); }
+    function y(v) { return padT + innerH - ((v - yMin) / (yMax - yMin)) * innerH; }
+
+    function pathFor(series) {
+      return series.map(function (p, i) { return (i === 0 ? "M" : "L") + x(i).toFixed(2) + "," + y(p.idx).toFixed(2); }).join(" ");
+    }
+    function areaFor(series) {
+      var line = pathFor(series);
+      return line + " L" + x(n - 1).toFixed(2) + "," + (padT + innerH).toFixed(2) +
+        " L" + x(0).toFixed(2) + "," + (padT + innerH).toFixed(2) + " Z";
+    }
+
+    var svgNS = "http://www.w3.org/2000/svg";
+    function el(tag, attrs) {
+      var e = document.createElementNS(svgNS, tag);
+      for (var k in attrs) e.setAttribute(k, attrs[k]);
+      return e;
+    }
+
+    svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+    // gridlines at ~4 nice steps
+    var steps = 4;
+    for (var g = 0; g <= steps; g++) {
+      var gv = yMin + ((yMax - yMin) * g) / steps;
+      var gy = y(gv);
+      svg.appendChild(el("line", { x1: padL, x2: width - padR, y1: gy.toFixed(2), y2: gy.toFixed(2), class: "gridline" }));
+      var label = el("text", { x: width - padR + 8, y: (gy + 4).toFixed(2), class: "axis-label" });
+      label.textContent = gv.toFixed(0);
+      svg.appendChild(label);
+    }
+
+    // x labels: first, mid, last
+    [0, Math.floor((n - 1) / 2), n - 1].forEach(function (i) {
+      var t = el("text", { x: x(i).toFixed(2), y: height - 6, class: "axis-label", "text-anchor": i === 0 ? "start" : (i === n - 1 ? "end" : "middle") });
+      t.textContent = fmtDate(portfolio[i].t);
+      svg.appendChild(t);
+    });
+
+    // portfolio area wash
+    var area = el("path", { d: areaFor(portfolio), fill: "var(--series-portfolio-wash)", stroke: "none" });
+    svg.appendChild(area);
+
+    // benchmark line (drawn first, under portfolio)
+    var benchPath = el("path", { d: pathFor(benchmark), fill: "none", stroke: "var(--series-benchmark)", "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" });
+    svg.appendChild(benchPath);
+
+    // portfolio line
+    var portPath = el("path", { d: pathFor(portfolio), fill: "none", stroke: "var(--series-portfolio)", "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" });
+    svg.appendChild(portPath);
+
+    // end labels
+    var portEnd = portfolio[n - 1], benchEnd = benchmark[n - 1];
+    var pLabel = el("text", { x: (x(n - 1) + 8).toFixed(2), y: (y(portEnd.idx) + 4).toFixed(2), class: "end-label", fill: "var(--series-portfolio)" });
+    pLabel.textContent = portEnd.idx.toFixed(1);
+    svg.appendChild(pLabel);
+    var bLabel = el("text", { x: (x(n - 1) + 8).toFixed(2), y: (y(benchEnd.idx) + 4).toFixed(2), class: "end-label", fill: "var(--series-benchmark)" });
+    bLabel.textContent = benchEnd.idx.toFixed(1);
+    svg.appendChild(bLabel);
+
+    // crosshair + hover dots
+    var crosshair = el("line", { class: "crosshair-line", y1: padT, y2: padT + innerH });
+    svg.appendChild(crosshair);
+    var dotP = el("circle", { class: "hover-dot", r: 4.5, fill: "var(--series-portfolio)", stroke: "var(--surface)", "stroke-width": 2 });
+    var dotB = el("circle", { class: "hover-dot", r: 4.5, fill: "var(--series-benchmark)", stroke: "var(--surface)", "stroke-width": 2 });
+    svg.appendChild(dotP); svg.appendChild(dotB);
+
+    var hitRect = el("rect", { x: padL, y: padT, width: innerW, height: innerH, fill: "transparent" });
+    svg.appendChild(hitRect);
+
+    function showTooltip(i) {
+      var px = x(i), py = y(portfolio[i].idx), by = y(benchmark[i].idx);
+      crosshair.setAttribute("x1", px); crosshair.setAttribute("x2", px);
+      crosshair.style.opacity = 1;
+      dotP.setAttribute("cx", px); dotP.setAttribute("cy", py); dotP.style.opacity = 1;
+      dotB.setAttribute("cx", px); dotB.setAttribute("cy", by); dotB.style.opacity = 1;
+
+      tooltip.innerHTML = "";
+      var dateEl = document.createElement("div"); dateEl.className = "tooltip-date"; dateEl.textContent = fmtDate(portfolio[i].t);
+      tooltip.appendChild(dateEl);
+
+      [["Portfolio", portfolio[i], "var(--series-portfolio)"], ["SPY", benchmark[i], "var(--series-benchmark)"]].forEach(function (row) {
+        var r = document.createElement("div"); r.className = "tooltip-row";
+        var key = document.createElement("div"); key.className = "tooltip-key";
+        var stroke = document.createElement("span"); stroke.className = "stroke"; stroke.style.background = row[2];
+        var name = document.createElement("span"); name.textContent = row[0];
+        key.appendChild(stroke); key.appendChild(name);
+        var val = document.createElement("div"); val.className = "tooltip-val"; val.textContent = row[1].idx.toFixed(1);
+        r.appendChild(key); r.appendChild(val);
+        tooltip.appendChild(r);
+      });
+
+      var rect = wrap.getBoundingClientRect();
+      var svgRect = svg.getBoundingClientRect();
+      var scale = svgRect.width / width;
+      tooltip.style.left = ((px * scale) + (svgRect.left - rect.left)) + "px";
+      tooltip.style.top = ((py * scale) + (svgRect.top - rect.top)) + "px";
+      tooltip.style.opacity = 1;
+    }
+    function hideTooltip() {
+      crosshair.style.opacity = 0; dotP.style.opacity = 0; dotB.style.opacity = 0; tooltip.style.opacity = 0;
+    }
+    function handleMove(evt) {
+      var svgRect = svg.getBoundingClientRect();
+      var scale = width / svgRect.width;
+      var mx = (evt.clientX - svgRect.left) * scale;
+      var i = Math.round(((mx - padL) / innerW) * (n - 1));
+      i = Math.max(0, Math.min(n - 1, i));
+      showTooltip(i);
+    }
+    hitRect.addEventListener("pointermove", handleMove);
+    hitRect.addEventListener("pointerleave", hideTooltip);
+    hitRect.addEventListener("pointerdown", handleMove);
+
+    // table view (accessibility fallback)
+    var tbody = document.querySelector("#equity-table tbody");
+    tbody.innerHTML = "";
+    portfolio.forEach(function (p, i) {
+      var tr = document.createElement("tr");
+      var tds = [fmtDate(p.t), p.idx.toFixed(1), benchmark[i].idx.toFixed(1), fmtEUR(p.raw)];
+      tds.forEach(function (val, idx) {
+        var td = document.createElement("td");
+        td.textContent = val;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  function renderToggle() {
+    var btn = document.getElementById("view-toggle");
+    var chartWrap = document.getElementById("chart-wrap");
+    var tableWrap = document.getElementById("table-wrap");
+    btn.addEventListener("click", function () {
+      var showingTable = tableWrap.style.display !== "none";
+      tableWrap.style.display = showingTable ? "none" : "block";
+      chartWrap.style.display = showingTable ? "block" : "none";
+      btn.setAttribute("aria-pressed", String(!showingTable));
+      btn.textContent = showingTable ? "View as table" : "View as chart";
+    });
+  }
+
+  // ---------- positions ----------
+  var longArrow = '<svg viewBox="0 0 12 12"><path d="M2 8L6 3L10 8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var shortArrow = '<svg viewBox="0 0 12 12"><path d="M2 4L6 9L10 4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  function renderPositions() {
+    var list = document.getElementById("position-list");
+    var totalNotional = DATA.positions.reduce(function (a, p) { return a + p.size_eur; }, 0);
+    document.getElementById("positions-sub").textContent = DATA.positions.length + " open · " + fmtEUR(totalNotional) + " deployed";
+
+    DATA.positions.forEach(function (p) {
+      var row = document.createElement("div");
+      row.className = "position-row";
+
+      var top = document.createElement("div"); top.className = "position-top";
+      var tag = document.createElement("span"); tag.className = "ticker-tag"; tag.textContent = p.symbol;
+      var dir = document.createElement("span"); dir.className = "dir-chip " + p.direction;
+      dir.innerHTML = (p.direction === "long" ? longArrow : shortArrow) + " " + p.direction.toUpperCase();
+      var size = document.createElement("span"); size.className = "position-size"; size.textContent = fmtEUR(p.size_eur);
+      top.appendChild(tag); top.appendChild(dir); top.appendChild(size);
+
+      var meta = document.createElement("div"); meta.className = "position-meta";
+      [["Entry", p.entry_price], ["Stop-loss", p.stop_loss_price], ["Take-profit", p.take_profit_price], ["Opened", fmtDate(p.opened_at)]].forEach(function (pair) {
+        var d = document.createElement("div");
+        var l = document.createElement("span"); l.textContent = pair[0];
+        var v = document.createElement("span"); v.textContent = typeof pair[1] === "number" ? pair[1].toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : pair[1];
+        d.appendChild(l); d.appendChild(v);
+        meta.appendChild(d);
+      });
+
+      row.appendChild(top); row.appendChild(meta);
+      list.appendChild(row);
+    });
+  }
+
+  // ---------- journal ----------
+  function renderJournal() {
+    var feed = document.getElementById("journal-feed");
+    DATA.trade_journal.forEach(function (entry) {
+      var item = document.createElement("article");
+      item.className = "journal-entry";
+      item.tabIndex = 0;
+
+      var top = document.createElement("div"); top.className = "journal-top";
+      var tag = document.createElement("span"); tag.className = "ticker-tag"; tag.textContent = entry.symbol;
+      top.appendChild(tag);
+
+      if (entry.skipped_by_risk_layer) {
+        var chip = document.createElement("span"); chip.className = "risk-gated-chip"; chip.textContent = "⚠ Blocked by risk layer";
+        top.appendChild(chip);
+      } else {
+        var dir = document.createElement("span"); dir.className = "dir-chip " + entry.direction;
+        dir.innerHTML = (entry.direction === "long" ? longArrow : entry.direction === "short" ? shortArrow : "") + " " + entry.direction.toUpperCase();
+        top.appendChild(dir);
+
+        var meter = document.createElement("div"); meter.className = "confidence-meter";
+        var track = document.createElement("div"); track.className = "confidence-track";
+        var fill = document.createElement("div"); fill.className = "confidence-fill"; fill.style.width = (entry.confidence * 100) + "%";
+        track.appendChild(fill);
+        var val = document.createElement("span"); val.className = "confidence-value"; val.textContent = (entry.confidence * 100).toFixed(0) + "%";
+        meter.appendChild(track); meter.appendChild(val);
+        top.appendChild(meter);
+      }
+
+      var time = document.createElement("span"); time.className = "journal-time"; time.textContent = fmtDateTime(entry.created_at);
+      top.appendChild(time);
+
+      var rationale = document.createElement("p"); rationale.className = "rationale"; rationale.textContent = entry.rationale;
+
+      var tags = document.createElement("div"); tags.className = "signal-tags";
+      entry.key_signals.forEach(function (s) {
+        var t = document.createElement("span"); t.className = "signal-tag"; t.textContent = s;
+        tags.appendChild(t);
+      });
+
+      item.appendChild(top);
+      item.appendChild(rationale);
+      item.appendChild(tags);
+      feed.appendChild(item);
+    });
+  }
+
+  renderMeta();
+  renderHero();
+  renderStats();
+  renderChart();
+  renderToggle();
+  renderPositions();
+  renderJournal();
+})();
+</script>

@@ -1,0 +1,417 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-20T14:00:00+00:00",
+  "equity_curve": [
+    {
+      "t": "2026-07-20T14:00:00+00:00",
+      "equity": 1011.3
+    },
+    {
+      "t": "2026-07-21T14:00:00+00:00",
+      "equity": 1007.77
+    },
+    {
+      "t": "2026-07-22T14:00:00+00:00",
+      "equity": 1003.31
+    },
+    {
+      "t": "2026-07-23T14:00:00+00:00",
+      "equity": 1044.61
+    },
+    {
+      "t": "2026-07-24T14:00:00+00:00",
+      "equity": 1062.19
+    },
+    {
+      "t": "2026-07-25T14:00:00+00:00",
+      "equity": 1061.4
+    },
+    {
+      "t": "2026-07-26T14:00:00+00:00",
+      "equity": 1096.97
+    },
+    {
+      "t": "2026-07-27T14:00:00+00:00",
+      "equity": 1086.84
+    },
+    {
+      "t": "2026-07-28T14:00:00+00:00",
+      "equity": 1068.41
+    },
+    {
+      "t": "2026-07-29T14:00:00+00:00",
+      "equity": 1063.74
+    },
+    {
+      "t": "2026-07-30T14:00:00+00:00",
+      "equity": 1073.65
+    },
+    {
+      "t": "2026-07-31T14:00:00+00:00",
+      "equity": 1113.94
+    },
+    {
+      "t": "2026-08-01T14:00:00+00:00",
+      "equity": 1085.8
+    },
+    {
+      "t": "2026-08-02T14:00:00+00:00",
+      "equity": 1047.59
+    },
+    {
+      "t": "2026-08-03T14:00:00+00:00",
+      "equity": 1043.81
+    },
+    {
+      "t": "2026-08-04T14:00:00+00:00",
+      "equity": 1024.56
+    },
+    {
+      "t": "2026-08-05T14:00:00+00:00",
+      "equity": 986.9
+    },
+    {
+      "t": "2026-08-06T14:00:00+00:00",
+      "equity": 1030.59
+    },
+    {
+      "t": "2026-08-07T14:00:00+00:00",
+      "equity": 1042.73
+    },
+    {
+      "t": "2026-08-08T14:00:00+00:00",
+      "equity": 1036.72
+    },
+    {
+      "t": "2026-08-09T14:00:00+00:00",
+      "equity": 1036.05
+    },
+    {
+      "t": "2026-08-10T14:00:00+00:00",
+      "equity": 1033.84
+    },
+    {
+      "t": "2026-08-11T14:00:00+00:00",
+      "equity": 1021.79
+    },
+    {
+      "t": "2026-08-12T14:00:00+00:00",
+      "equity": 1056.05
+    },
+    {
+      "t": "2026-08-13T14:00:00+00:00",
+      "equity": 1063.26
+    },
+    {
+      "t": "2026-08-14T14:00:00+00:00",
+      "equity": 1065.35
+    },
+    {
+      "t": "2026-08-15T14:00:00+00:00",
+      "equity": 1043.35
+    },
+    {
+      "t": "2026-08-16T14:00:00+00:00",
+      "equity": 1039.02
+    },
+    {
+      "t": "2026-08-17T14:00:00+00:00",
+      "equity": 1021.65
+    },
+    {
+      "t": "2026-08-18T14:00:00+00:00",
+      "equity": 1033.34
+    },
+    {
+      "t": "2026-08-19T14:00:00+00:00",
+      "equity": 1065.89
+    },
+    {
+      "t": "2026-08-20T14:00:00+00:00",
+      "equity": 1062.33
+    }
+  ],
+  "benchmark_curve": [
+    {
+      "t": "2026-07-20T14:00:00+00:00",
+      "equity": 982.9
+    },
+    {
+      "t": "2026-07-21T14:00:00+00:00",
+      "equity": 987.94
+    },
+    {
+      "t": "2026-07-22T14:00:00+00:00",
+      "equity": 999.53
+    },
+    {
+      "t": "2026-07-23T14:00:00+00:00",
+      "equity": 1026.66
+    },
+    {
+      "t": "2026-07-24T14:00:00+00:00",
+      "equity": 1027.24
+    },
+    {
+      "t": "2026-07-25T14:00:00+00:00",
+      "equity": 1014.78
+    },
+    {
+      "t": "2026-07-26T14:00:00+00:00",
+      "equity": 1027.77
+    },
+    {
+      "t": "2026-07-27T14:00:00+00:00",
+      "equity": 1035.39
+    },
+    {
+      "t": "2026-07-28T14:00:00+00:00",
+      "equity": 1040.72
+    },
+    {
+      "t": "2026-07-29T14:00:00+00:00",
+      "equity": 1044.93
+    },
+    {
+      "t": "2026-07-30T14:00:00+00:00",
+      "equity": 1037.7
+    },
+    {
+      "t": "2026-07-31T14:00:00+00:00",
+      "equity": 1056.79
+    },
+    {
+      "t": "2026-08-01T14:00:00+00:00",
+      "equity": 1047.93
+    },
+    {
+      "t": "2026-08-02T14:00:00+00:00",
+      "equity": 1032.23
+    },
+    {
+      "t": "2026-08-03T14:00:00+00:00",
+      "equity": 1029.47
+    },
+    {
+      "t": "2026-08-04T14:00:00+00:00",
+      "equity": 1020.02
+    },
+    {
+      "t": "2026-08-05T14:00:00+00:00",
+      "equity": 1002.37
+    },
+    {
+      "t": "2026-08-06T14:00:00+00:00",
+      "equity": 1018.97
+    },
+    {
+      "t": "2026-08-07T14:00:00+00:00",
+      "equity": 1026.55
+    },
+    {
+      "t": "2026-08-08T14:00:00+00:00",
+      "equity": 1030.74
+    },
+    {
+      "t": "2026-08-09T14:00:00+00:00",
+      "equity": 1018.77
+    },
+    {
+      "t": "2026-08-10T14:00:00+00:00",
+      "equity": 1007.66
+    },
+    {
+      "t": "2026-08-11T14:00:00+00:00",
+      "equity": 995.84
+    },
+    {
+      "t": "2026-08-12T14:00:00+00:00",
+      "equity": 1015.6
+    },
+    {
+      "t": "2026-08-13T14:00:00+00:00",
+      "equity": 1015.8
+    },
+    {
+      "t": "2026-08-14T14:00:00+00:00",
+      "equity": 999.52
+    },
+    {
+      "t": "2026-08-15T14:00:00+00:00",
+      "equity": 992.03
+    },
+    {
+      "t": "2026-08-16T14:00:00+00:00",
+      "equity": 985.31
+    },
+    {
+      "t": "2026-08-17T14:00:00+00:00",
+      "equity": 978.77
+    },
+    {
+      "t": "2026-08-18T14:00:00+00:00",
+      "equity": 984.88
+    },
+    {
+      "t": "2026-08-19T14:00:00+00:00",
+      "equity": 999.52
+    },
+    {
+      "t": "2026-08-20T14:00:00+00:00",
+      "equity": 1014.04
+    }
+  ],
+  "positions": [
+    {
+      "symbol": "NVDA",
+      "asset_class": "equity",
+      "direction": "long",
+      "entry_price": 131.42,
+      "stop_loss_price": 128.66,
+      "take_profit_price": 136.26,
+      "size_eur": 15.0,
+      "opened_at": "2026-08-20T15:32:00+00:00"
+    },
+    {
+      "symbol": "ETH/USD",
+      "asset_class": "crypto",
+      "direction": "long",
+      "entry_price": 4820.15,
+      "stop_loss_price": 4690.3,
+      "take_profit_price": 5047.8,
+      "size_eur": 15.0,
+      "opened_at": "2026-08-18T16:11:00+00:00"
+    },
+    {
+      "symbol": "BTC/USD",
+      "asset_class": "crypto",
+      "direction": "short",
+      "entry_price": 98240.0,
+      "stop_loss_price": 100680.0,
+      "take_profit_price": 94480.0,
+      "size_eur": 10.0,
+      "opened_at": "2026-08-20T09:05:00+00:00"
+    }
+  ],
+  "trade_journal": [
+    {
+      "created_at": "2026-08-20T15:32:00+00:00",
+      "symbol": "NVDA",
+      "asset_class": "equity",
+      "direction": "long",
+      "confidence": 0.78,
+      "rationale": "RSI(14) at 27.4 with a bullish MACD crossover confirming; Finnhub headline flagged a data-center capacity expansion announced this morning. Sized at the fixed-fractional cap given ATR-based stop distance of 2.1%.",
+      "key_signals": [
+        "RSI 27.4 oversold",
+        "MACD bullish crossover",
+        "fresh headline: capacity expansion"
+      ],
+      "risk_flags": [],
+      "skipped_by_risk_layer": false,
+      "skip_reason": null
+    },
+    {
+      "created_at": "2026-08-20T09:05:00+00:00",
+      "symbol": "BTC/USD",
+      "asset_class": "crypto",
+      "direction": "short",
+      "confidence": 0.61,
+      "rationale": "Price broke below the lower Bollinger band on declining volume with RSI still neutral at 46 \u2014 reading this as a low-conviction mean-reversion setup, not a trend break, so sized below the risk cap and confidence reflects that.",
+      "key_signals": [
+        "price broke below lower Bollinger band"
+      ],
+      "risk_flags": [
+        "low volume confirmation"
+      ],
+      "skipped_by_risk_layer": false,
+      "skip_reason": null
+    },
+    {
+      "created_at": "2026-08-19T19:47:00+00:00",
+      "symbol": "TSLA",
+      "asset_class": "equity",
+      "direction": "hold",
+      "confidence": 0.35,
+      "rationale": "RSI overbought at 74 but MACD histogram still expanding and no bearish crossover yet \u2014 signals are mixed, holding rather than fading a trend that hasn't turned.",
+      "key_signals": [
+        "RSI 74.0 overbought"
+      ],
+      "risk_flags": [],
+      "skipped_by_risk_layer": false,
+      "skip_reason": null
+    },
+    {
+      "created_at": "2026-08-19T13:20:00+00:00",
+      "symbol": "AMZN",
+      "asset_class": "equity",
+      "direction": "long",
+      "confidence": 0.0,
+      "rationale": "Skipped by risk layer: max concurrent positions reached: 5/5",
+      "key_signals": [
+        "RSI 29.1 oversold"
+      ],
+      "risk_flags": [
+        "max concurrent positions reached: 5/5"
+      ],
+      "skipped_by_risk_layer": true,
+      "skip_reason": "max concurrent positions reached: 5/5"
+    },
+    {
+      "created_at": "2026-08-18T16:11:00+00:00",
+      "symbol": "ETH/USD",
+      "asset_class": "crypto",
+      "direction": "long",
+      "confidence": 0.69,
+      "rationale": "MACD bullish crossover on the 1h chart plus a positive funding-rate shift; RSI recovering through 34 from oversold territory. Stop placed at 1.5x ATR below entry.",
+      "key_signals": [
+        "MACD bullish crossover",
+        "RSI 34.2 recovering from oversold"
+      ],
+      "risk_flags": [],
+      "skipped_by_risk_layer": false,
+      "skip_reason": null
+    },
+    {
+      "created_at": "2026-08-18T10:02:00+00:00",
+      "symbol": "MSFT",
+      "asset_class": "equity",
+      "direction": "short",
+      "confidence": 0.58,
+      "rationale": "Price broke above the upper Bollinger band into an RSI of 71 with no supporting headline \u2014 treating this as an overextension in a range-bound name.",
+      "key_signals": [
+        "RSI 71.2 overbought",
+        "price broke above upper Bollinger band"
+      ],
+      "risk_flags": [],
+      "skipped_by_risk_layer": false,
+      "skip_reason": null
+    },
+    {
+      "created_at": "2026-08-11T11:40:00+00:00",
+      "symbol": "AAPL",
+      "asset_class": "equity",
+      "direction": "short",
+      "confidence": 0.64,
+      "rationale": "RSI 73 into an upper Bollinger breakout with no headline support \u2014 faded the extension; stopped out same day as the name kept running.",
+      "key_signals": [
+        "RSI 73.4 overbought",
+        "price broke above upper Bollinger band"
+      ],
+      "risk_flags": [],
+      "skipped_by_risk_layer": false,
+      "skip_reason": null
+    }
+  ],
+  "stats": {
+    "sharpe_ratio": 1.3397743740725157,
+    "sortino_ratio": 2.2827824985283685,
+    "max_drawdown": 0.11404563980106655,
+    "win_rate": 0.625,
+    "profit_factor": 2.7590909090909084,
+    "closed_trades_count": 16,
+    "total_realized_pnl_eur": 23.22,
+    "equity_eur": 1062.33,
+    "alpha_annualized": 0.09295718380585202,
+    "beta": 1.3389514105478189
+  }
+}
