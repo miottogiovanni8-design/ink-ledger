@@ -179,6 +179,8 @@ def test_build_snapshot_holdings_detail_and_transaction_history():
     assert h["cost_basis"] == pytest.approx(200.0)
     assert h["pct_since_purchase"] == pytest.approx(0.10)
 
+    assert snapshot["latest_prices"] == {"AAPL": 220.0}
+
     history = snapshot["transaction_history"]
     assert len(history) == 1
     assert history[0]["symbol"] == "AAPL"

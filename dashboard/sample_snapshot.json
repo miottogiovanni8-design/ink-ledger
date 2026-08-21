@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "generated_at": "2026-08-20T21:15:00+00:00",
   "equity_curve": [
     {
@@ -1709,6 +1709,259 @@
       }
     }
   },
+  "latest_prices": {
+    "AAPL": 151.4501542769227,
+    "NVDA": 192.82219222016644,
+    "JPM": 189.03023163645247,
+    "V": 244.786779454402,
+    "JNJ": 143.87270776883955,
+    "UNH": 434.7855929294193,
+    "XOM": 119.96847359396628,
+    "PG": 133.3674811775061,
+    "HD": 299.59592495602186,
+    "CAT": 290.0103740879047,
+    "XLK": 264.5694269275557,
+    "XLF": 34.029424630501985,
+    "XLV": 106.86840196646828,
+    "MTUM": 180.1135139424183,
+    "VLUE": 144.67693413849133,
+    "USMV": 80.49210709193724,
+    "SPY": 539.9453202607268
+  },
+  "holdings_detail": [
+    {
+      "symbol": "AAPL",
+      "name": "Apple Inc.",
+      "weight": 0.15,
+      "market_value_usd": 16767.09,
+      "current_price": 151.4501542769227,
+      "cost_basis": 144.53912754761203,
+      "pct_since_purchase": 0.0478142275145125
+    },
+    {
+      "symbol": "V",
+      "name": "Visa Inc.",
+      "weight": 0.15,
+      "market_value_usd": 16767.09,
+      "current_price": 244.786779454402,
+      "cost_basis": 232.52421225716935,
+      "pct_since_purchase": 0.05273673256731807
+    },
+    {
+      "symbol": "HD",
+      "name": "The Home Depot Inc.",
+      "weight": 0.15,
+      "market_value_usd": 16767.09,
+      "current_price": 299.59592495602186,
+      "cost_basis": 305.7070945220492,
+      "pct_since_purchase": -0.019990277214801677
+    },
+    {
+      "symbol": "XLK",
+      "name": "Technology Select Sector SPDR Fund",
+      "weight": 0.15,
+      "market_value_usd": 16767.09,
+      "current_price": 264.5694269275557,
+      "cost_basis": 262.37077453849685,
+      "pct_since_purchase": 0.008379943966420118
+    },
+    {
+      "symbol": "NVDA",
+      "name": "NVIDIA Corporation",
+      "weight": 0.12831,
+      "market_value_usd": 14342.568786000002,
+      "current_price": 192.82219222016644,
+      "cost_basis": 203.3045139496377,
+      "pct_since_purchase": -0.05155970974686736
+    },
+    {
+      "symbol": "MTUM",
+      "name": "iShares MSCI USA Momentum Factor ETF",
+      "weight": 0.11485,
+      "market_value_usd": 12838.00191,
+      "current_price": 180.1135139424183,
+      "cost_basis": 197.8076000505545,
+      "pct_since_purchase": -0.08945099229561473
+    },
+    {
+      "symbol": "VLUE",
+      "name": "iShares MSCI USA Value Factor ETF",
+      "weight": 0.06503,
+      "market_value_usd": 7269.092418000001,
+      "current_price": 144.67693413849133,
+      "cost_basis": 142.89974392231667,
+      "pct_since_purchase": 0.012436622819567667
+    },
+    {
+      "symbol": "CAT",
+      "name": "Caterpillar Inc.",
+      "weight": 0.0538,
+      "market_value_usd": 6013.7962800000005,
+      "current_price": 290.0103740879047,
+      "cost_basis": 290.8369638278678,
+      "pct_since_purchase": -0.002842106894130215
+    },
+    {
+      "symbol": "JNJ",
+      "name": "Johnson & Johnson",
+      "weight": 0.02821,
+      "market_value_usd": 3153.330726,
+      "current_price": 143.87270776883955,
+      "cost_basis": 159.1225107005869,
+      "pct_since_purchase": -0.0958368672327083
+    },
+    {
+      "symbol": "JPM",
+      "name": "JPMorgan Chase & Co.",
+      "weight": 0.00979,
+      "market_value_usd": 1094.3320740000001,
+      "current_price": 189.03023163645247,
+      "cost_basis": 203.14829935404646,
+      "pct_since_purchase": -0.06949636183263856
+    }
+  ],
+  "transaction_history": [
+    {
+      "executed_at": "2026-06-01T14:05:00+00:00",
+      "symbol": "PG",
+      "name": "Procter & Gamble Company",
+      "asset_class": "equity",
+      "side": "sell",
+      "notional_usd": 9210.721440000001,
+      "price": 130.82714820269646,
+      "rationale": "Two consecutive quarters of volume weakness reversed the original volume-recovery thesis; reallocated the capital to higher-conviction technology names."
+    },
+    {
+      "executed_at": "2026-05-18T14:05:00+00:00",
+      "symbol": "XOM",
+      "name": "Exxon Mobil Corporation",
+      "asset_class": "equity",
+      "side": "sell",
+      "notional_usd": 8584.75008,
+      "price": 109.6854615716263,
+      "rationale": "Crude demand forecasts were cut twice within the quarter and OPEC+ supply discipline proved less supportive than expected \u2014 exited energy exposure ahead of the sector-wide downgrade."
+    },
+    {
+      "executed_at": "2026-05-11T14:05:00+00:00",
+      "symbol": "JNJ",
+      "name": "Johnson & Johnson",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 3153.330726,
+      "price": 159.1225107005869,
+      "rationale": "Pharma pipeline solid but patent-cliff exposure on two mid-size drugs caps upside near-term."
+    },
+    {
+      "executed_at": "2026-05-11T14:05:00+00:00",
+      "symbol": "VLUE",
+      "name": "iShares MSCI USA Value Factor ETF",
+      "asset_class": "etf",
+      "side": "buy",
+      "notional_usd": 7269.092418000001,
+      "price": 142.89974392231667,
+      "rationale": "Value spread vs. growth remains historically wide, a mean-reversion setup without a clear near-term catalyst."
+    },
+    {
+      "executed_at": "2026-05-04T14:05:00+00:00",
+      "symbol": "V",
+      "name": "Visa Inc.",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 16767.09,
+      "price": 232.52421225716935,
+      "rationale": "Cross-border payment volume reaccelerating with travel demand; take-rate stable."
+    },
+    {
+      "executed_at": "2026-05-04T14:05:00+00:00",
+      "symbol": "MTUM",
+      "name": "iShares MSCI USA Momentum Factor ETF",
+      "asset_class": "etf",
+      "side": "buy",
+      "notional_usd": 12838.00191,
+      "price": 197.80760005055453,
+      "rationale": "Momentum factor has been crowded into a narrow set of mega-cap tech names \u2014 conviction moderate given concentration risk."
+    },
+    {
+      "executed_at": "2026-04-27T14:05:00+00:00",
+      "symbol": "JPM",
+      "name": "JPMorgan Chase & Co.",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 1094.3320740000001,
+      "price": 203.14829935404646,
+      "rationale": "Net interest income holding up better than peers as rate cuts arrive slower than expected; credit quality metrics remain benign."
+    },
+    {
+      "executed_at": "2026-04-27T14:05:00+00:00",
+      "symbol": "XLK",
+      "name": "Technology Select Sector SPDR Fund",
+      "asset_class": "etf",
+      "side": "buy",
+      "notional_usd": 16767.09,
+      "price": 262.37077453849685,
+      "rationale": "Sector-wide AI infrastructure spend still the dominant earnings driver across the largest constituents."
+    },
+    {
+      "executed_at": "2026-04-20T14:05:00+00:00",
+      "symbol": "NVDA",
+      "name": "NVIDIA Corporation",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 14342.568786000002,
+      "price": 203.3045139496377,
+      "rationale": "Data-center capex guidance from hyperscalers still expanding for next fiscal year, but valuation already prices in a lot of that \u2014 conviction is real but not maximal."
+    },
+    {
+      "executed_at": "2026-04-20T14:05:00+00:00",
+      "symbol": "CAT",
+      "name": "Caterpillar Inc.",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 6013.7962800000005,
+      "price": 290.8369638278678,
+      "rationale": "Infrastructure-linked order backlog remains elevated; dealer inventory normalized after last year's destock."
+    },
+    {
+      "executed_at": "2026-04-13T14:05:00+00:00",
+      "symbol": "AAPL",
+      "name": "Apple Inc.",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 16767.09,
+      "price": 144.53912754761203,
+      "rationale": "Services revenue growing ~14% YoY now outweighs hardware cyclicality; iPhone upgrade cycle in China stabilizing after two soft quarters."
+    },
+    {
+      "executed_at": "2026-04-13T14:05:00+00:00",
+      "symbol": "HD",
+      "name": "The Home Depot Inc.",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 16767.09,
+      "price": 305.7070945220492,
+      "rationale": "Housing turnover still depressed by mortgage rates, but pro-customer segment outperforming DIY."
+    },
+    {
+      "executed_at": "2026-03-09T14:05:00+00:00",
+      "symbol": "PG",
+      "name": "Procter & Gamble Company",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 8942.448,
+      "price": 127.016648740482,
+      "rationale": "Volume growth turned positive after two quarters of price-driven declines; input cost inflation easing."
+    },
+    {
+      "executed_at": "2026-03-02T14:05:00+00:00",
+      "symbol": "XOM",
+      "name": "Exxon Mobil Corporation",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 8942.448,
+      "price": 114.25568913711074,
+      "rationale": "Crude inventories drawing down as OPEC+ holds supply discipline, but demand growth forecasts have been trimmed twice this year."
+    }
+  ],
   "investment_committee_notes": [
     {
       "created_at": "2026-08-17T14:05:00+00:00",

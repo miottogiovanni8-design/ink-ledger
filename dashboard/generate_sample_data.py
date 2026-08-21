@@ -18,11 +18,12 @@ sys.path.insert(0, "src")
 import numpy as np
 import pandas as pd
 
-from trading_desk.config import DEFAULT_FACTOR_MAP, DEFAULT_SECTOR_MAP  # noqa: E402
+from trading_desk.config import DEFAULT_FACTOR_MAP, DEFAULT_NAME_MAP, DEFAULT_SECTOR_MAP  # noqa: E402
 from trading_desk.engine.black_litterman import blend_views, compute_covariance, compute_market_prior, optimize_portfolio  # noqa: E402
 from trading_desk.engine.portfolio_risk import evaluate_scenario, exposure_by_tag, historical_var_cvar  # noqa: E402
 from trading_desk.engine.schemas import PortfolioView  # noqa: E402
 from trading_desk.metrics import stats  # noqa: E402
+from trading_desk.reporting.holdings import build_holdings_detail  # noqa: E402
 
 random.seed(11)
 np.random.seed(11)
@@ -208,6 +209,9 @@ def main():
             "factor_exposure": exposure_by_tag(weights, DEFAULT_FACTOR_MAP),
         }
 
+    latest_prices = price_panel.iloc[-1].to_dict()
+    views_by_symbol = {v.symbol: v for v in views}
+
     random.seed(25)  # chosen to land a presentable but not fantastical demo: +12% vs SPY +4%, Sharpe ~1.3
     equity_curve, benchmark_curve = build_equity_and_benchmark_curves()
     equity_values = [p["equity"] for p in equity_curve]
@@ -239,8 +243,77 @@ def main():
         for v in views
     ]
 
+    # --- fabricate a transaction history: one buy per currently-held
+    # position (at a plausible historical entry price), plus two fully
+    # closed round-trips (bought then later exited) to show real turnover.
+    tx_rng = random.Random(77)
+    balanced_weights = scenarios["balanced"]["weights"]
+    current_equity = equity_values[-1]
+    purchase_dates = [
+        "2026-04-13T14:05:00+00:00", "2026-04-20T14:05:00+00:00", "2026-04-27T14:05:00+00:00",
+        "2026-05-04T14:05:00+00:00", "2026-05-11T14:05:00+00:00",
+    ]
+    transactions = []
+    for i, (symbol, weight) in enumerate(balanced_weights.items()):
+        current_price = latest_prices[symbol]
+        entry_offset = tx_rng.uniform(-0.12, 0.09)
+        entry_price = current_price / (1 + entry_offset)
+        view = views_by_symbol.get(symbol)
+        transactions.append(
+            {
+                "executed_at": purchase_dates[i % len(purchase_dates)],
+                "symbol": symbol,
+                "name": DEFAULT_NAME_MAP.get(symbol, symbol),
+                "asset_class": "equity" if symbol in EQUITIES else "etf",
+                "side": "buy",
+                "notional_usd": weight * current_equity,
+                "price": entry_price,
+                "rationale": view.rationale if view else "Initial position build toward target weight.",
+            }
+        )
+
+    closed_round_trips = [
+        ("XOM", "2026-03-02T14:05:00+00:00", "2026-05-18T14:05:00+00:00", -0.04,
+         "Crude demand forecasts were cut twice within the quarter and OPEC+ supply discipline proved less supportive than expected — exited energy exposure ahead of the sector-wide downgrade."),
+        ("PG", "2026-03-09T14:05:00+00:00", "2026-06-01T14:05:00+00:00", 0.03,
+         "Two consecutive quarters of volume weakness reversed the original volume-recovery thesis; reallocated the capital to higher-conviction technology names."),
+    ]
+    for symbol, buy_date, sell_date, exit_return, exit_rationale in closed_round_trips:
+        buy_price = latest_prices[symbol] / 1.05
+        sell_price = buy_price * (1 + exit_return)
+        buy_notional = 0.08 * current_equity
+        shares = buy_notional / buy_price
+        view = views_by_symbol.get(symbol)
+        transactions.append(
+            {
+                "executed_at": buy_date, "symbol": symbol, "name": DEFAULT_NAME_MAP.get(symbol, symbol),
+                "asset_class": "equity" if symbol in EQUITIES else "etf", "side": "buy",
+                "notional_usd": buy_notional, "price": buy_price,
+                "rationale": view.rationale if view else "Initial position build.",
+            }
+        )
+        transactions.append(
+            {
+                "executed_at": sell_date, "symbol": symbol, "name": DEFAULT_NAME_MAP.get(symbol, symbol),
+                "asset_class": "equity" if symbol in EQUITIES else "etf", "side": "sell",
+                "notional_usd": shares * sell_price, "price": sell_price,
+                "rationale": exit_rationale,
+            }
+        )
+
+    transactions_by_symbol = {}
+    for tx in sorted(transactions, key=lambda t: t["executed_at"]):
+        transactions_by_symbol.setdefault(tx["symbol"], []).append(tx)
+
+    holdings_detail = build_holdings_detail(
+        balanced_weights, current_equity, latest_prices, DEFAULT_NAME_MAP, transactions_by_symbol
+    )
+    holdings_detail.sort(key=lambda h: h["weight"], reverse=True)
+
+    transaction_history = sorted(transactions, key=lambda t: t["executed_at"], reverse=True)
+
     snapshot = {
-        "schema_version": 2,
+        "schema_version": 3,
         "generated_at": "2026-08-20T21:15:00+00:00",
         "equity_curve": equity_curve,
         "benchmark_curve": benchmark_curve,
@@ -249,6 +322,9 @@ def main():
         "rebalance_generated_at": "2026-08-17T14:05:00+00:00",
         "risk_profile_history": build_risk_profile_history(),
         "scenarios": scenarios,
+        "latest_prices": latest_prices,
+        "holdings_detail": holdings_detail,
+        "transaction_history": transaction_history,
         "investment_committee_notes": committee_notes,
     }
 

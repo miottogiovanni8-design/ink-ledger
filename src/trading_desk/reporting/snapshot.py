@@ -125,6 +125,7 @@ def build_snapshot(session: Session) -> Dict[str, Any]:
     notes = _investment_committee_notes(session, since=rebalance.created_at if rebalance else None)
 
     holdings_detail: List[Dict[str, Any]] = []
+    latest_prices: Dict[str, float] = {}
     if rebalance:
         active_weights = scenarios.get(rebalance.active_risk_profile, {}).get("weights", {})
         latest_prices = json.loads(rebalance.latest_prices_json) if rebalance.latest_prices_json else {}
@@ -161,6 +162,7 @@ def build_snapshot(session: Session) -> Dict[str, Any]:
         "rebalance_generated_at": rebalance.created_at.isoformat() if rebalance else None,
         "risk_profile_history": _risk_profile_history(session),
         "scenarios": scenarios,
+        "latest_prices": latest_prices,
         "holdings_detail": holdings_detail,
         "transaction_history": _transaction_history(session),
         "investment_committee_notes": notes,
