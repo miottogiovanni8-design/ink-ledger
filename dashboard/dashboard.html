@@ -258,6 +258,48 @@
   .hit-rate-fill.good { background: var(--status-good); }
   .hit-rate-fill.bad { background: var(--status-critical); }
   .method-note { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+
+  /* ---------- profile questionnaire ---------- */
+  .profile-intro-body { font-size: 14px; line-height: 1.6; color: var(--text-secondary); max-width: 640px; margin: 0 0 20px; }
+  .cta-button {
+    background: var(--accent); color: var(--accent-ink); border: none; border-radius: 10px;
+    padding: 12px 22px; font-size: 14px; font-weight: 600; font-family: inherit; cursor: pointer;
+    transition: filter 0.15s ease, transform 0.1s ease;
+  }
+  .cta-button:hover { filter: brightness(1.08); }
+  .cta-button:active { transform: scale(0.98); }
+
+  .quiz-progress-row { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; }
+  .quiz-progress-track { flex: 1; height: 3px; border-radius: 2px; background: var(--surface-2); overflow: hidden; }
+  .quiz-progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.25s ease; }
+  .quiz-progress-label { font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--text-muted); flex: none; }
+
+  .quiz-question-title { font-family: "Space Grotesk", sans-serif; font-size: 19px; font-weight: 600; margin: 0 0 18px; text-wrap: balance; }
+  .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-option {
+    display: flex; align-items: center; gap: 12px; text-align: left; width: 100%;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 13px 16px; cursor: pointer; font-family: inherit; font-size: 14px; color: var(--text-primary);
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+  .quiz-option:hover { border-color: var(--text-muted); }
+  .quiz-option.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .quiz-option-dot { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--border); flex: none; position: relative; }
+  .quiz-option.selected .quiz-option-dot { border-color: var(--accent); }
+  .quiz-option.selected .quiz-option-dot::after {
+    content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--accent);
+  }
+
+  .quiz-nav-row { display: flex; justify-content: space-between; margin-top: 26px; }
+  .quiz-nav-btn {
+    background: var(--surface); color: var(--text-secondary); border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 18px; font-size: 13.5px; font-weight: 500; font-family: inherit; cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+  }
+  .quiz-nav-btn:hover:not(:disabled) { color: var(--text-primary); border-color: var(--text-muted); }
+  .quiz-nav-btn:disabled { opacity: 0.35; cursor: default; }
+  .quiz-nav-btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .quiz-nav-btn.primary:hover:not(:disabled) { filter: brightness(1.08); color: var(--accent-ink); }
   .stat-tile { background: var(--surface); padding: 14px 16px; display: flex; flex-direction: column; gap: 5px; }
   .stat-label { font-size: 11.5px; color: var(--text-secondary); }
   .stat-value { font-size: 21px; font-weight: 600; font-family: "Space Grotesk", sans-serif; }
@@ -385,6 +427,7 @@
       <button class="nav-link active" data-page="home"><span data-i18n="nav_home">Home</span></button>
       <button class="nav-link" data-page="committee"><span data-i18n="nav_committee">Investment Committee</span></button>
       <button class="nav-link" data-page="analytics"><span data-i18n="nav_analytics">Analytics</span></button>
+      <button class="nav-link" data-page="profile"><span data-i18n="nav_profile">Il tuo profilo</span></button>
     </nav>
   </header>
 
@@ -577,6 +620,71 @@
 
   </div>
 
+  <div id="page-profile" class="page-view" style="display:none">
+
+  <section class="card" id="profile-intro">
+    <div class="card-head">
+      <div>
+        <h2 data-i18n="profile_intro_title">Vuoi vedere come investirebbe per te?</h2>
+        <div class="card-sub" data-i18n="profile_intro_sub">Rispondi a 7 domande sul tuo profilo di rischio — lo stesso motore Black-Litterman calcolerà un'allocazione pensata per te, usando i pesi già ottimizzati per i tre profili</div>
+      </div>
+    </div>
+    <p class="profile-intro-body" data-i18n="profile_intro_body">Il questionario è basato su temi standard dei robo-advisor (Wealthfront, Nutmeg, Vanguard) e sulla scala accademica di Grable &amp; Lytton per la tolleranza al rischio finanziario. Nessun dato viene salvato: tutto avviene nel tuo browser.</p>
+    <button class="cta-button" id="profile-start-btn" data-i18n="profile_start_cta">Inizia il questionario</button>
+  </section>
+
+  <section class="card" id="profile-quiz" style="display:none">
+    <div class="quiz-progress-row">
+      <div class="quiz-progress-track"><div class="quiz-progress-fill" id="quiz-progress-fill"></div></div>
+      <span class="quiz-progress-label" id="quiz-progress-label">1 / 7</span>
+    </div>
+    <div id="quiz-question-container"></div>
+    <div class="quiz-nav-row">
+      <button class="quiz-nav-btn" id="quiz-back-btn" data-i18n="profile_back">Indietro</button>
+      <button class="quiz-nav-btn primary" id="quiz-next-btn" data-i18n="profile_next">Avanti</button>
+    </div>
+  </section>
+
+  <section class="card" id="profile-results" style="display:none">
+    <div class="card-head">
+      <div>
+        <h2 id="profile-result-title">—</h2>
+        <div class="card-sub" id="profile-result-sub">—</div>
+      </div>
+      <button class="view-toggle" id="profile-retake-btn" data-i18n="profile_retake">Rifai il questionario</button>
+    </div>
+    <p class="profile-intro-body" id="profile-result-body"></p>
+    <div class="stat-grid" id="profile-stat-grid"></div>
+    <div class="exposure-grid">
+      <div>
+        <div class="exposure-title" data-i18n="sector_exposure">Esposizione settoriale</div>
+        <div id="profile-sector-exposure"></div>
+      </div>
+      <div>
+        <div class="exposure-title" data-i18n="factor_exposure">Esposizione fattoriale</div>
+        <div id="profile-factor-exposure"></div>
+      </div>
+    </div>
+    <div class="card-sub" style="margin-top:20px;" data-i18n="profile_holdings_sub">Posizioni target per il tuo profilo</div>
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th data-i18n="th_ticker">Titolo</th>
+            <th data-i18n="th_name">Nome</th>
+            <th data-i18n="th_class">Classe</th>
+            <th data-i18n="th_tag">Settore / Fattore</th>
+            <th data-i18n="th_weight">Peso target</th>
+          </tr>
+        </thead>
+        <tbody id="profile-holdings-body"></tbody>
+      </table>
+    </div>
+    <div class="method-note" data-i18n="profile_disclaimer">Questa è una dimostrazione a scopo illustrativo, non una consulenza di investimento personalizzata. L'allocazione mostrata riutilizza uno dei tre scenari già calcolati dal motore Black-Litterman per il portafoglio reale — non viene eseguito alcun ordine.</div>
+  </section>
+
+  </div>
+
   <footer>
     <div class="footer-row">
       <span data-i18n="footer_disclosure">Conto di investimento simulato — nessun fondo reale coinvolto.</span>
@@ -674,7 +782,39 @@
       tip_skill_contrib: "Rendimento residuo non spiegato dal beta — la parte attribuibile alle view AI e ai tilt dell'ottimizzatore.",
       insufficient_data: "Dati insufficienti — servono più settimane di storico per un segnale statisticamente significativo.",
       insufficient_attribution: "Dati insufficienti per l'attribution — servono almeno due ribilanciamenti con prezzi settoriali tracciati.",
-      not_available: "n/d"
+      not_available: "n/d",
+      nav_profile: "Il tuo profilo",
+      profile_intro_title: "Vuoi vedere come investirebbe per te?",
+      profile_intro_sub: "Rispondi a 7 domande sul tuo profilo di rischio — lo stesso motore Black-Litterman calcolerà un'allocazione pensata per te, usando i pesi già ottimizzati per i tre profili",
+      profile_intro_body: "Il questionario è basato su temi standard dei robo-advisor (Wealthfront, Nutmeg, Vanguard) e sulla scala accademica di Grable & Lytton per la tolleranza al rischio finanziario. Nessun dato viene salvato: tutto avviene nel tuo browser.",
+      profile_start_cta: "Inizia il questionario",
+      profile_back: "Indietro", profile_next: "Avanti", profile_see_results: "Vedi il risultato",
+      profile_retake: "Rifai il questionario",
+      profile_holdings_sub: "Posizioni target per il tuo profilo",
+      profile_disclaimer: "Questa è una dimostrazione a scopo illustrativo, non una consulenza di investimento personalizzata. L'allocazione mostrata riutilizza uno dei tre scenari già calcolati dal motore Black-Litterman per il portafoglio reale — non viene eseguito alcun ordine.",
+      profile_result_sub_prefix: "Punteggio",
+      profile_result_body_conservative: "In base alle tue risposte, privilegi la protezione del capitale rispetto alla crescita. Ecco come il motore alloca il portafoglio per questo profilo.",
+      profile_result_body_balanced: "In base alle tue risposte, cerchi un equilibrio tra crescita e stabilità. Ecco come il motore alloca il portafoglio per questo profilo.",
+      profile_result_body_aggressive: "In base alle tue risposte, sei disposto ad accettare oscillazioni più forti in cambio di un rendimento atteso più alto. Ecco come il motore alloca il portafoglio per questo profilo.",
+      q1: "Tra quanto tempo pensi di aver bisogno di questi soldi?",
+      q1_a: "Meno di 1 anno", q1_b: "1-3 anni", q1_c: "3-7 anni", q1_d: "Oltre 7 anni",
+      q2: "Qual è il tuo obiettivo principale?",
+      q2_a: "Proteggere il capitale che ho già", q2_b: "Ottenere un reddito stabile",
+      q2_c: "Una crescita bilanciata nel tempo", q2_d: "Massimizzare la crescita, accettando oscillazioni forti",
+      q3: "Il tuo portafoglio perde il 20% in un mese. Cosa fai?",
+      q3_a: "Vendo tutto per limitare le perdite", q3_b: "Vendo una parte",
+      q3_c: "Non faccio nulla e aspetto", q3_d: "Investo di più, è un'opportunità",
+      q4: "Devi scegliere tra due modi di investire una somma. Quale preferisci?",
+      q4_a: "Un guadagno certo, ma modesto", q4_b: "Una probabilità alta di un guadagno discreto",
+      q4_c: "Una probabilità media di un guadagno consistente", q4_d: "Una probabilità bassa di un guadagno molto alto",
+      q5: "Quanta esperienza hai con gli investimenti?",
+      q5_a: "Nessuna", q5_b: "Di base (conto deposito, fondo pensione)",
+      q5_c: "Intermedia (ETF, azioni singole)", q5_d: "Avanzata (derivati, leva, trading attivo)",
+      q6: "Hai già un fondo di emergenza separato (3-6 mesi di spese)?",
+      q6_a: "No", q6_b: "Parzialmente", q6_c: "Sì, completo", q6_d: "Sì, e ho anche altre riserve",
+      q7: "Come ti descriverebbe un amico stretto riguardo al rischio finanziario?",
+      q7_a: "Molto cauto/a", q7_b: "Prudente",
+      q7_c: "Disposto/a a rischiare se ben informato/a", q7_d: "Amante del rischio"
     },
     en: {
       badge_paper: "Paper — simulated funds", badge_sample: "Sample data",
@@ -727,11 +867,43 @@
       tip_skill_contrib: "Residual return not explained by beta — the part attributable to the AI's views and the optimizer's tilts.",
       insufficient_data: "Insufficient data — needs more weeks of history for a statistically meaningful signal.",
       insufficient_attribution: "Insufficient data for attribution — needs at least two rebalances with tracked sector prices.",
-      not_available: "n/a"
+      not_available: "n/a",
+      nav_profile: "Your Profile",
+      profile_intro_title: "Want to see how it would invest for you?",
+      profile_intro_sub: "Answer 7 questions about your risk profile — the same Black-Litterman engine will map you to an allocation, using the weights already optimized for the three profiles",
+      profile_intro_body: "The questionnaire is built from standard robo-advisor themes (Wealthfront, Nutmeg, Vanguard) and the academic Grable & Lytton financial risk-tolerance scale. Nothing is saved — it all runs in your browser.",
+      profile_start_cta: "Start the questionnaire",
+      profile_back: "Back", profile_next: "Next", profile_see_results: "See my result",
+      profile_retake: "Retake the questionnaire",
+      profile_holdings_sub: "Target holdings for your profile",
+      profile_disclaimer: "This is an illustrative demo, not personalized investment advice. The allocation shown reuses one of the three scenarios already computed by the Black-Litterman engine for the real portfolio — no order is executed.",
+      profile_result_sub_prefix: "Score",
+      profile_result_body_conservative: "Based on your answers, you prioritize protecting capital over growth. Here's how the engine allocates the portfolio for this profile.",
+      profile_result_body_balanced: "Based on your answers, you're looking for a balance between growth and stability. Here's how the engine allocates the portfolio for this profile.",
+      profile_result_body_aggressive: "Based on your answers, you're willing to accept larger swings for a higher expected return. Here's how the engine allocates the portfolio for this profile.",
+      q1: "How soon do you think you'll need this money?",
+      q1_a: "Less than 1 year", q1_b: "1-3 years", q1_c: "3-7 years", q1_d: "More than 7 years",
+      q2: "What's your main goal?",
+      q2_a: "Protect the capital I already have", q2_b: "Generate a stable income",
+      q2_c: "Balanced growth over time", q2_d: "Maximize growth, accepting strong swings",
+      q3: "Your portfolio drops 20% in a month. What do you do?",
+      q3_a: "Sell everything to limit losses", q3_b: "Sell some of it",
+      q3_c: "Do nothing and wait", q3_d: "Invest more — it's an opportunity",
+      q4: "You have to choose between two ways to invest a sum. Which do you prefer?",
+      q4_a: "A certain, but modest, gain", q4_b: "A high probability of a decent gain",
+      q4_c: "A medium probability of a sizable gain", q4_d: "A low probability of a very high gain",
+      q5: "How much investing experience do you have?",
+      q5_a: "None", q5_b: "Basic (savings account, pension fund)",
+      q5_c: "Intermediate (ETFs, individual stocks)", q5_d: "Advanced (derivatives, leverage, active trading)",
+      q6: "Do you already have a separate emergency fund (3-6 months of expenses)?",
+      q6_a: "No", q6_b: "Partially", q6_c: "Yes, fully", q6_d: "Yes, plus other reserves",
+      q7: "How would a close friend describe you regarding financial risk?",
+      q7_a: "Very cautious", q7_b: "Prudent",
+      q7_c: "Willing to take risks if well informed", q7_d: "A risk lover"
     }
   };
 
-  var state = { lang: "it", range: "ALL", granularity: "day", riskProfile: DATA.active_risk_profile || "balanced", scrubIndex: null };
+  var state = { lang: "it", range: "ALL", granularity: "day", riskProfile: DATA.active_risk_profile || "balanced", scrubIndex: null, quizStep: 0, quizAnswers: [] };
 
   function t(key) { return I18N[state.lang][key] || key; }
   function fmtLocale() { return state.lang === "it" ? "it-IT" : "en-US"; }
@@ -1115,6 +1287,122 @@
     });
   }
 
+  // ---------- "your profile" questionnaire — 7 items covering time horizon,
+  // goal, loss-reaction (Grable-Lytton style), a prospect-theory risk/reward
+  // trade-off, experience, liquidity, and self-perceived risk tolerance.
+  // Options are ordered least-to-most risk-tolerant, worth 1-4 points each
+  // (range 7-28), banded into the same three profiles the real desk uses.
+  var QUESTIONS = [
+    { key: "q1", options: ["q1_a", "q1_b", "q1_c", "q1_d"] },
+    { key: "q2", options: ["q2_a", "q2_b", "q2_c", "q2_d"] },
+    { key: "q3", options: ["q3_a", "q3_b", "q3_c", "q3_d"] },
+    { key: "q4", options: ["q4_a", "q4_b", "q4_c", "q4_d"] },
+    { key: "q5", options: ["q5_a", "q5_b", "q5_c", "q5_d"] },
+    { key: "q6", options: ["q6_a", "q6_b", "q6_c", "q6_d"] },
+    { key: "q7", options: ["q7_a", "q7_b", "q7_c", "q7_d"] }
+  ];
+
+  function renderQuizQuestion() {
+    var q = QUESTIONS[state.quizStep];
+    var container = document.getElementById("quiz-question-container");
+    var html = '<div class="quiz-question-title">' + t(q.key) + '</div><div class="quiz-options">';
+    q.options.forEach(function (optKey, i) {
+      var points = i + 1;
+      var selected = state.quizAnswers[state.quizStep] === points;
+      html += '<button type="button" class="quiz-option' + (selected ? " selected" : "") + '" data-points="' + points + '">' +
+        '<span class="quiz-option-dot"></span><span>' + t(optKey) + '</span></button>';
+    });
+    html += "</div>";
+    container.innerHTML = html;
+
+    container.querySelectorAll(".quiz-option").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        state.quizAnswers[state.quizStep] = parseInt(btn.getAttribute("data-points"), 10);
+        renderQuizQuestion();
+      });
+    });
+
+    document.getElementById("quiz-progress-label").textContent = (state.quizStep + 1) + " / " + QUESTIONS.length;
+    document.getElementById("quiz-progress-fill").style.width = (((state.quizStep + 1) / QUESTIONS.length) * 100) + "%";
+
+    var backBtn = document.getElementById("quiz-back-btn");
+    var nextBtn = document.getElementById("quiz-next-btn");
+    backBtn.disabled = state.quizStep === 0;
+    nextBtn.disabled = state.quizAnswers[state.quizStep] == null;
+    nextBtn.textContent = state.quizStep === QUESTIONS.length - 1 ? t("profile_see_results") : t("profile_next");
+  }
+
+  function computeRiskProfile(total) {
+    if (total <= 13) return "conservative";
+    if (total <= 20) return "balanced";
+    return "aggressive";
+  }
+
+  function showProfileResults() {
+    var total = state.quizAnswers.reduce(function (sum, v) { return sum + (v || 0); }, 0);
+    var profile = computeRiskProfile(total);
+
+    document.getElementById("profile-quiz").style.display = "none";
+    document.getElementById("profile-results").style.display = "block";
+    document.getElementById("profile-result-title").textContent = t(profile);
+    document.getElementById("profile-result-sub").textContent = t("profile_result_sub_prefix") + ": " + total + " / 28";
+    document.getElementById("profile-result-body").textContent = t("profile_result_body_" + profile);
+
+    var scenario = DATA.scenarios[profile];
+    var grid = document.getElementById("profile-stat-grid");
+    if (!scenario) { grid.innerHTML = ""; return; }
+    grid.innerHTML =
+      statTileHtml(t("stat_return"), fmtSignedPct(scenario.expected_return), t("stat_note_return")) +
+      statTileHtml(t("stat_vol"), fmtPct(scenario.volatility), t("stat_note_vol")) +
+      statTileHtml(t("stat_sharpe"), scenario.sharpe.toFixed(2), t("stat_note_sharpe")) +
+      statTileHtml(t("stat_var"), fmtPct(scenario.var_95), t("stat_note_var")) +
+      statTileHtml(t("stat_cvar"), fmtPct(scenario.cvar_95), t("stat_note_cvar"));
+
+    renderExposure("profile-sector-exposure", scenario.sector_exposure || {});
+    renderExposure("profile-factor-exposure", scenario.factor_exposure || {});
+
+    var body = document.getElementById("profile-holdings-body");
+    body.innerHTML = "";
+    var entries = Object.keys(scenario.weights).map(function (k) { return [k, scenario.weights[k]]; });
+    entries.sort(function (a, b) { return b[1] - a[1]; });
+    entries.forEach(function (entry) {
+      var symbol = entry[0], weight = entry[1];
+      var assetClass = ETF_TICKERS.indexOf(symbol) !== -1 ? "etf" : "equity";
+      var tag = SECTOR_MAP[symbol] || FACTOR_MAP[symbol] || t("other_tag");
+      var name = NAME_MAP[symbol] || symbol;
+      var tr = document.createElement("tr");
+      tr.innerHTML =
+        '<td><span class="ticker-tag">' + symbol + '</span></td>' +
+        '<td>' + name + '</td>' +
+        '<td>' + t(assetClass) + '</td>' +
+        '<td>' + tag + '</td>' +
+        '<td><div class="weight-bar-cell"><div class="weight-bar-track"><div class="weight-bar-fill" style="width:' + Math.min(100, (weight / 0.15) * 100).toFixed(0) + '%"></div></div>' + fmtPct(weight, 1) + '</div></td>';
+      body.appendChild(tr);
+    });
+  }
+
+  document.getElementById("profile-start-btn").addEventListener("click", function () {
+    state.quizStep = 0;
+    state.quizAnswers = new Array(QUESTIONS.length).fill(null);
+    document.getElementById("profile-intro").style.display = "none";
+    document.getElementById("profile-results").style.display = "none";
+    document.getElementById("profile-quiz").style.display = "block";
+    renderQuizQuestion();
+  });
+  document.getElementById("quiz-back-btn").addEventListener("click", function () {
+    if (state.quizStep > 0) { state.quizStep--; renderQuizQuestion(); }
+  });
+  document.getElementById("quiz-next-btn").addEventListener("click", function () {
+    if (state.quizAnswers[state.quizStep] == null) return;
+    if (state.quizStep < QUESTIONS.length - 1) { state.quizStep++; renderQuizQuestion(); }
+    else { showProfileResults(); }
+  });
+  document.getElementById("profile-retake-btn").addEventListener("click", function () {
+    document.getElementById("profile-results").style.display = "none";
+    document.getElementById("profile-quiz").style.display = "none";
+    document.getElementById("profile-intro").style.display = "block";
+  });
+
   function renderNotes() {
     var feed = document.getElementById("notes-feed");
     feed.innerHTML = "";
@@ -1197,6 +1485,7 @@
       document.getElementById("page-home").style.display = page === "home" ? "flex" : "none";
       document.getElementById("page-committee").style.display = page === "committee" ? "flex" : "none";
       document.getElementById("page-analytics").style.display = page === "analytics" ? "flex" : "none";
+      document.getElementById("page-profile").style.display = page === "profile" ? "flex" : "none";
       window.scrollTo(0, 0);
     });
   });
@@ -1208,6 +1497,8 @@
     document.getElementById("lang-it").classList.toggle("active", lang === "it");
     document.getElementById("lang-en").classList.toggle("active", lang === "en");
     renderAll();
+    if (document.getElementById("profile-quiz").style.display !== "none") renderQuizQuestion();
+    if (document.getElementById("profile-results").style.display !== "none") showProfileResults();
   }
 
   document.querySelectorAll("#range-toggle button").forEach(function (btn) {
