@@ -100,17 +100,18 @@ def run_weekly_rebalance(risk_profile_override: Optional[str] = None) -> None:
     views = gather_views(anthropic_client, http_client, universe)
 
     with get_session(settings.db_path) as session:
+        view_records = []
         for view in views:
-            session.add(
-                ViewRecord(
-                    symbol=view.symbol,
-                    asset_class=view.asset_class,
-                    expected_return_annualized=view.expected_return_annualized,
-                    confidence=view.confidence,
-                    rationale=view.rationale,
-                    key_signals=json.dumps(view.key_signals),
-                )
+            vr = ViewRecord(
+                symbol=view.symbol,
+                asset_class=view.asset_class,
+                expected_return_annualized=view.expected_return_annualized,
+                confidence=view.confidence,
+                rationale=view.rationale,
+                key_signals=json.dumps(view.key_signals),
             )
+            session.add(vr)
+            view_records.append(vr)
 
         views_by_symbol = {v.symbol: v for v in views}
         latest_prices = price_panel.iloc[-1].to_dict()
@@ -147,6 +148,8 @@ def run_weekly_rebalance(risk_profile_override: Optional[str] = None) -> None:
         )
         session.add(rebalance_event)
         session.flush()
+        for vr in view_records:
+            vr.rebalance_event_id = rebalance_event.id
 
         if gate.rebalancing_allowed:
             active_weights = scenarios[active_profile]["weights"]

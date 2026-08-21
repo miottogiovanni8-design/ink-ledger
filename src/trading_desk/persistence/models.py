@@ -15,12 +15,16 @@ class Base(DeclarativeBase):
 
 class ViewRecord(Base):
     """One asset's weekly analyst view, persisted for the investment
-    committee notes — the LLM's only output in this pipeline."""
+    committee notes — the LLM's only output in this pipeline.
+    rebalance_event_id links it to the week it was made in, which is what
+    lets skill_analysis pair a view against the asset's subsequently
+    realized return (read from the *next* RebalanceEvent's prices)."""
 
     __tablename__ = "view_records"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    rebalance_event_id: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     symbol: Mapped[str] = mapped_column(String(16))
     asset_class: Mapped[str] = mapped_column(String(8))  # "equity" | "etf"
     expected_return_annualized: Mapped[float] = mapped_column(Float)

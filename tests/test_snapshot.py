@@ -100,7 +100,7 @@ def test_build_snapshot_shape_and_content():
         with get_session(db_path) as session:
             snapshot = build_snapshot(session)
 
-    assert snapshot["schema_version"] == 3
+    assert snapshot["schema_version"] == 4
     assert len(snapshot["equity_curve"]) == 4
     assert snapshot["active_risk_profile"] == "balanced"
     assert snapshot["scenarios"]["aggressive"]["volatility"] == 0.22
@@ -186,6 +186,57 @@ def test_build_snapshot_holdings_detail_and_transaction_history():
     assert history[0]["symbol"] == "AAPL"
     assert history[0]["side"] == "buy"
     assert history[0]["rationale"].startswith("Strong iPhone cycle")
+
+
+def test_build_snapshot_skill_analysis_and_attribution_with_two_rebalances():
+    with tempfile.TemporaryDirectory() as tmp:
+        db_path = str(Path(tmp) / "test.sqlite")
+        week1 = REBALANCE_TIME - timedelta(weeks=1)
+
+        with get_session(db_path) as session:
+            session.add(EquitySnapshot(equity_eur=1000.0, cash_eur=500.0, taken_at=week1))
+            session.add(EquitySnapshot(equity_eur=1020.0, cash_eur=500.0, taken_at=REBALANCE_TIME))
+
+            event1 = RebalanceEvent(
+                created_at=week1, active_risk_profile="balanced",
+                scenarios_json=json.dumps(SCENARIOS), prior_returns_json="{}", posterior_returns_json="{}",
+                latest_prices_json=json.dumps({"AAPL": 200.0, "XLK": 100.0}), executed=True,
+            )
+            session.add(event1)
+            session.flush()
+            session.add(
+                ViewRecord(
+                    created_at=week1, rebalance_event_id=event1.id, symbol="AAPL", asset_class="equity",
+                    expected_return_annualized=0.08, confidence=0.6, rationale="Bullish.", key_signals="[]",
+                )
+            )
+            session.add(
+                Transaction(
+                    executed_at=week1, symbol="AAPL", asset_class="equity", side="buy",
+                    notional_usd=100.0, price=200.0, rationale="Initial build.",
+                )
+            )
+
+            event2 = RebalanceEvent(
+                created_at=REBALANCE_TIME, active_risk_profile="balanced",
+                scenarios_json=json.dumps(SCENARIOS), prior_returns_json="{}", posterior_returns_json="{}",
+                latest_prices_json=json.dumps({"AAPL": 220.0, "XLK": 105.0}), executed=True,
+            )
+            session.add(event2)
+
+        with get_session(db_path) as session:
+            snapshot = build_snapshot(session)
+
+    skill = snapshot["skill_analysis"]
+    assert skill["sample_size"] == 1
+    assert skill["information_coefficient"] is None  # a single point has no variance to correlate
+    total_bucketed = sum(b["count"] for b in skill["calibration_buckets"])
+    assert total_bucketed == 1  # the 0.6-confidence view lands in exactly one bucket
+
+    attribution = snapshot["attribution"]
+    assert attribution["by_sector"]  # populated since XLK gives us a Technology benchmark return
+    tech = next(s for s in attribution["by_sector"] if s["sector"] == "Technology")
+    assert tech["portfolio_weight"] == pytest.approx(0.15)
 
 
 def test_write_and_read_snapshot_roundtrip():

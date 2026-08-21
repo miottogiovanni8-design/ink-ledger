@@ -15,6 +15,10 @@ DEFAULT_EQUITY_UNIVERSE = [
 ]
 
 DEFAULT_SECTOR_ETFS = ["XLK", "XLF", "XLE", "XLV", "XLY", "XLP", "XLI"]
+DEFAULT_SECTOR_ETF_MAP: Dict[str, str] = {
+    "Technology": "XLK", "Financials": "XLF", "Energy": "XLE", "Healthcare": "XLV",
+    "Consumer Discretionary": "XLY", "Consumer Staples": "XLP", "Industrials": "XLI",
+}
 DEFAULT_FACTOR_ETFS = ["MTUM", "VLUE", "QUAL", "USMV"]
 DEFAULT_ETF_UNIVERSE = DEFAULT_SECTOR_ETFS + DEFAULT_FACTOR_ETFS
 
@@ -33,6 +37,23 @@ DEFAULT_SECTOR_MAP: Dict[str, str] = {
 
 DEFAULT_FACTOR_MAP: Dict[str, str] = {
     "MTUM": "Momentum", "VLUE": "Value", "QUAL": "Quality", "USMV": "Low Volatility",
+}
+
+# Approximate S&P 500 sector weights — a static reference (S&P/State Street
+# publish updated GICS sector weights regularly; this is a representative
+# snapshot, not a live feed) used as the benchmark side of Brinson
+# attribution. Sectors not in our universe's sector map (Utilities, Real
+# Estate, Materials) are folded into "Other" since we hold no proxy for them.
+DEFAULT_BENCHMARK_SECTOR_WEIGHTS: Dict[str, float] = {
+    "Technology": 0.32,
+    "Financials": 0.13,
+    "Healthcare": 0.11,
+    "Consumer Discretionary": 0.10,
+    "Communication Services": 0.09,
+    "Industrials": 0.08,
+    "Consumer Staples": 0.06,
+    "Energy": 0.03,
+    "Other": 0.08,
 }
 
 # Static reference table — company/fund full names don't change often enough
