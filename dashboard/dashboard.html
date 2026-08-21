@@ -14,6 +14,7 @@
     --text-secondary: #55555f;
     --text-muted: #85858f;
     --accent: #6d4fe0;
+    --accent-rgb: 109, 79, 224;
     --accent-ink: #ffffff;
     --accent-soft: #efe9fd;
     --series-portfolio: #2a78d6;
@@ -39,6 +40,7 @@
       --text-secondary: #a3a3ab;
       --text-muted: #67676f;
       --accent: #8b7cf6;
+      --accent-rgb: 139, 124, 246;
       --accent-ink: #0a0a0c;
       --accent-soft: #1c1836;
       --series-portfolio: #4c93ec;
@@ -64,6 +66,7 @@
     --text-secondary: #a3a3ab;
     --text-muted: #67676f;
     --accent: #8b7cf6;
+    --accent-rgb: 139, 124, 246;
     --accent-ink: #0a0a0c;
     --accent-soft: #1c1836;
     --series-portfolio: #4c93ec;
@@ -163,35 +166,64 @@
   .scrub-row { display: flex; align-items: center; gap: 16px; padding: 2px 0; }
 
   .scrub-slider {
-    flex: 1; -webkit-appearance: none; appearance: none; height: 4px; border-radius: 3px; outline: none;
+    flex: 1; -webkit-appearance: none; appearance: none; height: 2px; border-radius: 2px; outline: none;
     background: linear-gradient(to right, var(--accent) 0%, var(--accent) 0%, var(--surface-2) 0%, var(--surface-2) 100%);
-    transition: height 0.12s ease;
+    transition: height 0.15s ease;
     cursor: pointer;
   }
-  .scrub-slider:hover { height: 6px; }
+  .scrub-slider:hover { height: 3px; }
 
+  /* small circular dot with a soft, blurred glow — not a hard-edged flat disc */
   .scrub-slider::-webkit-slider-thumb {
-    -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
-    background: var(--accent); cursor: grab; margin-top: 0;
-    border: 2.5px solid var(--surface);
-    box-shadow: 0 0 0 1px var(--border), 0 2px 6px rgba(0, 0, 0, 0.25);
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    -webkit-appearance: none; width: 9px; height: 9px; border-radius: 50%;
+    background: var(--accent); cursor: grab; margin-top: 0; border: none;
+    box-shadow:
+      0 0 0 4px rgba(var(--accent-rgb), 0.14),
+      0 0 10px 3px rgba(var(--accent-rgb), 0.35),
+      0 1px 3px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.15s ease;
   }
-  .scrub-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
-  .scrub-slider::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.1); box-shadow: 0 0 0 5px var(--accent-soft), 0 2px 6px rgba(0, 0, 0, 0.3); }
+  .scrub-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.35);
+    box-shadow:
+      0 0 0 6px rgba(var(--accent-rgb), 0.18),
+      0 0 16px 5px rgba(var(--accent-rgb), 0.45),
+      0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+  .scrub-slider::-webkit-slider-thumb:active {
+    cursor: grabbing; transform: scale(1.15);
+    box-shadow:
+      0 0 0 8px rgba(var(--accent-rgb), 0.22),
+      0 0 18px 6px rgba(var(--accent-rgb), 0.5),
+      0 1px 3px rgba(0, 0, 0, 0.3);
+  }
 
   .scrub-slider::-moz-range-thumb {
-    width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: grab;
-    border: 2.5px solid var(--surface);
-    box-shadow: 0 0 0 1px var(--border), 0 2px 6px rgba(0, 0, 0, 0.25);
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    width: 9px; height: 9px; border-radius: 50%; background: var(--accent); cursor: grab; border: none;
+    box-shadow:
+      0 0 0 4px rgba(var(--accent-rgb), 0.14),
+      0 0 10px 3px rgba(var(--accent-rgb), 0.35),
+      0 1px 3px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.15s ease;
   }
-  .scrub-slider::-moz-range-thumb:hover { transform: scale(1.2); }
-  .scrub-slider::-moz-range-thumb:active { cursor: grabbing; transform: scale(1.1); box-shadow: 0 0 0 5px var(--accent-soft), 0 2px 6px rgba(0, 0, 0, 0.3); }
+  .scrub-slider::-moz-range-thumb:hover {
+    transform: scale(1.35);
+    box-shadow:
+      0 0 0 6px rgba(var(--accent-rgb), 0.18),
+      0 0 16px 5px rgba(var(--accent-rgb), 0.45),
+      0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+  .scrub-slider::-moz-range-thumb:active {
+    cursor: grabbing; transform: scale(1.15);
+    box-shadow:
+      0 0 0 8px rgba(var(--accent-rgb), 0.22),
+      0 0 18px 6px rgba(var(--accent-rgb), 0.5),
+      0 1px 3px rgba(0, 0, 0, 0.3);
+  }
   .scrub-slider::-moz-range-track { background: transparent; border: none; }
-  .scrub-slider::-moz-range-progress { height: 4px; border-radius: 3px; background: var(--accent); }
+  .scrub-slider::-moz-range-progress { height: 2px; border-radius: 2px; background: var(--accent); }
 
-  .scrub-slider:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .scrub-slider:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 
   .scrub-readout { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--text-secondary); min-width: 168px; text-align: right; }
   .scrub-readout strong { color: var(--text-primary); }
@@ -311,7 +343,26 @@
   .footer-legal { font-size: 11px; color: var(--text-muted); line-height: 1.6; padding-top: 10px; border-top: 1px solid var(--border); }
 
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+  /* custom cursor follower — small, soft-blurred, gradient circle that
+     trails the real pointer with a touch of lag. Ambient/decorative only:
+     the native cursor stays visible, this never swallows pointer events,
+     and it's skipped entirely on touch devices and under reduced-motion. */
+  .cursor-glow {
+    position: fixed; top: 0; left: 0; width: 26px; height: 26px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(var(--accent-rgb), 0.6) 0%, rgba(var(--accent-rgb), 0.28) 45%, rgba(var(--accent-rgb), 0) 75%);
+    filter: blur(3px);
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    will-change: transform;
+  }
+  .cursor-glow.visible { opacity: 1; }
+  @media (prefers-reduced-motion: reduce), (pointer: coarse) { .cursor-glow { display: none; } }
 </style>
+
+<div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
 
 <div class="page">
 
@@ -1182,7 +1233,32 @@
     renderChart();
   });
 
+  function initCursorGlow() {
+    var glow = document.getElementById("cursor-glow");
+    if (!glow) return;
+    if (window.matchMedia && (window.matchMedia("(pointer: coarse)").matches || window.matchMedia("(prefers-reduced-motion: reduce)").matches)) return;
+
+    var targetX = 0, targetY = 0, currentX = 0, currentY = 0, started = false;
+
+    document.addEventListener("mousemove", function (e) {
+      targetX = e.clientX; targetY = e.clientY;
+      if (!started) { currentX = targetX; currentY = targetY; started = true; }
+      glow.classList.add("visible");
+    });
+    document.addEventListener("mouseleave", function () { glow.classList.remove("visible"); });
+    document.addEventListener("mouseenter", function () { if (started) glow.classList.add("visible"); });
+
+    function tick() {
+      currentX += (targetX - currentX) * 0.18;
+      currentY += (targetY - currentY) * 0.18;
+      glow.style.transform = "translate(" + currentX.toFixed(1) + "px, " + currentY.toFixed(1) + "px) translate(-50%, -50%)";
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
   buildLogo();
   renderAll();
+  initCursorGlow();
 })();
 </script>
