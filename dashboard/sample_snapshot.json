@@ -1,417 +1,1020 @@
 {
-  "schema_version": 1,
-  "generated_at": "2026-08-20T14:00:00+00:00",
+  "schema_version": 2,
+  "generated_at": "2026-08-20T21:15:00+00:00",
   "equity_curve": [
     {
-      "t": "2026-07-20T14:00:00+00:00",
-      "equity": 1011.3
+      "t": "2026-02-23T00:00:00+00:00",
+      "equity": 99126.95
     },
     {
-      "t": "2026-07-21T14:00:00+00:00",
-      "equity": 1007.77
+      "t": "2026-02-24T00:00:00+00:00",
+      "equity": 99452.27
     },
     {
-      "t": "2026-07-22T14:00:00+00:00",
-      "equity": 1003.31
+      "t": "2026-02-25T00:00:00+00:00",
+      "equity": 100239.19
     },
     {
-      "t": "2026-07-23T14:00:00+00:00",
-      "equity": 1044.61
+      "t": "2026-02-26T00:00:00+00:00",
+      "equity": 99898.47
     },
     {
-      "t": "2026-07-24T14:00:00+00:00",
-      "equity": 1062.19
+      "t": "2026-02-27T00:00:00+00:00",
+      "equity": 98947.7
     },
     {
-      "t": "2026-07-25T14:00:00+00:00",
-      "equity": 1061.4
+      "t": "2026-02-28T00:00:00+00:00",
+      "equity": 98943.6
     },
     {
-      "t": "2026-07-26T14:00:00+00:00",
-      "equity": 1096.97
+      "t": "2026-03-01T00:00:00+00:00",
+      "equity": 99342.84
     },
     {
-      "t": "2026-07-27T14:00:00+00:00",
-      "equity": 1086.84
+      "t": "2026-03-02T00:00:00+00:00",
+      "equity": 100205.77
     },
     {
-      "t": "2026-07-28T14:00:00+00:00",
-      "equity": 1068.41
+      "t": "2026-03-03T00:00:00+00:00",
+      "equity": 99337.08
     },
     {
-      "t": "2026-07-29T14:00:00+00:00",
-      "equity": 1063.74
+      "t": "2026-03-04T00:00:00+00:00",
+      "equity": 98418.56
     },
     {
-      "t": "2026-07-30T14:00:00+00:00",
-      "equity": 1073.65
+      "t": "2026-03-05T00:00:00+00:00",
+      "equity": 98983.92
     },
     {
-      "t": "2026-07-31T14:00:00+00:00",
-      "equity": 1113.94
+      "t": "2026-03-06T00:00:00+00:00",
+      "equity": 99380.42
     },
     {
-      "t": "2026-08-01T14:00:00+00:00",
-      "equity": 1085.8
+      "t": "2026-03-07T00:00:00+00:00",
+      "equity": 100568.35
     },
     {
-      "t": "2026-08-02T14:00:00+00:00",
-      "equity": 1047.59
+      "t": "2026-03-08T00:00:00+00:00",
+      "equity": 101354.64
     },
     {
-      "t": "2026-08-03T14:00:00+00:00",
-      "equity": 1043.81
+      "t": "2026-03-09T00:00:00+00:00",
+      "equity": 101322.88
     },
     {
-      "t": "2026-08-04T14:00:00+00:00",
-      "equity": 1024.56
+      "t": "2026-03-10T00:00:00+00:00",
+      "equity": 101160.08
     },
     {
-      "t": "2026-08-05T14:00:00+00:00",
-      "equity": 986.9
+      "t": "2026-03-11T00:00:00+00:00",
+      "equity": 103155.86
     },
     {
-      "t": "2026-08-06T14:00:00+00:00",
-      "equity": 1030.59
+      "t": "2026-03-12T00:00:00+00:00",
+      "equity": 102978.84
     },
     {
-      "t": "2026-08-07T14:00:00+00:00",
-      "equity": 1042.73
+      "t": "2026-03-13T00:00:00+00:00",
+      "equity": 102418.95
     },
     {
-      "t": "2026-08-08T14:00:00+00:00",
-      "equity": 1036.72
+      "t": "2026-03-14T00:00:00+00:00",
+      "equity": 101590.62
     },
     {
-      "t": "2026-08-09T14:00:00+00:00",
-      "equity": 1036.05
+      "t": "2026-03-15T00:00:00+00:00",
+      "equity": 101709.07
     },
     {
-      "t": "2026-08-10T14:00:00+00:00",
-      "equity": 1033.84
+      "t": "2026-03-16T00:00:00+00:00",
+      "equity": 101865.69
     },
     {
-      "t": "2026-08-11T14:00:00+00:00",
-      "equity": 1021.79
+      "t": "2026-03-17T00:00:00+00:00",
+      "equity": 101648.06
     },
     {
-      "t": "2026-08-12T14:00:00+00:00",
-      "equity": 1056.05
+      "t": "2026-03-18T00:00:00+00:00",
+      "equity": 101646.41
     },
     {
-      "t": "2026-08-13T14:00:00+00:00",
-      "equity": 1063.26
+      "t": "2026-03-19T00:00:00+00:00",
+      "equity": 101900.34
     },
     {
-      "t": "2026-08-14T14:00:00+00:00",
-      "equity": 1065.35
+      "t": "2026-03-20T00:00:00+00:00",
+      "equity": 102475.36
     },
     {
-      "t": "2026-08-15T14:00:00+00:00",
-      "equity": 1043.35
+      "t": "2026-03-21T00:00:00+00:00",
+      "equity": 103364.44
     },
     {
-      "t": "2026-08-16T14:00:00+00:00",
-      "equity": 1039.02
+      "t": "2026-03-22T00:00:00+00:00",
+      "equity": 103573.61
     },
     {
-      "t": "2026-08-17T14:00:00+00:00",
-      "equity": 1021.65
+      "t": "2026-03-23T00:00:00+00:00",
+      "equity": 102229.91
     },
     {
-      "t": "2026-08-18T14:00:00+00:00",
-      "equity": 1033.34
+      "t": "2026-03-24T00:00:00+00:00",
+      "equity": 102813.95
     },
     {
-      "t": "2026-08-19T14:00:00+00:00",
-      "equity": 1065.89
+      "t": "2026-03-25T00:00:00+00:00",
+      "equity": 101765.48
     },
     {
-      "t": "2026-08-20T14:00:00+00:00",
-      "equity": 1062.33
+      "t": "2026-03-26T00:00:00+00:00",
+      "equity": 101680.44
+    },
+    {
+      "t": "2026-03-27T00:00:00+00:00",
+      "equity": 100602.27
+    },
+    {
+      "t": "2026-03-28T00:00:00+00:00",
+      "equity": 100649.13
+    },
+    {
+      "t": "2026-03-29T00:00:00+00:00",
+      "equity": 100106.71
+    },
+    {
+      "t": "2026-03-30T00:00:00+00:00",
+      "equity": 100312.34
+    },
+    {
+      "t": "2026-03-31T00:00:00+00:00",
+      "equity": 102840.45
+    },
+    {
+      "t": "2026-04-01T00:00:00+00:00",
+      "equity": 102849.23
+    },
+    {
+      "t": "2026-04-02T00:00:00+00:00",
+      "equity": 103545.26
+    },
+    {
+      "t": "2026-04-03T00:00:00+00:00",
+      "equity": 102564.17
+    },
+    {
+      "t": "2026-04-04T00:00:00+00:00",
+      "equity": 102388.75
+    },
+    {
+      "t": "2026-04-05T00:00:00+00:00",
+      "equity": 102943.56
+    },
+    {
+      "t": "2026-04-06T00:00:00+00:00",
+      "equity": 102918.33
+    },
+    {
+      "t": "2026-04-07T00:00:00+00:00",
+      "equity": 103250.38
+    },
+    {
+      "t": "2026-04-08T00:00:00+00:00",
+      "equity": 103376.86
+    },
+    {
+      "t": "2026-04-09T00:00:00+00:00",
+      "equity": 102643.3
+    },
+    {
+      "t": "2026-04-10T00:00:00+00:00",
+      "equity": 103123.47
+    },
+    {
+      "t": "2026-04-11T00:00:00+00:00",
+      "equity": 102541.84
+    },
+    {
+      "t": "2026-04-12T00:00:00+00:00",
+      "equity": 104027.48
+    },
+    {
+      "t": "2026-04-13T00:00:00+00:00",
+      "equity": 103680.13
+    },
+    {
+      "t": "2026-04-14T00:00:00+00:00",
+      "equity": 104260.29
+    },
+    {
+      "t": "2026-04-15T00:00:00+00:00",
+      "equity": 104309.04
+    },
+    {
+      "t": "2026-04-16T00:00:00+00:00",
+      "equity": 105101.08
+    },
+    {
+      "t": "2026-04-17T00:00:00+00:00",
+      "equity": 104673.73
+    },
+    {
+      "t": "2026-04-18T00:00:00+00:00",
+      "equity": 105505.0
+    },
+    {
+      "t": "2026-04-19T00:00:00+00:00",
+      "equity": 105454.43
+    },
+    {
+      "t": "2026-04-20T00:00:00+00:00",
+      "equity": 106501.05
+    },
+    {
+      "t": "2026-04-21T00:00:00+00:00",
+      "equity": 107047.55
+    },
+    {
+      "t": "2026-04-22T00:00:00+00:00",
+      "equity": 107209.16
+    },
+    {
+      "t": "2026-04-23T00:00:00+00:00",
+      "equity": 106630.01
+    },
+    {
+      "t": "2026-04-24T00:00:00+00:00",
+      "equity": 107292.02
+    },
+    {
+      "t": "2026-04-25T00:00:00+00:00",
+      "equity": 107717.02
+    },
+    {
+      "t": "2026-04-26T00:00:00+00:00",
+      "equity": 109091.94
+    },
+    {
+      "t": "2026-04-27T00:00:00+00:00",
+      "equity": 108832.56
+    },
+    {
+      "t": "2026-04-28T00:00:00+00:00",
+      "equity": 109334.35
+    },
+    {
+      "t": "2026-04-29T00:00:00+00:00",
+      "equity": 109800.06
+    },
+    {
+      "t": "2026-04-30T00:00:00+00:00",
+      "equity": 110082.5
+    },
+    {
+      "t": "2026-05-01T00:00:00+00:00",
+      "equity": 110304.13
+    },
+    {
+      "t": "2026-05-02T00:00:00+00:00",
+      "equity": 110504.44
+    },
+    {
+      "t": "2026-05-03T00:00:00+00:00",
+      "equity": 110058.22
+    },
+    {
+      "t": "2026-05-04T00:00:00+00:00",
+      "equity": 109270.37
+    },
+    {
+      "t": "2026-05-05T00:00:00+00:00",
+      "equity": 108994.63
+    },
+    {
+      "t": "2026-05-06T00:00:00+00:00",
+      "equity": 109526.64
+    },
+    {
+      "t": "2026-05-07T00:00:00+00:00",
+      "equity": 110817.29
+    },
+    {
+      "t": "2026-05-08T00:00:00+00:00",
+      "equity": 111679.25
+    },
+    {
+      "t": "2026-05-09T00:00:00+00:00",
+      "equity": 112611.7
+    },
+    {
+      "t": "2026-05-10T00:00:00+00:00",
+      "equity": 113318.87
+    },
+    {
+      "t": "2026-05-11T00:00:00+00:00",
+      "equity": 113963.5
+    },
+    {
+      "t": "2026-05-12T00:00:00+00:00",
+      "equity": 114171.5
+    },
+    {
+      "t": "2026-05-13T00:00:00+00:00",
+      "equity": 114883.52
+    },
+    {
+      "t": "2026-05-14T00:00:00+00:00",
+      "equity": 116463.46
+    },
+    {
+      "t": "2026-05-15T00:00:00+00:00",
+      "equity": 116229.7
+    },
+    {
+      "t": "2026-05-16T00:00:00+00:00",
+      "equity": 115677.2
+    },
+    {
+      "t": "2026-05-17T00:00:00+00:00",
+      "equity": 117429.78
+    },
+    {
+      "t": "2026-05-18T00:00:00+00:00",
+      "equity": 117698.13
+    },
+    {
+      "t": "2026-05-19T00:00:00+00:00",
+      "equity": 118608.2
+    },
+    {
+      "t": "2026-05-20T00:00:00+00:00",
+      "equity": 119438.93
+    },
+    {
+      "t": "2026-05-21T00:00:00+00:00",
+      "equity": 118475.3
+    },
+    {
+      "t": "2026-05-22T00:00:00+00:00",
+      "equity": 120690.92
+    },
+    {
+      "t": "2026-05-23T00:00:00+00:00",
+      "equity": 122352.66
+    },
+    {
+      "t": "2026-05-24T00:00:00+00:00",
+      "equity": 122570.09
+    },
+    {
+      "t": "2026-05-25T00:00:00+00:00",
+      "equity": 123317.0
+    },
+    {
+      "t": "2026-05-26T00:00:00+00:00",
+      "equity": 123489.87
+    },
+    {
+      "t": "2026-05-27T00:00:00+00:00",
+      "equity": 122726.56
+    },
+    {
+      "t": "2026-05-28T00:00:00+00:00",
+      "equity": 122678.64
+    },
+    {
+      "t": "2026-05-29T00:00:00+00:00",
+      "equity": 121605.86
+    },
+    {
+      "t": "2026-05-30T00:00:00+00:00",
+      "equity": 121218.97
+    },
+    {
+      "t": "2026-05-31T00:00:00+00:00",
+      "equity": 120463.71
+    },
+    {
+      "t": "2026-06-01T00:00:00+00:00",
+      "equity": 119126.13
+    },
+    {
+      "t": "2026-06-02T00:00:00+00:00",
+      "equity": 118960.66
+    },
+    {
+      "t": "2026-06-03T00:00:00+00:00",
+      "equity": 116907.95
+    },
+    {
+      "t": "2026-06-04T00:00:00+00:00",
+      "equity": 116252.88
+    },
+    {
+      "t": "2026-06-05T00:00:00+00:00",
+      "equity": 115879.87
+    },
+    {
+      "t": "2026-06-06T00:00:00+00:00",
+      "equity": 114287.66
+    },
+    {
+      "t": "2026-06-07T00:00:00+00:00",
+      "equity": 111432.8
+    },
+    {
+      "t": "2026-06-08T00:00:00+00:00",
+      "equity": 109388.32
+    },
+    {
+      "t": "2026-06-09T00:00:00+00:00",
+      "equity": 108319.34
+    },
+    {
+      "t": "2026-06-10T00:00:00+00:00",
+      "equity": 107497.06
+    },
+    {
+      "t": "2026-06-11T00:00:00+00:00",
+      "equity": 108793.65
+    },
+    {
+      "t": "2026-06-12T00:00:00+00:00",
+      "equity": 108023.25
+    },
+    {
+      "t": "2026-06-13T00:00:00+00:00",
+      "equity": 108073.51
+    },
+    {
+      "t": "2026-06-14T00:00:00+00:00",
+      "equity": 108648.04
+    },
+    {
+      "t": "2026-06-15T00:00:00+00:00",
+      "equity": 108568.43
+    },
+    {
+      "t": "2026-06-16T00:00:00+00:00",
+      "equity": 106687.72
+    },
+    {
+      "t": "2026-06-17T00:00:00+00:00",
+      "equity": 107381.03
+    },
+    {
+      "t": "2026-06-18T00:00:00+00:00",
+      "equity": 109291.54
+    },
+    {
+      "t": "2026-06-19T00:00:00+00:00",
+      "equity": 110163.94
+    },
+    {
+      "t": "2026-06-20T00:00:00+00:00",
+      "equity": 109455.5
+    },
+    {
+      "t": "2026-06-21T00:00:00+00:00",
+      "equity": 109166.22
+    },
+    {
+      "t": "2026-06-22T00:00:00+00:00",
+      "equity": 109396.96
+    },
+    {
+      "t": "2026-06-23T00:00:00+00:00",
+      "equity": 111488.4
+    },
+    {
+      "t": "2026-06-24T00:00:00+00:00",
+      "equity": 112054.81
+    },
+    {
+      "t": "2026-06-25T00:00:00+00:00",
+      "equity": 112200.74
+    },
+    {
+      "t": "2026-06-26T00:00:00+00:00",
+      "equity": 113561.88
+    },
+    {
+      "t": "2026-06-27T00:00:00+00:00",
+      "equity": 113543.39
+    },
+    {
+      "t": "2026-06-28T00:00:00+00:00",
+      "equity": 115179.58
+    },
+    {
+      "t": "2026-06-29T00:00:00+00:00",
+      "equity": 114639.67
+    },
+    {
+      "t": "2026-06-30T00:00:00+00:00",
+      "equity": 114283.01
+    },
+    {
+      "t": "2026-07-01T00:00:00+00:00",
+      "equity": 114952.31
+    },
+    {
+      "t": "2026-07-02T00:00:00+00:00",
+      "equity": 116232.04
+    },
+    {
+      "t": "2026-07-03T00:00:00+00:00",
+      "equity": 116854.39
+    },
+    {
+      "t": "2026-07-04T00:00:00+00:00",
+      "equity": 117171.3
+    },
+    {
+      "t": "2026-07-05T00:00:00+00:00",
+      "equity": 115623.2
+    },
+    {
+      "t": "2026-07-06T00:00:00+00:00",
+      "equity": 115057.06
+    },
+    {
+      "t": "2026-07-07T00:00:00+00:00",
+      "equity": 114581.9
+    },
+    {
+      "t": "2026-07-08T00:00:00+00:00",
+      "equity": 114174.9
+    },
+    {
+      "t": "2026-07-09T00:00:00+00:00",
+      "equity": 114728.45
+    },
+    {
+      "t": "2026-07-10T00:00:00+00:00",
+      "equity": 114491.67
+    },
+    {
+      "t": "2026-07-11T00:00:00+00:00",
+      "equity": 115219.56
+    },
+    {
+      "t": "2026-07-12T00:00:00+00:00",
+      "equity": 115342.55
+    },
+    {
+      "t": "2026-07-13T00:00:00+00:00",
+      "equity": 115106.55
+    },
+    {
+      "t": "2026-07-14T00:00:00+00:00",
+      "equity": 115260.35
+    },
+    {
+      "t": "2026-07-15T00:00:00+00:00",
+      "equity": 115682.86
+    },
+    {
+      "t": "2026-07-16T00:00:00+00:00",
+      "equity": 116479.45
+    },
+    {
+      "t": "2026-07-17T00:00:00+00:00",
+      "equity": 116114.72
+    },
+    {
+      "t": "2026-07-18T00:00:00+00:00",
+      "equity": 115964.33
+    },
+    {
+      "t": "2026-07-19T00:00:00+00:00",
+      "equity": 114830.52
+    },
+    {
+      "t": "2026-07-20T00:00:00+00:00",
+      "equity": 116263.46
+    },
+    {
+      "t": "2026-07-21T00:00:00+00:00",
+      "equity": 117581.7
+    },
+    {
+      "t": "2026-07-22T00:00:00+00:00",
+      "equity": 117476.9
+    },
+    {
+      "t": "2026-07-23T00:00:00+00:00",
+      "equity": 117108.28
+    },
+    {
+      "t": "2026-07-24T00:00:00+00:00",
+      "equity": 116075.48
+    },
+    {
+      "t": "2026-07-25T00:00:00+00:00",
+      "equity": 116275.63
+    },
+    {
+      "t": "2026-07-26T00:00:00+00:00",
+      "equity": 116507.85
+    },
+    {
+      "t": "2026-07-27T00:00:00+00:00",
+      "equity": 118466.69
+    },
+    {
+      "t": "2026-07-28T00:00:00+00:00",
+      "equity": 118738.87
+    },
+    {
+      "t": "2026-07-29T00:00:00+00:00",
+      "equity": 118099.58
+    },
+    {
+      "t": "2026-07-30T00:00:00+00:00",
+      "equity": 115987.39
+    },
+    {
+      "t": "2026-07-31T00:00:00+00:00",
+      "equity": 117265.61
+    },
+    {
+      "t": "2026-08-01T00:00:00+00:00",
+      "equity": 117484.95
+    },
+    {
+      "t": "2026-08-02T00:00:00+00:00",
+      "equity": 116119.81
+    },
+    {
+      "t": "2026-08-03T00:00:00+00:00",
+      "equity": 116329.15
+    },
+    {
+      "t": "2026-08-04T00:00:00+00:00",
+      "equity": 114978.06
+    },
+    {
+      "t": "2026-08-05T00:00:00+00:00",
+      "equity": 118031.06
+    },
+    {
+      "t": "2026-08-06T00:00:00+00:00",
+      "equity": 119074.7
+    },
+    {
+      "t": "2026-08-07T00:00:00+00:00",
+      "equity": 119639.52
+    },
+    {
+      "t": "2026-08-08T00:00:00+00:00",
+      "equity": 119536.25
+    },
+    {
+      "t": "2026-08-09T00:00:00+00:00",
+      "equity": 117671.73
+    },
+    {
+      "t": "2026-08-10T00:00:00+00:00",
+      "equity": 117613.13
+    },
+    {
+      "t": "2026-08-11T00:00:00+00:00",
+      "equity": 116294.77
+    },
+    {
+      "t": "2026-08-12T00:00:00+00:00",
+      "equity": 116867.13
+    },
+    {
+      "t": "2026-08-13T00:00:00+00:00",
+      "equity": 115044.99
+    },
+    {
+      "t": "2026-08-14T00:00:00+00:00",
+      "equity": 114313.54
+    },
+    {
+      "t": "2026-08-15T00:00:00+00:00",
+      "equity": 115410.58
+    },
+    {
+      "t": "2026-08-16T00:00:00+00:00",
+      "equity": 116885.4
+    },
+    {
+      "t": "2026-08-17T00:00:00+00:00",
+      "equity": 115902.52
+    },
+    {
+      "t": "2026-08-18T00:00:00+00:00",
+      "equity": 114621.25
+    },
+    {
+      "t": "2026-08-19T00:00:00+00:00",
+      "equity": 115428.81
+    },
+    {
+      "t": "2026-08-20T00:00:00+00:00",
+      "equity": 116219.28
+    },
+    {
+      "t": "2026-08-21T00:00:00+00:00",
+      "equity": 115411.65
     }
   ],
-  "benchmark_curve": [
-    {
-      "t": "2026-07-20T14:00:00+00:00",
-      "equity": 982.9
+  "performance_stats": {
+    "sharpe_ratio": 1.6521483913784119,
+    "sortino_ratio": 2.5392729822324696,
+    "max_drawdown": 0.13606095787452036,
+    "total_return": 0.16428125751876757
+  },
+  "active_risk_profile": "balanced",
+  "rebalance_generated_at": "2026-08-17T14:05:00+00:00",
+  "scenarios": {
+    "conservative": {
+      "weights": {
+        "AAPL": 0.15,
+        "V": 0.15,
+        "JNJ": 0.15,
+        "HD": 0.15,
+        "XLK": 0.11829,
+        "VLUE": 0.15,
+        "USMV": 0.13171
+      },
+      "expected_return": 0.05386187416919434,
+      "volatility": 0.14189767904733297,
+      "sharpe": 0.37958248881031786,
+      "var_95": 0.01514709840510378,
+      "cvar_95": 0.01899614976853927,
+      "sector_exposure": {
+        "Technology": 0.26829000000000003,
+        "Financials": 0.15,
+        "Healthcare": 0.15,
+        "Energy": 0.0,
+        "Consumer Staples": 0.0,
+        "Consumer Discretionary": 0.15,
+        "Industrials": 0.0,
+        "Other": 0.28171
+      },
+      "factor_exposure": {
+        "Other": 0.71829,
+        "Momentum": 0.0,
+        "Value": 0.15,
+        "Low Volatility": 0.13171
+      }
     },
-    {
-      "t": "2026-07-21T14:00:00+00:00",
-      "equity": 987.94
+    "balanced": {
+      "weights": {
+        "AAPL": 0.15,
+        "NVDA": 0.12831,
+        "JPM": 0.00979,
+        "V": 0.15,
+        "JNJ": 0.02821,
+        "HD": 0.15,
+        "CAT": 0.0538,
+        "XLK": 0.15,
+        "MTUM": 0.11485,
+        "VLUE": 0.06503
+      },
+      "expected_return": 0.06497180106326511,
+      "volatility": 0.16081405939054158,
+      "sharpe": 0.4040181642668395,
+      "var_95": 0.017285681373810487,
+      "cvar_95": 0.02214486751072405,
+      "sector_exposure": {
+        "Technology": 0.42830999999999997,
+        "Financials": 0.15979,
+        "Healthcare": 0.02821,
+        "Energy": 0.0,
+        "Consumer Staples": 0.0,
+        "Consumer Discretionary": 0.15,
+        "Industrials": 0.0538,
+        "Other": 0.17987999999999998
+      },
+      "factor_exposure": {
+        "Other": 0.82011,
+        "Momentum": 0.11485,
+        "Value": 0.06503,
+        "Low Volatility": 0.0
+      }
     },
-    {
-      "t": "2026-07-22T14:00:00+00:00",
-      "equity": 999.53
-    },
-    {
-      "t": "2026-07-23T14:00:00+00:00",
-      "equity": 1026.66
-    },
-    {
-      "t": "2026-07-24T14:00:00+00:00",
-      "equity": 1027.24
-    },
-    {
-      "t": "2026-07-25T14:00:00+00:00",
-      "equity": 1014.78
-    },
-    {
-      "t": "2026-07-26T14:00:00+00:00",
-      "equity": 1027.77
-    },
-    {
-      "t": "2026-07-27T14:00:00+00:00",
-      "equity": 1035.39
-    },
-    {
-      "t": "2026-07-28T14:00:00+00:00",
-      "equity": 1040.72
-    },
-    {
-      "t": "2026-07-29T14:00:00+00:00",
-      "equity": 1044.93
-    },
-    {
-      "t": "2026-07-30T14:00:00+00:00",
-      "equity": 1037.7
-    },
-    {
-      "t": "2026-07-31T14:00:00+00:00",
-      "equity": 1056.79
-    },
-    {
-      "t": "2026-08-01T14:00:00+00:00",
-      "equity": 1047.93
-    },
-    {
-      "t": "2026-08-02T14:00:00+00:00",
-      "equity": 1032.23
-    },
-    {
-      "t": "2026-08-03T14:00:00+00:00",
-      "equity": 1029.47
-    },
-    {
-      "t": "2026-08-04T14:00:00+00:00",
-      "equity": 1020.02
-    },
-    {
-      "t": "2026-08-05T14:00:00+00:00",
-      "equity": 1002.37
-    },
-    {
-      "t": "2026-08-06T14:00:00+00:00",
-      "equity": 1018.97
-    },
-    {
-      "t": "2026-08-07T14:00:00+00:00",
-      "equity": 1026.55
-    },
-    {
-      "t": "2026-08-08T14:00:00+00:00",
-      "equity": 1030.74
-    },
-    {
-      "t": "2026-08-09T14:00:00+00:00",
-      "equity": 1018.77
-    },
-    {
-      "t": "2026-08-10T14:00:00+00:00",
-      "equity": 1007.66
-    },
-    {
-      "t": "2026-08-11T14:00:00+00:00",
-      "equity": 995.84
-    },
-    {
-      "t": "2026-08-12T14:00:00+00:00",
-      "equity": 1015.6
-    },
-    {
-      "t": "2026-08-13T14:00:00+00:00",
-      "equity": 1015.8
-    },
-    {
-      "t": "2026-08-14T14:00:00+00:00",
-      "equity": 999.52
-    },
-    {
-      "t": "2026-08-15T14:00:00+00:00",
-      "equity": 992.03
-    },
-    {
-      "t": "2026-08-16T14:00:00+00:00",
-      "equity": 985.31
-    },
-    {
-      "t": "2026-08-17T14:00:00+00:00",
-      "equity": 978.77
-    },
-    {
-      "t": "2026-08-18T14:00:00+00:00",
-      "equity": 984.88
-    },
-    {
-      "t": "2026-08-19T14:00:00+00:00",
-      "equity": 999.52
-    },
-    {
-      "t": "2026-08-20T14:00:00+00:00",
-      "equity": 1014.04
+    "aggressive": {
+      "weights": {
+        "AAPL": 0.1,
+        "NVDA": 0.15,
+        "JPM": 0.15,
+        "CAT": 0.15,
+        "XLK": 0.15,
+        "XLF": 0.15,
+        "MTUM": 0.15
+      },
+      "expected_return": 0.07291666321707785,
+      "volatility": 0.1921121457947436,
+      "sharpe": 0.3795525936969308,
+      "var_95": 0.021215115557153497,
+      "cvar_95": 0.02554863214838796,
+      "sector_exposure": {
+        "Technology": 0.4,
+        "Financials": 0.3,
+        "Healthcare": 0.0,
+        "Energy": 0.0,
+        "Consumer Staples": 0.0,
+        "Consumer Discretionary": 0.0,
+        "Industrials": 0.15,
+        "Other": 0.15
+      },
+      "factor_exposure": {
+        "Other": 0.8500000000000001,
+        "Momentum": 0.15,
+        "Value": 0.0,
+        "Low Volatility": 0.0
+      }
     }
-  ],
-  "positions": [
+  },
+  "investment_committee_notes": [
     {
-      "symbol": "NVDA",
-      "asset_class": "equity",
-      "direction": "long",
-      "entry_price": 131.42,
-      "stop_loss_price": 128.66,
-      "take_profit_price": 136.26,
-      "size_eur": 15.0,
-      "opened_at": "2026-08-20T15:32:00+00:00"
-    },
-    {
-      "symbol": "ETH/USD",
-      "asset_class": "crypto",
-      "direction": "long",
-      "entry_price": 4820.15,
-      "stop_loss_price": 4690.3,
-      "take_profit_price": 5047.8,
-      "size_eur": 15.0,
-      "opened_at": "2026-08-18T16:11:00+00:00"
-    },
-    {
-      "symbol": "BTC/USD",
-      "asset_class": "crypto",
-      "direction": "short",
-      "entry_price": 98240.0,
-      "stop_loss_price": 100680.0,
-      "take_profit_price": 94480.0,
-      "size_eur": 10.0,
-      "opened_at": "2026-08-20T09:05:00+00:00"
-    }
-  ],
-  "trade_journal": [
-    {
-      "created_at": "2026-08-20T15:32:00+00:00",
-      "symbol": "NVDA",
-      "asset_class": "equity",
-      "direction": "long",
-      "confidence": 0.78,
-      "rationale": "RSI(14) at 27.4 with a bullish MACD crossover confirming; Finnhub headline flagged a data-center capacity expansion announced this morning. Sized at the fixed-fractional cap given ATR-based stop distance of 2.1%.",
-      "key_signals": [
-        "RSI 27.4 oversold",
-        "MACD bullish crossover",
-        "fresh headline: capacity expansion"
-      ],
-      "risk_flags": [],
-      "skipped_by_risk_layer": false,
-      "skip_reason": null
-    },
-    {
-      "created_at": "2026-08-20T09:05:00+00:00",
-      "symbol": "BTC/USD",
-      "asset_class": "crypto",
-      "direction": "short",
-      "confidence": 0.61,
-      "rationale": "Price broke below the lower Bollinger band on declining volume with RSI still neutral at 46 \u2014 reading this as a low-conviction mean-reversion setup, not a trend break, so sized below the risk cap and confidence reflects that.",
-      "key_signals": [
-        "price broke below lower Bollinger band"
-      ],
-      "risk_flags": [
-        "low volume confirmation"
-      ],
-      "skipped_by_risk_layer": false,
-      "skip_reason": null
-    },
-    {
-      "created_at": "2026-08-19T19:47:00+00:00",
-      "symbol": "TSLA",
-      "asset_class": "equity",
-      "direction": "hold",
-      "confidence": 0.35,
-      "rationale": "RSI overbought at 74 but MACD histogram still expanding and no bearish crossover yet \u2014 signals are mixed, holding rather than fading a trend that hasn't turned.",
-      "key_signals": [
-        "RSI 74.0 overbought"
-      ],
-      "risk_flags": [],
-      "skipped_by_risk_layer": false,
-      "skip_reason": null
-    },
-    {
-      "created_at": "2026-08-19T13:20:00+00:00",
-      "symbol": "AMZN",
-      "asset_class": "equity",
-      "direction": "long",
-      "confidence": 0.0,
-      "rationale": "Skipped by risk layer: max concurrent positions reached: 5/5",
-      "key_signals": [
-        "RSI 29.1 oversold"
-      ],
-      "risk_flags": [
-        "max concurrent positions reached: 5/5"
-      ],
-      "skipped_by_risk_layer": true,
-      "skip_reason": "max concurrent positions reached: 5/5"
-    },
-    {
-      "created_at": "2026-08-18T16:11:00+00:00",
-      "symbol": "ETH/USD",
-      "asset_class": "crypto",
-      "direction": "long",
-      "confidence": 0.69,
-      "rationale": "MACD bullish crossover on the 1h chart plus a positive funding-rate shift; RSI recovering through 34 from oversold territory. Stop placed at 1.5x ATR below entry.",
-      "key_signals": [
-        "MACD bullish crossover",
-        "RSI 34.2 recovering from oversold"
-      ],
-      "risk_flags": [],
-      "skipped_by_risk_layer": false,
-      "skip_reason": null
-    },
-    {
-      "created_at": "2026-08-18T10:02:00+00:00",
-      "symbol": "MSFT",
-      "asset_class": "equity",
-      "direction": "short",
-      "confidence": 0.58,
-      "rationale": "Price broke above the upper Bollinger band into an RSI of 71 with no supporting headline \u2014 treating this as an overextension in a range-bound name.",
-      "key_signals": [
-        "RSI 71.2 overbought",
-        "price broke above upper Bollinger band"
-      ],
-      "risk_flags": [],
-      "skipped_by_risk_layer": false,
-      "skip_reason": null
-    },
-    {
-      "created_at": "2026-08-11T11:40:00+00:00",
+      "created_at": "2026-08-17T14:05:00+00:00",
       "symbol": "AAPL",
       "asset_class": "equity",
-      "direction": "short",
-      "confidence": 0.64,
-      "rationale": "RSI 73 into an upper Bollinger breakout with no headline support \u2014 faded the extension; stopped out same day as the name kept running.",
+      "expected_return_annualized": 0.1,
+      "confidence": 0.62,
+      "rationale": "Services revenue growing ~14% YoY now outweighs hardware cyclicality; iPhone upgrade cycle in China stabilizing after two soft quarters.",
       "key_signals": [
-        "RSI 73.4 overbought",
-        "price broke above upper Bollinger band"
-      ],
-      "risk_flags": [],
-      "skipped_by_risk_layer": false,
-      "skip_reason": null
+        "services revenue +14% YoY",
+        "China iPhone demand stabilizing"
+      ]
+    },
+    {
+      "created_at": "2026-08-17T14:05:00+00:00",
+      "symbol": "NVDA",
+      "asset_class": "equity",
+      "expected_return_annualized": 0.16,
+      "confidence": 0.58,
+      "rationale": "Data-center capex guidance from hyperscalers still expanding for next fiscal year, but valuation already prices in a lot of that \u2014 conviction is real but not maximal.",
+      "key_signals": [
+        "hyperscaler capex guidance raised",
+        "valuation already reflects strong demand"
+      ]
+    },
+    {
+      "created_at": "2026-08-17T14:05:00+00:00",
+      "symbol": "JPM",
+      "asset_class": "equity",
+      "expected_return_annualized": 0.07,
+      "confidence": 0.55,
+      "rationale": "Net interest income holding up better than peers as rate cuts arrive slower than expected; credit quality metrics remain benign.",
+      "key_signals": [
+        "NII resilient vs. peers",
+        "credit quality stable"
+      ]
+    },
+    {
+      "created_at": "2026-08-17T14:05:00+00:00",
+      "symbol": "V",
+      "asset_class": "equity",
+      "expected_return_annualized": 0.08,
+      "confidence": 0.6,
+      "rationale": "Cross-border payment volume reaccelerating with travel demand; take-rate stable.",
+      "key_signals": [
+        "cross-border volume reaccelerating"
+      ]
+    },
+    {
+      "created_at": "2026-08-17T14:05:00+00:00",
+      "symbol": "JNJ",
+      "asset_class": "equity",
+      "expected_return_annualized": 0.04,
+      "confidence": 0.45,
+      "rationale": "Pharma pipeline solid but patent-cliff exposure on two mid-size drugs caps upside near-term.",
+      "key_signals": [
+        "patent cliff exposure on two drugs"
+      ]
+    },
+    {
+      "created_at": "2026-08-17T14:05:00+00:00",
+      "symbol": "UNH",
+      "asset_class": "equity",
+      "expected_return_annualized": 0.02,
+      "confidence": 0.35,
+      "rationale": "Medical cost ratio came in above guidance last quarter; regulatory overhang on Medicare Advantage reimbursement unresolved.",
+      "key_signals": [
+        "medical cost ratio above guidance",
+        "Medicare Advantage reimbursement uncertainty"
+      ]
+    },
+    {
+      "created_at": "2026-08-17T14:05:00+00:00",
+      "symbol": "XOM",
+      "asset_class": "equity",
+      "expected_return_annualized": 0.05,
+      "confidence": 0.48,
+      "rationale": "Crude inventories drawing down as OPEC+ holds supply discipline, but demand growth forecasts have been trimmed twice this year.",
+      "key_signals": [
+        "OPEC+ supply discipline",
+        "demand growth forecasts trimmed"
+      ]
+    },
+    {
+      "created_at": "2026-08-17T14:05:00+00:00",
+      "symbol": "PG",
+      "asset_class": "equity",
+      "expected_return_annualized": 0.05,
+      "confidence": 0.5,
+      "rationale": "Volume growth turned positive after two quarters of price-driven declines; input cost inflation easing.",
+      "key_signals": [
+        "volume growth turned positive",
+        "input costs easing"
+      ]
+    },
+    {
+      "created_at": "2026-08-17T14:05:00+00:00",
+      "symbol": "HD",
+      "asset_class": "equity",
+      "expected_return_annualized": 0.06,
+      "confidence": 0.47,
+      "rationale": "Housing turnover still depressed by mortgage rates, but pro-customer segment outperforming DIY.",
+      "key_signals": [
+        "pro segment outperforming DIY"
+      ]
+    },
+    {
+      "created_at": "2026-08-17T14:05:00+00:00",
+      "symbol": "CAT",
+      "asset_class": "equity",
+      "expected_return_annualized": 0.09,
+      "confidence": 0.52,
+      "rationale": "Infrastructure-linked order backlog remains elevated; dealer inventory normalized after last year's destock.",
+      "key_signals": [
+        "backlog elevated",
+        "dealer inventory normalized"
+      ]
+    },
+    {
+      "created_at": "2026-08-17T14:05:00+00:00",
+      "symbol": "XLK",
+      "asset_class": "etf",
+      "expected_return_annualized": 0.11,
+      "confidence": 0.55,
+      "rationale": "Sector-wide AI infrastructure spend still the dominant earnings driver across the largest constituents.",
+      "key_signals": [
+        "AI infrastructure spend broad-based"
+      ]
+    },
+    {
+      "created_at": "2026-08-17T14:05:00+00:00",
+      "symbol": "XLF",
+      "asset_class": "etf",
+      "expected_return_annualized": 0.06,
+      "confidence": 0.5,
+      "rationale": "Yield curve steepening supports net interest margins across the sector into next year.",
+      "key_signals": [
+        "yield curve steepening"
+      ]
+    },
+    {
+      "created_at": "2026-08-17T14:05:00+00:00",
+      "symbol": "XLV",
+      "asset_class": "etf",
+      "expected_return_annualized": 0.03,
+      "confidence": 0.4,
+      "rationale": "Sector laggard year-to-date on policy uncertainty around drug pricing reform.",
+      "key_signals": [
+        "drug pricing policy uncertainty"
+      ]
+    },
+    {
+      "created_at": "2026-08-17T14:05:00+00:00",
+      "symbol": "MTUM",
+      "asset_class": "etf",
+      "expected_return_annualized": 0.09,
+      "confidence": 0.45,
+      "rationale": "Momentum factor has been crowded into a narrow set of mega-cap tech names \u2014 conviction moderate given concentration risk.",
+      "key_signals": [
+        "momentum concentrated in mega-cap tech"
+      ]
+    },
+    {
+      "created_at": "2026-08-17T14:05:00+00:00",
+      "symbol": "VLUE",
+      "asset_class": "etf",
+      "expected_return_annualized": 0.06,
+      "confidence": 0.42,
+      "rationale": "Value spread vs. growth remains historically wide, a mean-reversion setup without a clear near-term catalyst.",
+      "key_signals": [
+        "value-growth spread historically wide"
+      ]
+    },
+    {
+      "created_at": "2026-08-17T14:05:00+00:00",
+      "symbol": "USMV",
+      "asset_class": "etf",
+      "expected_return_annualized": 0.04,
+      "confidence": 0.48,
+      "rationale": "Low-volatility sleeve provides ballast; opportunity cost has been real in a risk-on tape but that's the point of holding it.",
+      "key_signals": [
+        "defensive ballast against risk-on tape"
+      ]
     }
-  ],
-  "stats": {
-    "sharpe_ratio": 1.3397743740725157,
-    "sortino_ratio": 2.2827824985283685,
-    "max_drawdown": 0.11404563980106655,
-    "win_rate": 0.625,
-    "profit_factor": 2.7590909090909084,
-    "closed_trades_count": 16,
-    "total_realized_pnl_eur": 23.22,
-    "equity_eur": 1062.33,
-    "alpha_annualized": 0.09295718380585202,
-    "beta": 1.3389514105478189
-  }
+  ]
 }

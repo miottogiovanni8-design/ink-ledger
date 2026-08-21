@@ -1,46 +1,46 @@
 <title>Ink Ledger</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,440;9..144,560;9..144,640&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
   :root {
     color-scheme: light;
-    --bg: #f7f4ec;
+    --bg: #f4f4f6;
     --surface: #ffffff;
-    --surface-2: #f1ede1;
-    --border: #e3dcc8;
-    --text-primary: #201c14;
-    --text-secondary: #5c5646;
-    --text-muted: #8c8570;
-    --brass: #8f5f18;
-    --brass-strong: #6e480f;
-    --brass-soft: #f1e2bf;
+    --surface-2: #ececf0;
+    --border: #e0e0e6;
+    --text-primary: #101014;
+    --text-secondary: #55555f;
+    --text-muted: #85858f;
+    --accent: #6d4fe0;
+    --accent-ink: #ffffff;
+    --accent-soft: #efe9fd;
     --series-portfolio: #2a78d6;
     --series-portfolio-wash: rgba(42, 120, 214, 0.10);
-    --series-benchmark: #d15b26;
+    --series-benchmark: #eb6834;
     --status-good: #0b8f0b;
     --status-good-soft: #e2f3df;
     --status-warning-soft: #fdf1d9;
     --status-warning-ink: #8a5a06;
     --status-critical: #c53a3a;
     --status-critical-soft: #fbe6e3;
-    --shadow: 0 1px 2px rgba(32, 28, 20, 0.04), 0 8px 24px -12px rgba(32, 28, 20, 0.18);
+    --shadow: 0 1px 2px rgba(16, 16, 20, 0.04), 0 10px 28px -14px rgba(16, 16, 20, 0.16);
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       color-scheme: dark;
-      --bg: #14161c;
-      --surface: #1b1e26;
-      --surface-2: #22252e;
-      --border: #2d3038;
-      --text-primary: #f1eee3;
-      --text-secondary: #b8b2a0;
-      --text-muted: #837d6c;
-      --brass: #e0ac4c;
-      --brass-strong: #f0c877;
-      --brass-soft: #382b12;
+      --bg: #0a0a0c;
+      --surface: #131316;
+      --surface-2: #1a1a1f;
+      --border: #232328;
+      --text-primary: #f5f5f4;
+      --text-secondary: #a3a3ab;
+      --text-muted: #67676f;
+      --accent: #8b7cf6;
+      --accent-ink: #0a0a0c;
+      --accent-soft: #1c1836;
       --series-portfolio: #4c93ec;
       --series-portfolio-wash: rgba(76, 147, 236, 0.14);
       --series-benchmark: #e0703a;
@@ -50,22 +50,22 @@
       --status-warning-ink: #f0bd52;
       --status-critical: #e6685f;
       --status-critical-soft: #3a1817;
-      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -16px rgba(0, 0, 0, 0.6);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px -20px rgba(0, 0, 0, 0.7);
     }
   }
 
   :root[data-theme="dark"] {
     color-scheme: dark;
-    --bg: #14161c;
-    --surface: #1b1e26;
-    --surface-2: #22252e;
-    --border: #2d3038;
-    --text-primary: #f1eee3;
-    --text-secondary: #b8b2a0;
-    --text-muted: #837d6c;
-    --brass: #e0ac4c;
-    --brass-strong: #f0c877;
-    --brass-soft: #382b12;
+    --bg: #0a0a0c;
+    --surface: #131316;
+    --surface-2: #1a1a1f;
+    --border: #232328;
+    --text-primary: #f5f5f4;
+    --text-secondary: #a3a3ab;
+    --text-muted: #67676f;
+    --accent: #8b7cf6;
+    --accent-ink: #0a0a0c;
+    --accent-soft: #1c1836;
     --series-portfolio: #4c93ec;
     --series-portfolio-wash: rgba(76, 147, 236, 0.14);
     --series-benchmark: #e0703a;
@@ -75,7 +75,7 @@
     --status-warning-ink: #f0bd52;
     --status-critical: #e6685f;
     --status-critical-soft: #3a1817;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -16px rgba(0, 0, 0, 0.6);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px -20px rgba(0, 0, 0, 0.7);
   }
 
   * { box-sizing: border-box; }
@@ -84,405 +84,383 @@
     margin: 0;
     background: var(--bg);
     color: var(--text-primary);
-    font-family: "Public Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-family: "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
 
-  .page {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 40px 28px 80px;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-  }
+  .page { max-width: 1160px; margin: 0 auto; padding: 36px 28px 80px; display: flex; flex-direction: column; gap: 28px; }
 
-  h1, h2 {
-    font-family: "Fraunces", Georgia, serif;
-    text-wrap: balance;
-    margin: 0;
-  }
-
-  .mono { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+  h1, h2, .display { font-family: "Space Grotesk", "Inter", sans-serif; font-weight: 600; text-wrap: balance; margin: 0; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
   .tabular { font-variant-numeric: tabular-nums; }
 
   /* ---------- masthead ---------- */
-  .masthead {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid var(--border);
-  }
-  .eyebrow {
-    font-size: 11.5px;
-    font-weight: 600;
-    letter-spacing: 0.11em;
-    text-transform: uppercase;
-    color: var(--brass);
-  }
-  .masthead-top { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-  .masthead h1 { font-size: 34px; font-weight: 560; font-optical-sizing: auto; }
-  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .masthead { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 22px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand svg { width: 26px; height: 26px; flex: none; }
+  .brand-name { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 18px; letter-spacing: -0.01em; }
+  .masthead-right { display: flex; align-items: center; gap: 10px; }
+
   .badge {
     display: inline-flex; align-items: center; gap: 6px;
-    font-size: 12px; font-weight: 600; letter-spacing: 0.01em;
-    padding: 5px 10px 5px 8px; border-radius: 100px;
-    border: 1px solid var(--border);
-    color: var(--text-secondary);
-    background: var(--surface);
+    font-family: "JetBrains Mono", monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.02em; text-transform: uppercase;
+    padding: 6px 10px 6px 8px; border-radius: 100px; border: 1px solid var(--border); color: var(--text-secondary); background: var(--surface);
   }
-  .badge .dot { width: 6px; height: 6px; border-radius: 50%; flex: none; }
-  .badge.live .dot { background: var(--status-good); box-shadow: 0 0 0 3px var(--status-good-soft); }
+  .badge .dot { width: 6px; height: 6px; border-radius: 50%; flex: none; background: var(--status-good); box-shadow: 0 0 0 3px var(--status-good-soft); }
   .badge.sample { color: var(--status-warning-ink); background: var(--status-warning-soft); border-color: transparent; }
-  .badge.sample .dot { background: var(--status-warning-ink); }
+  .badge.sample .dot { background: var(--status-warning-ink); box-shadow: none; }
 
-  .meta-line { font-size: 13px; color: var(--text-muted); }
+  .lang-toggle { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; font-family: "JetBrains Mono", monospace; font-size: 11px; font-weight: 600; }
+  .lang-toggle button { background: var(--surface); color: var(--text-muted); border: none; padding: 7px 11px; cursor: pointer; letter-spacing: 0.02em; }
+  .lang-toggle button.active { background: var(--accent); color: var(--accent-ink); }
+  .lang-toggle button:not(.active):hover { color: var(--text-primary); }
 
   /* ---------- hero ---------- */
-  .hero {
-    display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 24px;
-  }
-  .hero-figure-block { display: flex; flex-direction: column; gap: 6px; }
-  .hero-label { font-size: 13px; color: var(--text-secondary); }
-  .hero-figure { font-size: 56px; font-weight: 600; letter-spacing: -0.01em; line-height: 1; }
-  .hero-delta { display: inline-flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 600; }
+  .hero { display: flex; flex-direction: column; gap: 18px; }
+  .hero-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  .hero-label { font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; }
+  .hero-figure { font-family: "Space Grotesk", sans-serif; font-size: 52px; font-weight: 600; letter-spacing: -0.01em; line-height: 1; }
+  .hero-delta { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; margin-top: 8px; }
   .hero-delta.pos { color: var(--status-good); }
   .hero-delta.neg { color: var(--status-critical); }
   .hero-delta-note { color: var(--text-muted); font-weight: 400; }
 
-  .universe-tags { display: flex; gap: 8px; }
-  .universe-tag {
-    font-size: 12px; color: var(--text-secondary); background: var(--surface-2);
-    border-radius: 8px; padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; min-width: 92px;
+  .hero-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .segmented { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .segmented button {
+    background: var(--surface); color: var(--text-secondary); border: none; border-right: 1px solid var(--border);
+    padding: 7px 13px; font-size: 12.5px; font-weight: 500; cursor: pointer; font-family: inherit;
   }
-  .universe-tag strong { font-size: 15px; color: var(--text-primary); font-weight: 600; }
+  .segmented button:last-child { border-right: none; }
+  .segmented button.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  .segmented button:not(.active):hover { color: var(--text-primary); }
 
-  /* ---------- stat grid ---------- */
-  .stat-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  @media (max-width: 720px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
-  .stat-tile {
-    background: var(--surface);
-    padding: 16px 18px;
-    display: flex; flex-direction: column; gap: 6px;
-  }
-  .stat-label { font-size: 12px; color: var(--text-secondary); }
-  .stat-value { font-size: 24px; font-weight: 600; letter-spacing: -0.005em; }
-  .stat-note { font-size: 11.5px; color: var(--text-muted); }
-  .stat-value.pos { color: var(--status-good); }
-  .stat-value.neg { color: var(--status-critical); }
+  .chart-wrap { position: relative; }
+  #chart-svg { width: 100%; height: 260px; display: block; overflow: visible; }
+  .gridline { stroke: var(--border); stroke-width: 1; }
+  .axis-label { fill: var(--text-muted); font-size: 10.5px; font-family: "JetBrains Mono", monospace; }
+  .end-label { font-size: 12px; font-weight: 600; font-family: "JetBrains Mono", monospace; }
+  .playhead-line { stroke: var(--accent); stroke-width: 1; stroke-dasharray: 3 3; }
+  .playhead-dot { fill: var(--accent); stroke: var(--surface); stroke-width: 2; }
 
-  /* ---------- card shell ---------- */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    box-shadow: var(--shadow);
-    padding: 22px 22px 18px;
-  }
-  .card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
-  .card-head h2 { font-size: 20px; font-weight: 560; }
+  .scrub-row { display: flex; align-items: center; gap: 14px; }
+  .scrub-slider { flex: 1; -webkit-appearance: none; appearance: none; height: 4px; border-radius: 2px; background: var(--surface-2); outline: none; }
+  .scrub-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 15px; height: 15px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--border); }
+  .scrub-slider::-moz-range-thumb { width: 15px; height: 15px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--border); }
+  .scrub-readout { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--text-secondary); min-width: 168px; text-align: right; }
+  .scrub-readout strong { color: var(--text-primary); }
+
+  .legend { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; font-size: 12px; color: var(--text-secondary); }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-key { width: 12px; height: 2px; border-radius: 2px; flex: none; }
+
+  /* ---------- cards ---------- */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow); padding: 22px; }
+  .card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  .card-head h2 { font-size: 18px; }
   .card-sub { font-size: 12.5px; color: var(--text-muted); }
 
-  /* ---------- chart legend ---------- */
-  .legend { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-secondary); }
-  .legend-key { width: 14px; height: 2px; border-radius: 2px; flex: none; }
-  .view-toggle {
-    font-size: 12px; color: var(--text-secondary); background: var(--surface-2);
-    border: 1px solid var(--border); border-radius: 8px; padding: 5px 10px; cursor: pointer;
-    font-family: inherit;
+  .risk-selector { display: flex; gap: 8px; flex-wrap: wrap; }
+  .risk-pill {
+    flex: 1; min-width: 140px; text-align: left; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 14px; cursor: pointer; font-family: inherit; color: var(--text-primary);
   }
-  .view-toggle:hover { color: var(--text-primary); }
-  .view-toggle:focus-visible, button:focus-visible, .journal-entry:focus-visible {
-    outline: 2px solid var(--series-portfolio); outline-offset: 2px;
-  }
+  .risk-pill .risk-name { font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: space-between; }
+  .risk-pill .risk-vol { font-size: 11.5px; color: var(--text-muted); margin-top: 3px; font-family: "JetBrains Mono", monospace; }
+  .risk-pill.active { border-color: var(--accent); background: var(--accent-soft); }
+  .risk-pill.active .risk-name { color: var(--accent); }
+  .risk-pill:not(.active):hover { border-color: var(--text-muted); }
 
-  /* ---------- chart ---------- */
-  .chart-wrap { position: relative; }
-  #chart-svg { width: 100%; height: 280px; display: block; overflow: visible; }
-  .gridline { stroke: var(--border); stroke-width: 1; }
-  .axis-label { fill: var(--text-muted); font-size: 11px; font-family: "IBM Plex Mono", monospace; }
-  .end-label { font-size: 12px; font-weight: 600; font-family: "IBM Plex Mono", monospace; }
-  .crosshair-line { stroke: var(--text-muted); stroke-width: 1; stroke-dasharray: 2 3; opacity: 0; }
-  .hover-dot { opacity: 0; }
+  .stat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 16px; }
+  @media (max-width: 900px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+  .stat-tile { background: var(--surface); padding: 14px 16px; display: flex; flex-direction: column; gap: 5px; }
+  .stat-label { font-size: 11.5px; color: var(--text-secondary); }
+  .stat-value { font-size: 21px; font-weight: 600; font-family: "Space Grotesk", sans-serif; }
+  .stat-note { font-size: 11px; color: var(--text-muted); }
 
-  .tooltip {
-    position: absolute; pointer-events: none; opacity: 0; transition: opacity 0.08s ease;
-    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-    padding: 10px 12px; box-shadow: var(--shadow); font-size: 12.5px; min-width: 168px;
-    transform: translate(-50%, -110%);
-  }
-  .tooltip-date { color: var(--text-muted); font-size: 11.5px; margin-bottom: 6px; }
-  .tooltip-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 2px 0; }
-  .tooltip-key { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); }
-  .tooltip-key .stroke { width: 12px; height: 2px; border-radius: 2px; }
-  .tooltip-val { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .exposure-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
+  @media (max-width: 720px) { .exposure-grid { grid-template-columns: 1fr; } }
+  .exposure-title { font-size: 12.5px; font-weight: 600; color: var(--text-secondary); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.03em; }
+  .exposure-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 12.5px; }
+  .exposure-label { width: 128px; flex: none; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .exposure-track { flex: 1; height: 8px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+  .exposure-fill { height: 100%; background: var(--accent); border-radius: 4px; }
+  .exposure-value { width: 42px; flex: none; text-align: right; font-family: "JetBrains Mono", monospace; color: var(--text-primary); }
 
   table.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  table.data-table th { text-align: right; font-weight: 600; color: var(--text-secondary); font-size: 11.5px; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+  table.data-table th { text-align: right; font-weight: 600; color: var(--text-secondary); font-size: 11px; padding: 7px 8px; border-bottom: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.02em; }
   table.data-table th:first-child, table.data-table td:first-child { text-align: left; }
-  table.data-table td { text-align: right; padding: 6px 8px; border-bottom: 1px solid var(--border); font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
-  .table-scroll { max-height: 320px; overflow: auto; }
+  table.data-table td { text-align: right; padding: 8px; border-bottom: 1px solid var(--border); font-family: "JetBrains Mono", monospace; font-variant-numeric: tabular-nums; }
+  table.data-table td:first-child, table.data-table td:nth-child(2) { font-family: "Inter", sans-serif; }
+  .ticker-tag { font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 600; background: var(--surface-2); border-radius: 6px; padding: 3px 7px; }
+  .weight-bar-cell { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+  .weight-bar-track { width: 60px; height: 5px; border-radius: 3px; background: var(--surface-2); overflow: hidden; }
+  .weight-bar-fill { height: 100%; background: var(--accent); border-radius: 3px; }
 
-  /* ---------- two column ---------- */
-  .two-col { display: grid; grid-template-columns: 1fr 1.35fr; gap: 20px; align-items: start; }
-  @media (max-width: 860px) { .two-col { grid-template-columns: 1fr; } }
-
-  /* positions */
-  .position-list { display: flex; flex-direction: column; gap: 10px; }
-  .position-row {
-    display: grid; grid-template-columns: auto 1fr; gap: 4px 14px;
-    padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px;
-  }
-  .position-top { display: flex; align-items: center; gap: 8px; grid-column: 1 / -1; }
-  .ticker-tag {
-    font-family: "IBM Plex Mono", monospace; font-size: 12.5px; font-weight: 600;
-    background: var(--surface-2); border-radius: 6px; padding: 3px 7px;
-  }
-  .dir-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; font-weight: 600; color: var(--text-secondary); }
-  .dir-chip svg { width: 11px; height: 11px; }
-  .dir-chip.long svg { fill: none; stroke: var(--series-portfolio); }
-  .dir-chip.short svg { fill: none; stroke: var(--series-benchmark); }
-  .position-meta { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px 10px; font-size: 11.5px; }
-  .position-meta div { display: flex; flex-direction: column; gap: 2px; }
-  .position-meta span:first-child { color: var(--text-muted); }
-  .position-meta span:last-child { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; font-size: 12.5px; color: var(--text-primary); }
-  .position-size { margin-left: auto; font-family: "IBM Plex Mono", monospace; font-size: 12.5px; color: var(--text-secondary); }
-
-  /* journal */
-  .journal-feed { display: flex; flex-direction: column; gap: 2px; max-height: 620px; overflow-y: auto; margin: -4px -6px 0; padding: 4px 6px 0; }
-  .journal-entry { padding: 13px 10px; border-radius: 10px; border-bottom: 1px solid var(--border); }
-  .journal-entry:last-child { border-bottom: none; }
-  .journal-top { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; flex-wrap: wrap; }
-  .journal-time { font-size: 11px; color: var(--text-muted); margin-left: auto; font-family: "IBM Plex Mono", monospace; }
-  .confidence-meter { display: flex; align-items: center; gap: 6px; }
+  /* ---------- notes feed ---------- */
+  .notes-feed { display: flex; flex-direction: column; }
+  .note-entry { padding: 14px 2px; border-bottom: 1px solid var(--border); }
+  .note-entry:last-child { border-bottom: none; }
+  .note-top { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; flex-wrap: wrap; }
+  .note-return { font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 600; }
+  .note-return.pos { color: var(--status-good); }
+  .note-return.neg { color: var(--status-critical); }
+  .confidence-meter { display: flex; align-items: center; gap: 6px; margin-left: auto; }
   .confidence-track { width: 52px; height: 5px; border-radius: 3px; background: var(--surface-2); overflow: hidden; }
-  .confidence-fill { height: 100%; background: var(--brass); border-radius: 3px; }
-  .confidence-value { font-size: 11px; color: var(--text-muted); font-family: "IBM Plex Mono", monospace; }
-  .risk-gated-chip {
-    display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600;
-    color: var(--status-warning-ink); background: var(--status-warning-soft); padding: 3px 8px; border-radius: 100px;
-  }
-  .rationale { font-size: 14px; line-height: 1.55; color: var(--text-secondary); margin: 0 0 8px; }
+  .confidence-fill { height: 100%; background: var(--accent); border-radius: 3px; }
+  .confidence-value { font-size: 11px; color: var(--text-muted); font-family: "JetBrains Mono", monospace; }
+  .note-rationale { font-size: 14px; line-height: 1.55; color: var(--text-secondary); margin: 0 0 8px; }
   .signal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
   .signal-tag { font-size: 11px; color: var(--text-muted); background: var(--surface-2); padding: 3px 8px; border-radius: 100px; }
 
-  footer {
-    border-top: 1px solid var(--border);
-    padding-top: 18px;
-    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
-    font-size: 12px; color: var(--text-muted);
-  }
+  footer { border-top: 1px solid var(--border); padding-top: 18px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--text-muted); }
 
-  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-
-  @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; animation: none !important; }
-  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
 
 <div class="page">
 
   <header class="masthead">
-    <div class="eyebrow">AI Paper Trading Desk</div>
-    <div class="masthead-top">
-      <h1>Ink Ledger</h1>
-      <div class="badge-row">
-        <span class="badge live"><span class="dot"></span>Paper trading — simulated funds</span>
-        <span class="badge sample" id="sample-badge"><span class="dot"></span>Sample data — awaiting first live cycle</span>
+    <div class="brand">
+      <svg id="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
+      <span class="brand-name">Ink Ledger</span>
+    </div>
+    <div class="masthead-right">
+      <span class="badge live"><span class="dot"></span><span data-i18n="badge_paper">Paper — simulated funds</span></span>
+      <span class="badge sample"><span class="dot"></span><span data-i18n="badge_sample">Sample data</span></span>
+      <div class="lang-toggle">
+        <button id="lang-it" class="active" data-lang="it">IT</button>
+        <button id="lang-en" data-lang="en">EN</button>
       </div>
     </div>
-    <div class="meta-line" id="generated-line">Generated —</div>
   </header>
 
   <section class="hero">
-    <div class="hero-figure-block">
-      <div class="hero-label">Account equity</div>
-      <div class="hero-figure tabular" id="hero-equity">—</div>
-      <div class="hero-delta" id="hero-delta">—</div>
+    <div class="hero-top">
+      <div>
+        <div class="hero-label" data-i18n="hero_label">Patrimonio del conto</div>
+        <div class="hero-figure tabular" id="hero-equity">—</div>
+        <div class="hero-delta" id="hero-delta">—</div>
+      </div>
+      <div class="hero-controls">
+        <div class="segmented" id="range-toggle">
+          <button data-range="1M">1M</button>
+          <button data-range="3M">3M</button>
+          <button data-range="ALL" class="active">ALL</button>
+        </div>
+        <div class="segmented" id="granularity-toggle">
+          <button data-gran="day" class="active" data-i18n="gran_day">Giorno</button>
+          <button data-gran="week" data-i18n="gran_week">Settimana</button>
+        </div>
+      </div>
     </div>
-    <div class="universe-tags">
-      <div class="universe-tag"><span>Equity book</span><strong id="tag-equity-count">—</strong></div>
-      <div class="universe-tag"><span>Crypto book</span><strong id="tag-crypto-count">—</strong></div>
-      <div class="universe-tag"><span>Closed trades</span><strong id="tag-closed-count">—</strong></div>
+
+    <div class="chart-wrap">
+      <svg id="chart-svg" role="img" aria-label="Grafico dell'equity nel tempo"></svg>
+    </div>
+
+    <div class="scrub-row">
+      <input type="range" class="scrub-slider" id="scrub-slider" min="0" max="0" value="0">
+      <div class="scrub-readout" id="scrub-readout">—</div>
     </div>
   </section>
-
-  <section class="stat-grid" id="stat-grid" aria-label="Performance statistics"></section>
 
   <section class="card">
     <div class="card-head">
       <div>
-        <h2>Equity vs. benchmark</h2>
-        <div class="card-sub">Indexed to 100 at inception — SPY as the equity benchmark</div>
-      </div>
-      <div class="legend" id="chart-controls">
-        <span class="legend-item"><span class="legend-key" style="background:var(--series-portfolio)"></span>Portfolio</span>
-        <span class="legend-item"><span class="legend-key" style="background:var(--series-benchmark)"></span>SPY (benchmark)</span>
-        <button class="view-toggle" id="view-toggle" aria-pressed="false">View as table</button>
+        <h2 data-i18n="risk_title">Profilo di rischio</h2>
+        <div class="card-sub" data-i18n="risk_sub">Tre allocazioni ottimizzate dallo stesso posteriore Black-Litterman — scegline una</div>
       </div>
     </div>
-    <div class="chart-wrap" id="chart-wrap">
-      <svg id="chart-svg" role="img" aria-label="Line chart of portfolio equity versus SPY benchmark, indexed to 100 at inception"></svg>
-      <div class="tooltip" id="tooltip"></div>
-    </div>
-    <div class="table-scroll" id="table-wrap" style="display:none;">
-      <table class="data-table" id="equity-table">
-        <thead><tr><th>Date</th><th>Portfolio (idx)</th><th>SPY (idx)</th><th>Equity €</th></tr></thead>
-        <tbody></tbody>
-      </table>
+    <div class="risk-selector" id="risk-selector"></div>
+    <div class="stat-grid" id="stat-grid"></div>
+
+    <div class="exposure-grid">
+      <div>
+        <div class="exposure-title" data-i18n="sector_exposure">Esposizione settoriale</div>
+        <div id="sector-exposure"></div>
+      </div>
+      <div>
+        <div class="exposure-title" data-i18n="factor_exposure">Esposizione fattoriale</div>
+        <div id="factor-exposure"></div>
+      </div>
     </div>
   </section>
 
-  <section class="two-col">
-    <div class="card">
-      <div class="card-head">
-        <div>
-          <h2>Open positions</h2>
-          <div class="card-sub" id="positions-sub">—</div>
-        </div>
+  <section class="card">
+    <div class="card-head">
+      <div>
+        <h2 data-i18n="holdings_title">Posizioni target</h2>
+        <div class="card-sub" id="holdings-sub">—</div>
       </div>
-      <div class="position-list" id="position-list"></div>
     </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th data-i18n="th_ticker">Titolo</th>
+          <th data-i18n="th_class">Classe</th>
+          <th data-i18n="th_tag">Settore / Fattore</th>
+          <th data-i18n="th_weight">Peso target</th>
+        </tr>
+      </thead>
+      <tbody id="holdings-body"></tbody>
+    </table>
+  </section>
 
-    <div class="card">
-      <div class="card-head">
-        <div>
-          <h2>Trade journal</h2>
-          <div class="card-sub">Every decision, with the model's stated rationale</div>
-        </div>
+  <section class="card">
+    <div class="card-head">
+      <div>
+        <h2 data-i18n="notes_title">Note del comitato investimenti</h2>
+        <div class="card-sub" data-i18n="notes_sub">Le view generate dall'AI, con motivazione — un output di ricerca, non un ordine</div>
       </div>
-      <div class="journal-feed" id="journal-feed"></div>
     </div>
+    <div class="notes-feed" id="notes-feed"></div>
   </section>
 
   <footer>
-    <span>Paper trading only — no real funds involved. Every order executes against Alpaca's simulated account.</span>
-    <span class="mono" id="schema-line">schema v1</span>
+    <span data-i18n="footer_disclosure">Conto di investimento simulato — nessun fondo reale coinvolto.</span>
+    <span class="mono" id="schema-line">schema v2</span>
   </footer>
 
 </div>
 
 <script>
 (function () {
-  var DATA = {
-    "schema_version": 1,
-    "generated_at": "2026-08-20T14:00:00+00:00",
-    "equity_curve": [{"t":"2026-07-20T14:00:00+00:00","equity":1011.3},{"t":"2026-07-21T14:00:00+00:00","equity":1007.77},{"t":"2026-07-22T14:00:00+00:00","equity":1003.31},{"t":"2026-07-23T14:00:00+00:00","equity":1044.61},{"t":"2026-07-24T14:00:00+00:00","equity":1062.19},{"t":"2026-07-25T14:00:00+00:00","equity":1061.4},{"t":"2026-07-26T14:00:00+00:00","equity":1096.97},{"t":"2026-07-27T14:00:00+00:00","equity":1086.84},{"t":"2026-07-28T14:00:00+00:00","equity":1068.41},{"t":"2026-07-29T14:00:00+00:00","equity":1063.74},{"t":"2026-07-30T14:00:00+00:00","equity":1073.65},{"t":"2026-07-31T14:00:00+00:00","equity":1113.94},{"t":"2026-08-01T14:00:00+00:00","equity":1085.8},{"t":"2026-08-02T14:00:00+00:00","equity":1047.59},{"t":"2026-08-03T14:00:00+00:00","equity":1043.81},{"t":"2026-08-04T14:00:00+00:00","equity":1024.56},{"t":"2026-08-05T14:00:00+00:00","equity":986.9},{"t":"2026-08-06T14:00:00+00:00","equity":1030.59},{"t":"2026-08-07T14:00:00+00:00","equity":1042.73},{"t":"2026-08-08T14:00:00+00:00","equity":1036.72},{"t":"2026-08-09T14:00:00+00:00","equity":1036.05},{"t":"2026-08-10T14:00:00+00:00","equity":1033.84},{"t":"2026-08-11T14:00:00+00:00","equity":1021.79},{"t":"2026-08-12T14:00:00+00:00","equity":1056.05},{"t":"2026-08-13T14:00:00+00:00","equity":1063.26},{"t":"2026-08-14T14:00:00+00:00","equity":1065.35},{"t":"2026-08-15T14:00:00+00:00","equity":1043.35},{"t":"2026-08-16T14:00:00+00:00","equity":1039.02},{"t":"2026-08-17T14:00:00+00:00","equity":1021.65},{"t":"2026-08-18T14:00:00+00:00","equity":1033.34},{"t":"2026-08-19T14:00:00+00:00","equity":1065.89},{"t":"2026-08-20T14:00:00+00:00","equity":1062.33}],
-    "benchmark_curve": [{"t":"2026-07-20T14:00:00+00:00","equity":982.9},{"t":"2026-07-21T14:00:00+00:00","equity":987.94},{"t":"2026-07-22T14:00:00+00:00","equity":999.53},{"t":"2026-07-23T14:00:00+00:00","equity":1026.66},{"t":"2026-07-24T14:00:00+00:00","equity":1027.24},{"t":"2026-07-25T14:00:00+00:00","equity":1014.78},{"t":"2026-07-26T14:00:00+00:00","equity":1027.77},{"t":"2026-07-27T14:00:00+00:00","equity":1035.39},{"t":"2026-07-28T14:00:00+00:00","equity":1040.72},{"t":"2026-07-29T14:00:00+00:00","equity":1044.93},{"t":"2026-07-30T14:00:00+00:00","equity":1037.7},{"t":"2026-07-31T14:00:00+00:00","equity":1056.79},{"t":"2026-08-01T14:00:00+00:00","equity":1047.93},{"t":"2026-08-02T14:00:00+00:00","equity":1032.23},{"t":"2026-08-03T14:00:00+00:00","equity":1029.47},{"t":"2026-08-04T14:00:00+00:00","equity":1020.02},{"t":"2026-08-05T14:00:00+00:00","equity":1002.37},{"t":"2026-08-06T14:00:00+00:00","equity":1018.97},{"t":"2026-08-07T14:00:00+00:00","equity":1026.55},{"t":"2026-08-08T14:00:00+00:00","equity":1030.74},{"t":"2026-08-09T14:00:00+00:00","equity":1018.77},{"t":"2026-08-10T14:00:00+00:00","equity":1007.66},{"t":"2026-08-11T14:00:00+00:00","equity":995.84},{"t":"2026-08-12T14:00:00+00:00","equity":1015.6},{"t":"2026-08-13T14:00:00+00:00","equity":1015.8},{"t":"2026-08-14T14:00:00+00:00","equity":999.52},{"t":"2026-08-15T14:00:00+00:00","equity":992.03},{"t":"2026-08-16T14:00:00+00:00","equity":985.31},{"t":"2026-08-17T14:00:00+00:00","equity":978.77},{"t":"2026-08-18T14:00:00+00:00","equity":984.88},{"t":"2026-08-19T14:00:00+00:00","equity":999.52},{"t":"2026-08-20T14:00:00+00:00","equity":1014.04}],
-    "positions": [{"symbol":"NVDA","asset_class":"equity","direction":"long","entry_price":131.42,"stop_loss_price":128.66,"take_profit_price":136.26,"size_eur":15.0,"opened_at":"2026-08-20T15:32:00+00:00"},{"symbol":"ETH/USD","asset_class":"crypto","direction":"long","entry_price":4820.15,"stop_loss_price":4690.3,"take_profit_price":5047.8,"size_eur":15.0,"opened_at":"2026-08-18T16:11:00+00:00"},{"symbol":"BTC/USD","asset_class":"crypto","direction":"short","entry_price":98240.0,"stop_loss_price":100680.0,"take_profit_price":94480.0,"size_eur":10.0,"opened_at":"2026-08-20T09:05:00+00:00"}],
-    "trade_journal": [{"created_at":"2026-08-20T15:32:00+00:00","symbol":"NVDA","asset_class":"equity","direction":"long","confidence":0.78,"rationale":"RSI(14) at 27.4 with a bullish MACD crossover confirming; Finnhub headline flagged a data-center capacity expansion announced this morning. Sized at the fixed-fractional cap given ATR-based stop distance of 2.1%.","key_signals":["RSI 27.4 oversold","MACD bullish crossover","fresh headline: capacity expansion"],"risk_flags":[],"skipped_by_risk_layer":false,"skip_reason":null},{"created_at":"2026-08-20T09:05:00+00:00","symbol":"BTC/USD","asset_class":"crypto","direction":"short","confidence":0.61,"rationale":"Price broke below the lower Bollinger band on declining volume with RSI still neutral at 46 — reading this as a low-conviction mean-reversion setup, not a trend break, so sized below the risk cap and confidence reflects that.","key_signals":["price broke below lower Bollinger band"],"risk_flags":["low volume confirmation"],"skipped_by_risk_layer":false,"skip_reason":null},{"created_at":"2026-08-19T19:47:00+00:00","symbol":"TSLA","asset_class":"equity","direction":"hold","confidence":0.35,"rationale":"RSI overbought at 74 but MACD histogram still expanding and no bearish crossover yet — signals are mixed, holding rather than fading a trend that hasn't turned.","key_signals":["RSI 74.0 overbought"],"risk_flags":[],"skipped_by_risk_layer":false,"skip_reason":null},{"created_at":"2026-08-19T13:20:00+00:00","symbol":"AMZN","asset_class":"equity","direction":"long","confidence":0.0,"rationale":"Skipped by risk layer: max concurrent positions reached: 5/5","key_signals":["RSI 29.1 oversold"],"risk_flags":["max concurrent positions reached: 5/5"],"skipped_by_risk_layer":true,"skip_reason":"max concurrent positions reached: 5/5"},{"created_at":"2026-08-18T16:11:00+00:00","symbol":"ETH/USD","asset_class":"crypto","direction":"long","confidence":0.69,"rationale":"MACD bullish crossover on the 1h chart plus a positive funding-rate shift; RSI recovering through 34 from oversold territory. Stop placed at 1.5x ATR below entry.","key_signals":["MACD bullish crossover","RSI 34.2 recovering from oversold"],"risk_flags":[],"skipped_by_risk_layer":false,"skip_reason":null},{"created_at":"2026-08-18T10:02:00+00:00","symbol":"MSFT","asset_class":"equity","direction":"short","confidence":0.58,"rationale":"Price broke above the upper Bollinger band into an RSI of 71 with no supporting headline — treating this as an overextension in a range-bound name.","key_signals":["RSI 71.2 overbought","price broke above upper Bollinger band"],"risk_flags":[],"skipped_by_risk_layer":false,"skip_reason":null},{"created_at":"2026-08-11T11:40:00+00:00","symbol":"AAPL","asset_class":"equity","direction":"short","confidence":0.64,"rationale":"RSI 73 into an upper Bollinger breakout with no headline support — faded the extension; stopped out same day as the name kept running.","key_signals":["RSI 73.4 overbought","price broke above upper Bollinger band"],"risk_flags":[],"skipped_by_risk_layer":false,"skip_reason":null}],
-    "stats": {"sharpe_ratio":1.3397743740725157,"sortino_ratio":2.2827824985283685,"max_drawdown":0.11404563980106655,"win_rate":0.625,"profit_factor":2.7590909090909084,"closed_trades_count":16,"total_realized_pnl_eur":23.22,"equity_eur":1062.33,"alpha_annualized":0.09295718380585202,"beta":1.3389514105478189}
+  var DATA = {"schema_version": 2, "generated_at": "2026-08-20T21:15:00+00:00", "equity_curve": [{"t": "2026-02-23T00:00:00+00:00", "equity": 99126.95}, {"t": "2026-02-24T00:00:00+00:00", "equity": 99452.27}, {"t": "2026-02-25T00:00:00+00:00", "equity": 100239.19}, {"t": "2026-02-26T00:00:00+00:00", "equity": 99898.47}, {"t": "2026-02-27T00:00:00+00:00", "equity": 98947.7}, {"t": "2026-02-28T00:00:00+00:00", "equity": 98943.6}, {"t": "2026-03-01T00:00:00+00:00", "equity": 99342.84}, {"t": "2026-03-02T00:00:00+00:00", "equity": 100205.77}, {"t": "2026-03-03T00:00:00+00:00", "equity": 99337.08}, {"t": "2026-03-04T00:00:00+00:00", "equity": 98418.56}, {"t": "2026-03-05T00:00:00+00:00", "equity": 98983.92}, {"t": "2026-03-06T00:00:00+00:00", "equity": 99380.42}, {"t": "2026-03-07T00:00:00+00:00", "equity": 100568.35}, {"t": "2026-03-08T00:00:00+00:00", "equity": 101354.64}, {"t": "2026-03-09T00:00:00+00:00", "equity": 101322.88}, {"t": "2026-03-10T00:00:00+00:00", "equity": 101160.08}, {"t": "2026-03-11T00:00:00+00:00", "equity": 103155.86}, {"t": "2026-03-12T00:00:00+00:00", "equity": 102978.84}, {"t": "2026-03-13T00:00:00+00:00", "equity": 102418.95}, {"t": "2026-03-14T00:00:00+00:00", "equity": 101590.62}, {"t": "2026-03-15T00:00:00+00:00", "equity": 101709.07}, {"t": "2026-03-16T00:00:00+00:00", "equity": 101865.69}, {"t": "2026-03-17T00:00:00+00:00", "equity": 101648.06}, {"t": "2026-03-18T00:00:00+00:00", "equity": 101646.41}, {"t": "2026-03-19T00:00:00+00:00", "equity": 101900.34}, {"t": "2026-03-20T00:00:00+00:00", "equity": 102475.36}, {"t": "2026-03-21T00:00:00+00:00", "equity": 103364.44}, {"t": "2026-03-22T00:00:00+00:00", "equity": 103573.61}, {"t": "2026-03-23T00:00:00+00:00", "equity": 102229.91}, {"t": "2026-03-24T00:00:00+00:00", "equity": 102813.95}, {"t": "2026-03-25T00:00:00+00:00", "equity": 101765.48}, {"t": "2026-03-26T00:00:00+00:00", "equity": 101680.44}, {"t": "2026-03-27T00:00:00+00:00", "equity": 100602.27}, {"t": "2026-03-28T00:00:00+00:00", "equity": 100649.13}, {"t": "2026-03-29T00:00:00+00:00", "equity": 100106.71}, {"t": "2026-03-30T00:00:00+00:00", "equity": 100312.34}, {"t": "2026-03-31T00:00:00+00:00", "equity": 102840.45}, {"t": "2026-04-01T00:00:00+00:00", "equity": 102849.23}, {"t": "2026-04-02T00:00:00+00:00", "equity": 103545.26}, {"t": "2026-04-03T00:00:00+00:00", "equity": 102564.17}, {"t": "2026-04-04T00:00:00+00:00", "equity": 102388.75}, {"t": "2026-04-05T00:00:00+00:00", "equity": 102943.56}, {"t": "2026-04-06T00:00:00+00:00", "equity": 102918.33}, {"t": "2026-04-07T00:00:00+00:00", "equity": 103250.38}, {"t": "2026-04-08T00:00:00+00:00", "equity": 103376.86}, {"t": "2026-04-09T00:00:00+00:00", "equity": 102643.3}, {"t": "2026-04-10T00:00:00+00:00", "equity": 103123.47}, {"t": "2026-04-11T00:00:00+00:00", "equity": 102541.84}, {"t": "2026-04-12T00:00:00+00:00", "equity": 104027.48}, {"t": "2026-04-13T00:00:00+00:00", "equity": 103680.13}, {"t": "2026-04-14T00:00:00+00:00", "equity": 104260.29}, {"t": "2026-04-15T00:00:00+00:00", "equity": 104309.04}, {"t": "2026-04-16T00:00:00+00:00", "equity": 105101.08}, {"t": "2026-04-17T00:00:00+00:00", "equity": 104673.73}, {"t": "2026-04-18T00:00:00+00:00", "equity": 105505.0}, {"t": "2026-04-19T00:00:00+00:00", "equity": 105454.43}, {"t": "2026-04-20T00:00:00+00:00", "equity": 106501.05}, {"t": "2026-04-21T00:00:00+00:00", "equity": 107047.55}, {"t": "2026-04-22T00:00:00+00:00", "equity": 107209.16}, {"t": "2026-04-23T00:00:00+00:00", "equity": 106630.01}, {"t": "2026-04-24T00:00:00+00:00", "equity": 107292.02}, {"t": "2026-04-25T00:00:00+00:00", "equity": 107717.02}, {"t": "2026-04-26T00:00:00+00:00", "equity": 109091.94}, {"t": "2026-04-27T00:00:00+00:00", "equity": 108832.56}, {"t": "2026-04-28T00:00:00+00:00", "equity": 109334.35}, {"t": "2026-04-29T00:00:00+00:00", "equity": 109800.06}, {"t": "2026-04-30T00:00:00+00:00", "equity": 110082.5}, {"t": "2026-05-01T00:00:00+00:00", "equity": 110304.13}, {"t": "2026-05-02T00:00:00+00:00", "equity": 110504.44}, {"t": "2026-05-03T00:00:00+00:00", "equity": 110058.22}, {"t": "2026-05-04T00:00:00+00:00", "equity": 109270.37}, {"t": "2026-05-05T00:00:00+00:00", "equity": 108994.63}, {"t": "2026-05-06T00:00:00+00:00", "equity": 109526.64}, {"t": "2026-05-07T00:00:00+00:00", "equity": 110817.29}, {"t": "2026-05-08T00:00:00+00:00", "equity": 111679.25}, {"t": "2026-05-09T00:00:00+00:00", "equity": 112611.7}, {"t": "2026-05-10T00:00:00+00:00", "equity": 113318.87}, {"t": "2026-05-11T00:00:00+00:00", "equity": 113963.5}, {"t": "2026-05-12T00:00:00+00:00", "equity": 114171.5}, {"t": "2026-05-13T00:00:00+00:00", "equity": 114883.52}, {"t": "2026-05-14T00:00:00+00:00", "equity": 116463.46}, {"t": "2026-05-15T00:00:00+00:00", "equity": 116229.7}, {"t": "2026-05-16T00:00:00+00:00", "equity": 115677.2}, {"t": "2026-05-17T00:00:00+00:00", "equity": 117429.78}, {"t": "2026-05-18T00:00:00+00:00", "equity": 117698.13}, {"t": "2026-05-19T00:00:00+00:00", "equity": 118608.2}, {"t": "2026-05-20T00:00:00+00:00", "equity": 119438.93}, {"t": "2026-05-21T00:00:00+00:00", "equity": 118475.3}, {"t": "2026-05-22T00:00:00+00:00", "equity": 120690.92}, {"t": "2026-05-23T00:00:00+00:00", "equity": 122352.66}, {"t": "2026-05-24T00:00:00+00:00", "equity": 122570.09}, {"t": "2026-05-25T00:00:00+00:00", "equity": 123317.0}, {"t": "2026-05-26T00:00:00+00:00", "equity": 123489.87}, {"t": "2026-05-27T00:00:00+00:00", "equity": 122726.56}, {"t": "2026-05-28T00:00:00+00:00", "equity": 122678.64}, {"t": "2026-05-29T00:00:00+00:00", "equity": 121605.86}, {"t": "2026-05-30T00:00:00+00:00", "equity": 121218.97}, {"t": "2026-05-31T00:00:00+00:00", "equity": 120463.71}, {"t": "2026-06-01T00:00:00+00:00", "equity": 119126.13}, {"t": "2026-06-02T00:00:00+00:00", "equity": 118960.66}, {"t": "2026-06-03T00:00:00+00:00", "equity": 116907.95}, {"t": "2026-06-04T00:00:00+00:00", "equity": 116252.88}, {"t": "2026-06-05T00:00:00+00:00", "equity": 115879.87}, {"t": "2026-06-06T00:00:00+00:00", "equity": 114287.66}, {"t": "2026-06-07T00:00:00+00:00", "equity": 111432.8}, {"t": "2026-06-08T00:00:00+00:00", "equity": 109388.32}, {"t": "2026-06-09T00:00:00+00:00", "equity": 108319.34}, {"t": "2026-06-10T00:00:00+00:00", "equity": 107497.06}, {"t": "2026-06-11T00:00:00+00:00", "equity": 108793.65}, {"t": "2026-06-12T00:00:00+00:00", "equity": 108023.25}, {"t": "2026-06-13T00:00:00+00:00", "equity": 108073.51}, {"t": "2026-06-14T00:00:00+00:00", "equity": 108648.04}, {"t": "2026-06-15T00:00:00+00:00", "equity": 108568.43}, {"t": "2026-06-16T00:00:00+00:00", "equity": 106687.72}, {"t": "2026-06-17T00:00:00+00:00", "equity": 107381.03}, {"t": "2026-06-18T00:00:00+00:00", "equity": 109291.54}, {"t": "2026-06-19T00:00:00+00:00", "equity": 110163.94}, {"t": "2026-06-20T00:00:00+00:00", "equity": 109455.5}, {"t": "2026-06-21T00:00:00+00:00", "equity": 109166.22}, {"t": "2026-06-22T00:00:00+00:00", "equity": 109396.96}, {"t": "2026-06-23T00:00:00+00:00", "equity": 111488.4}, {"t": "2026-06-24T00:00:00+00:00", "equity": 112054.81}, {"t": "2026-06-25T00:00:00+00:00", "equity": 112200.74}, {"t": "2026-06-26T00:00:00+00:00", "equity": 113561.88}, {"t": "2026-06-27T00:00:00+00:00", "equity": 113543.39}, {"t": "2026-06-28T00:00:00+00:00", "equity": 115179.58}, {"t": "2026-06-29T00:00:00+00:00", "equity": 114639.67}, {"t": "2026-06-30T00:00:00+00:00", "equity": 114283.01}, {"t": "2026-07-01T00:00:00+00:00", "equity": 114952.31}, {"t": "2026-07-02T00:00:00+00:00", "equity": 116232.04}, {"t": "2026-07-03T00:00:00+00:00", "equity": 116854.39}, {"t": "2026-07-04T00:00:00+00:00", "equity": 117171.3}, {"t": "2026-07-05T00:00:00+00:00", "equity": 115623.2}, {"t": "2026-07-06T00:00:00+00:00", "equity": 115057.06}, {"t": "2026-07-07T00:00:00+00:00", "equity": 114581.9}, {"t": "2026-07-08T00:00:00+00:00", "equity": 114174.9}, {"t": "2026-07-09T00:00:00+00:00", "equity": 114728.45}, {"t": "2026-07-10T00:00:00+00:00", "equity": 114491.67}, {"t": "2026-07-11T00:00:00+00:00", "equity": 115219.56}, {"t": "2026-07-12T00:00:00+00:00", "equity": 115342.55}, {"t": "2026-07-13T00:00:00+00:00", "equity": 115106.55}, {"t": "2026-07-14T00:00:00+00:00", "equity": 115260.35}, {"t": "2026-07-15T00:00:00+00:00", "equity": 115682.86}, {"t": "2026-07-16T00:00:00+00:00", "equity": 116479.45}, {"t": "2026-07-17T00:00:00+00:00", "equity": 116114.72}, {"t": "2026-07-18T00:00:00+00:00", "equity": 115964.33}, {"t": "2026-07-19T00:00:00+00:00", "equity": 114830.52}, {"t": "2026-07-20T00:00:00+00:00", "equity": 116263.46}, {"t": "2026-07-21T00:00:00+00:00", "equity": 117581.7}, {"t": "2026-07-22T00:00:00+00:00", "equity": 117476.9}, {"t": "2026-07-23T00:00:00+00:00", "equity": 117108.28}, {"t": "2026-07-24T00:00:00+00:00", "equity": 116075.48}, {"t": "2026-07-25T00:00:00+00:00", "equity": 116275.63}, {"t": "2026-07-26T00:00:00+00:00", "equity": 116507.85}, {"t": "2026-07-27T00:00:00+00:00", "equity": 118466.69}, {"t": "2026-07-28T00:00:00+00:00", "equity": 118738.87}, {"t": "2026-07-29T00:00:00+00:00", "equity": 118099.58}, {"t": "2026-07-30T00:00:00+00:00", "equity": 115987.39}, {"t": "2026-07-31T00:00:00+00:00", "equity": 117265.61}, {"t": "2026-08-01T00:00:00+00:00", "equity": 117484.95}, {"t": "2026-08-02T00:00:00+00:00", "equity": 116119.81}, {"t": "2026-08-03T00:00:00+00:00", "equity": 116329.15}, {"t": "2026-08-04T00:00:00+00:00", "equity": 114978.06}, {"t": "2026-08-05T00:00:00+00:00", "equity": 118031.06}, {"t": "2026-08-06T00:00:00+00:00", "equity": 119074.7}, {"t": "2026-08-07T00:00:00+00:00", "equity": 119639.52}, {"t": "2026-08-08T00:00:00+00:00", "equity": 119536.25}, {"t": "2026-08-09T00:00:00+00:00", "equity": 117671.73}, {"t": "2026-08-10T00:00:00+00:00", "equity": 117613.13}, {"t": "2026-08-11T00:00:00+00:00", "equity": 116294.77}, {"t": "2026-08-12T00:00:00+00:00", "equity": 116867.13}, {"t": "2026-08-13T00:00:00+00:00", "equity": 115044.99}, {"t": "2026-08-14T00:00:00+00:00", "equity": 114313.54}, {"t": "2026-08-15T00:00:00+00:00", "equity": 115410.58}, {"t": "2026-08-16T00:00:00+00:00", "equity": 116885.4}, {"t": "2026-08-17T00:00:00+00:00", "equity": 115902.52}, {"t": "2026-08-18T00:00:00+00:00", "equity": 114621.25}, {"t": "2026-08-19T00:00:00+00:00", "equity": 115428.81}, {"t": "2026-08-20T00:00:00+00:00", "equity": 116219.28}, {"t": "2026-08-21T00:00:00+00:00", "equity": 115411.65}], "performance_stats": {"sharpe_ratio": 1.6521483913784119, "sortino_ratio": 2.5392729822324696, "max_drawdown": 0.13606095787452036, "total_return": 0.16428125751876757}, "active_risk_profile": "balanced", "rebalance_generated_at": "2026-08-17T14:05:00+00:00", "scenarios": {"conservative": {"weights": {"AAPL": 0.15, "V": 0.15, "JNJ": 0.15, "HD": 0.15, "XLK": 0.11829, "VLUE": 0.15, "USMV": 0.13171}, "expected_return": 0.05386187416919434, "volatility": 0.14189767904733297, "sharpe": 0.37958248881031786, "var_95": 0.01514709840510378, "cvar_95": 0.01899614976853927, "sector_exposure": {"Technology": 0.26829000000000003, "Financials": 0.15, "Healthcare": 0.15, "Energy": 0.0, "Consumer Staples": 0.0, "Consumer Discretionary": 0.15, "Industrials": 0.0, "Other": 0.28171}, "factor_exposure": {"Other": 0.71829, "Momentum": 0.0, "Value": 0.15, "Low Volatility": 0.13171}}, "balanced": {"weights": {"AAPL": 0.15, "NVDA": 0.12831, "JPM": 0.00979, "V": 0.15, "JNJ": 0.02821, "HD": 0.15, "CAT": 0.0538, "XLK": 0.15, "MTUM": 0.11485, "VLUE": 0.06503}, "expected_return": 0.06497180106326511, "volatility": 0.16081405939054158, "sharpe": 0.4040181642668395, "var_95": 0.017285681373810487, "cvar_95": 0.02214486751072405, "sector_exposure": {"Technology": 0.42830999999999997, "Financials": 0.15979, "Healthcare": 0.02821, "Energy": 0.0, "Consumer Staples": 0.0, "Consumer Discretionary": 0.15, "Industrials": 0.0538, "Other": 0.17987999999999998}, "factor_exposure": {"Other": 0.82011, "Momentum": 0.11485, "Value": 0.06503, "Low Volatility": 0.0}}, "aggressive": {"weights": {"AAPL": 0.1, "NVDA": 0.15, "JPM": 0.15, "CAT": 0.15, "XLK": 0.15, "XLF": 0.15, "MTUM": 0.15}, "expected_return": 0.07291666321707785, "volatility": 0.1921121457947436, "sharpe": 0.3795525936969308, "var_95": 0.021215115557153497, "cvar_95": 0.02554863214838796, "sector_exposure": {"Technology": 0.4, "Financials": 0.3, "Healthcare": 0.0, "Energy": 0.0, "Consumer Staples": 0.0, "Consumer Discretionary": 0.0, "Industrials": 0.15, "Other": 0.15}, "factor_exposure": {"Other": 0.8500000000000001, "Momentum": 0.15, "Value": 0.0, "Low Volatility": 0.0}}}, "investment_committee_notes": [{"created_at": "2026-08-17T14:05:00+00:00", "symbol": "AAPL", "asset_class": "equity", "expected_return_annualized": 0.1, "confidence": 0.62, "rationale": "Services revenue growing ~14% YoY now outweighs hardware cyclicality; iPhone upgrade cycle in China stabilizing after two soft quarters.", "key_signals": ["services revenue +14% YoY", "China iPhone demand stabilizing"]}, {"created_at": "2026-08-17T14:05:00+00:00", "symbol": "NVDA", "asset_class": "equity", "expected_return_annualized": 0.16, "confidence": 0.58, "rationale": "Data-center capex guidance from hyperscalers still expanding for next fiscal year, but valuation already prices in a lot of that \u2014 conviction is real but not maximal.", "key_signals": ["hyperscaler capex guidance raised", "valuation already reflects strong demand"]}, {"created_at": "2026-08-17T14:05:00+00:00", "symbol": "JPM", "asset_class": "equity", "expected_return_annualized": 0.07, "confidence": 0.55, "rationale": "Net interest income holding up better than peers as rate cuts arrive slower than expected; credit quality metrics remain benign.", "key_signals": ["NII resilient vs. peers", "credit quality stable"]}, {"created_at": "2026-08-17T14:05:00+00:00", "symbol": "V", "asset_class": "equity", "expected_return_annualized": 0.08, "confidence": 0.6, "rationale": "Cross-border payment volume reaccelerating with travel demand; take-rate stable.", "key_signals": ["cross-border volume reaccelerating"]}, {"created_at": "2026-08-17T14:05:00+00:00", "symbol": "JNJ", "asset_class": "equity", "expected_return_annualized": 0.04, "confidence": 0.45, "rationale": "Pharma pipeline solid but patent-cliff exposure on two mid-size drugs caps upside near-term.", "key_signals": ["patent cliff exposure on two drugs"]}, {"created_at": "2026-08-17T14:05:00+00:00", "symbol": "UNH", "asset_class": "equity", "expected_return_annualized": 0.02, "confidence": 0.35, "rationale": "Medical cost ratio came in above guidance last quarter; regulatory overhang on Medicare Advantage reimbursement unresolved.", "key_signals": ["medical cost ratio above guidance", "Medicare Advantage reimbursement uncertainty"]}, {"created_at": "2026-08-17T14:05:00+00:00", "symbol": "XOM", "asset_class": "equity", "expected_return_annualized": 0.05, "confidence": 0.48, "rationale": "Crude inventories drawing down as OPEC+ holds supply discipline, but demand growth forecasts have been trimmed twice this year.", "key_signals": ["OPEC+ supply discipline", "demand growth forecasts trimmed"]}, {"created_at": "2026-08-17T14:05:00+00:00", "symbol": "PG", "asset_class": "equity", "expected_return_annualized": 0.05, "confidence": 0.5, "rationale": "Volume growth turned positive after two quarters of price-driven declines; input cost inflation easing.", "key_signals": ["volume growth turned positive", "input costs easing"]}, {"created_at": "2026-08-17T14:05:00+00:00", "symbol": "HD", "asset_class": "equity", "expected_return_annualized": 0.06, "confidence": 0.47, "rationale": "Housing turnover still depressed by mortgage rates, but pro-customer segment outperforming DIY.", "key_signals": ["pro segment outperforming DIY"]}, {"created_at": "2026-08-17T14:05:00+00:00", "symbol": "CAT", "asset_class": "equity", "expected_return_annualized": 0.09, "confidence": 0.52, "rationale": "Infrastructure-linked order backlog remains elevated; dealer inventory normalized after last year's destock.", "key_signals": ["backlog elevated", "dealer inventory normalized"]}, {"created_at": "2026-08-17T14:05:00+00:00", "symbol": "XLK", "asset_class": "etf", "expected_return_annualized": 0.11, "confidence": 0.55, "rationale": "Sector-wide AI infrastructure spend still the dominant earnings driver across the largest constituents.", "key_signals": ["AI infrastructure spend broad-based"]}, {"created_at": "2026-08-17T14:05:00+00:00", "symbol": "XLF", "asset_class": "etf", "expected_return_annualized": 0.06, "confidence": 0.5, "rationale": "Yield curve steepening supports net interest margins across the sector into next year.", "key_signals": ["yield curve steepening"]}, {"created_at": "2026-08-17T14:05:00+00:00", "symbol": "XLV", "asset_class": "etf", "expected_return_annualized": 0.03, "confidence": 0.4, "rationale": "Sector laggard year-to-date on policy uncertainty around drug pricing reform.", "key_signals": ["drug pricing policy uncertainty"]}, {"created_at": "2026-08-17T14:05:00+00:00", "symbol": "MTUM", "asset_class": "etf", "expected_return_annualized": 0.09, "confidence": 0.45, "rationale": "Momentum factor has been crowded into a narrow set of mega-cap tech names \u2014 conviction moderate given concentration risk.", "key_signals": ["momentum concentrated in mega-cap tech"]}, {"created_at": "2026-08-17T14:05:00+00:00", "symbol": "VLUE", "asset_class": "etf", "expected_return_annualized": 0.06, "confidence": 0.42, "rationale": "Value spread vs. growth remains historically wide, a mean-reversion setup without a clear near-term catalyst.", "key_signals": ["value-growth spread historically wide"]}, {"created_at": "2026-08-17T14:05:00+00:00", "symbol": "USMV", "asset_class": "etf", "expected_return_annualized": 0.04, "confidence": 0.48, "rationale": "Low-volatility sleeve provides ballast; opportunity cost has been real in a risk-on tape but that's the point of holding it.", "key_signals": ["defensive ballast against risk-on tape"]}]};
+
+  var SECTOR_MAP = {
+    AAPL: "Technology", MSFT: "Technology", NVDA: "Technology", GOOGL: "Technology",
+    JPM: "Financials", BAC: "Financials", V: "Financials",
+    XOM: "Energy", CVX: "Energy",
+    JNJ: "Healthcare", UNH: "Healthcare",
+    PG: "Consumer Staples", KO: "Consumer Staples",
+    HD: "Consumer Discretionary", MCD: "Consumer Discretionary",
+    CAT: "Industrials", HON: "Industrials",
+    DIS: "Communication Services",
+    XLK: "Technology", XLF: "Financials", XLE: "Energy", XLV: "Healthcare",
+    XLY: "Consumer Discretionary", XLP: "Consumer Staples", XLI: "Industrials"
+  };
+  var FACTOR_MAP = { MTUM: "Momentum", VLUE: "Value", QUAL: "Quality", USMV: "Low Volatility" };
+  var ETF_TICKERS = ["XLK", "XLF", "XLE", "XLV", "XLY", "XLP", "XLI", "MTUM", "VLUE", "QUAL", "USMV"];
+
+  var I18N = {
+    it: {
+      badge_paper: "Paper — fondi simulati", badge_sample: "Dati di esempio",
+      hero_label: "Patrimonio del conto", gran_day: "Giorno", gran_week: "Settimana",
+      risk_title: "Profilo di rischio", risk_sub: "Tre allocazioni ottimizzate dallo stesso posteriore Black-Litterman — scegline una",
+      sector_exposure: "Esposizione settoriale", factor_exposure: "Esposizione fattoriale",
+      holdings_title: "Posizioni target", th_ticker: "Titolo", th_class: "Classe", th_tag: "Settore / Fattore", th_weight: "Peso target",
+      notes_title: "Note del comitato investimenti", notes_sub: "Le view generate dall'AI, con motivazione — un output di ricerca, non un ordine",
+      footer_disclosure: "Conto di investimento simulato — nessun fondo reale coinvolto.",
+      stat_return: "Rendimento atteso", stat_vol: "Volatilità attesa", stat_sharpe: "Sharpe atteso",
+      stat_var: "VaR 95% (1gg)", stat_cvar: "CVaR 95% (1gg)",
+      stat_note_return: "annualizzato, posteriore BL", stat_note_vol: "annualizzata", stat_note_sharpe: "rf = 0%",
+      stat_note_var: "simulazione storica", stat_note_cvar: "shortfall atteso",
+      conservative: "Conservativo", balanced: "Bilanciato", aggressive: "Aggressivo",
+      equity: "Azione", etf: "ETF", since_inception: "da inizio periodo",
+      confidence: "conviction", other_tag: "Altro"
+    },
+    en: {
+      badge_paper: "Paper — simulated funds", badge_sample: "Sample data",
+      hero_label: "Account equity", gran_day: "Day", gran_week: "Week",
+      risk_title: "Risk profile", risk_sub: "Three allocations optimized from the same Black-Litterman posterior — pick one",
+      sector_exposure: "Sector exposure", factor_exposure: "Factor exposure",
+      holdings_title: "Target holdings", th_ticker: "Ticker", th_class: "Class", th_tag: "Sector / Factor", th_weight: "Target weight",
+      notes_title: "Investment committee notes", notes_sub: "The AI's generated views, with rationale — a research output, not an order",
+      footer_disclosure: "Simulated investment account — no real funds involved.",
+      stat_return: "Expected return", stat_vol: "Expected volatility", stat_sharpe: "Expected Sharpe",
+      stat_var: "VaR 95% (1-day)", stat_cvar: "CVaR 95% (1-day)",
+      stat_note_return: "annualized, BL posterior", stat_note_vol: "annualized", stat_note_sharpe: "rf = 0%",
+      stat_note_var: "historical simulation", stat_note_cvar: "expected shortfall",
+      conservative: "Conservative", balanced: "Balanced", aggressive: "Aggressive",
+      equity: "Equity", etf: "ETF", since_inception: "since inception",
+      confidence: "conviction", other_tag: "Other"
+    }
   };
 
-  var fmtEUR = function (v) { return "€" + v.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
-  var fmtPct = function (v, digits) { digits = digits === undefined ? 1 : digits; return (v * 100).toFixed(digits) + "%"; };
-  var fmtSigned = function (v, unit) { var s = v >= 0 ? "+" : ""; return s + v.toFixed(2) + (unit || ""); };
-  var fmtDate = function (iso) {
-    var d = new Date(iso);
-    return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-  };
-  var fmtDateTime = function (iso) {
-    var d = new Date(iso);
-    return d.toLocaleDateString("en-US", { month: "short", day: "numeric" }) + " · " +
-      d.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
-  };
+  var state = { lang: "it", range: "ALL", granularity: "day", riskProfile: DATA.active_risk_profile || "balanced", scrubIndex: null };
 
-  function renderMeta() {
-    document.getElementById("generated-line").textContent = "Generated " + fmtDateTime(DATA.generated_at) + " UTC · schema v" + DATA.schema_version;
-    document.getElementById("schema-line").textContent = "schema v" + DATA.schema_version + " · dashboard_snapshot.json";
+  function t(key) { return I18N[state.lang][key] || key; }
+  function fmtLocale() { return state.lang === "it" ? "it-IT" : "en-US"; }
+  function fmtEUR(v) { return v.toLocaleString(fmtLocale(), { style: "currency", currency: "EUR", minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  function fmtPct(v, digits) { digits = digits === undefined ? 1 : digits; return (v * 100).toLocaleString(fmtLocale(), { minimumFractionDigits: digits, maximumFractionDigits: digits }) + "%"; }
+  function fmtSignedPct(v, digits) { var s = v >= 0 ? "+" : ""; return s + fmtPct(v, digits); }
+  function fmtDate(iso) {
+    var d = new Date(iso);
+    return d.toLocaleDateString(fmtLocale(), { day: "2-digit", month: "short", year: "2-digit" });
+  }
+
+  function buildLogo() {
+    var svg = document.getElementById("logo-mark");
+    var svgNS = "http://www.w3.org/2000/svg";
+    var cx = 16, cy = 16, n = 14;
+    for (var i = 0; i < n; i++) {
+      var angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+      var rInner = 6, rOuter = i % 2 === 0 ? 14 : 11;
+      var x1 = cx + rInner * Math.cos(angle), y1 = cy + rInner * Math.sin(angle);
+      var x2 = cx + rOuter * Math.cos(angle), y2 = cy + rOuter * Math.sin(angle);
+      var line = document.createElementNS(svgNS, "line");
+      line.setAttribute("x1", x1.toFixed(2)); line.setAttribute("y1", y1.toFixed(2));
+      line.setAttribute("x2", x2.toFixed(2)); line.setAttribute("y2", y2.toFixed(2));
+      line.setAttribute("stroke", "var(--accent)");
+      line.setAttribute("stroke-width", "2");
+      line.setAttribute("stroke-linecap", "round");
+      svg.appendChild(line);
+    }
+  }
+
+  // ---------- equity curve: range/granularity filtering ----------
+  function weeklyResample(curve) {
+    var out = [];
+    for (var i = 0; i < curve.length; i += 7) {
+      out.push(curve[Math.min(i + 6, curve.length - 1)]);
+    }
+    return out;
+  }
+
+  function rangeFiltered(curve) {
+    if (state.range === "ALL") return curve;
+    var days = state.range === "1M" ? 30 : 90;
+    return curve.slice(Math.max(0, curve.length - days));
+  }
+
+  function activeCurve() {
+    var curve = rangeFiltered(DATA.equity_curve);
+    return state.granularity === "week" ? weeklyResample(curve) : curve;
   }
 
   function renderHero() {
-    var s = DATA.stats;
-    document.getElementById("hero-equity").textContent = fmtEUR(s.equity_eur);
-    var startEquity = DATA.equity_curve[0].equity;
-    var deltaPct = (s.equity_eur - startEquity) / startEquity;
-    var deltaEl = document.getElementById("hero-delta");
-    deltaEl.className = "hero-delta " + (deltaPct >= 0 ? "pos" : "neg");
-    deltaEl.innerHTML = "";
-    var arrow = document.createElement("span");
-    arrow.textContent = deltaPct >= 0 ? "↑" : "↓";
-    var val = document.createElement("span");
-    val.textContent = fmtSigned(deltaPct * 100, "%") + " since inception";
-    deltaEl.appendChild(arrow);
-    deltaEl.appendChild(val);
+    var curve = DATA.equity_curve;
+    var current = curve.length ? curve[curve.length - 1].equity : 0;
+    document.getElementById("hero-equity").textContent = fmtEUR(current);
 
-    var equityCount = DATA.positions.filter(function (p) { return p.asset_class === "equity"; }).length;
-    var cryptoCount = DATA.positions.filter(function (p) { return p.asset_class === "crypto"; }).length;
-    document.getElementById("tag-equity-count").textContent = equityCount + " open";
-    document.getElementById("tag-crypto-count").textContent = cryptoCount + " open";
-    document.getElementById("tag-closed-count").textContent = s.closed_trades_count;
-  }
-
-  function statTile(label, value, note, cls) {
-    var tile = document.createElement("div");
-    tile.className = "stat-tile";
-    var l = document.createElement("div"); l.className = "stat-label"; l.textContent = label;
-    var v = document.createElement("div"); v.className = "stat-value tabular" + (cls ? " " + cls : ""); v.textContent = value;
-    var n = document.createElement("div"); n.className = "stat-note"; n.textContent = note;
-    tile.appendChild(l); tile.appendChild(v); tile.appendChild(n);
-    return tile;
-  }
-
-  function renderStats() {
-    var s = DATA.stats;
-    var grid = document.getElementById("stat-grid");
-    grid.appendChild(statTile("Sharpe ratio", s.sharpe_ratio.toFixed(2), "annualized, 252 periods"));
-    grid.appendChild(statTile("Sortino ratio", s.sortino_ratio.toFixed(2), "downside deviation only"));
-    grid.appendChild(statTile("Max drawdown", fmtPct(s.max_drawdown), "peak to trough", "neg"));
-    grid.appendChild(statTile("Win rate", fmtPct(s.win_rate, 0), s.closed_trades_count + " closed trades"));
-    grid.appendChild(statTile("Profit factor", s.profit_factor.toFixed(2), "gross profit ÷ gross loss"));
-    grid.appendChild(statTile("Alpha (ann.)", fmtSigned(s.alpha_annualized * 100, "%"), "vs. SPY", s.alpha_annualized >= 0 ? "pos" : "neg"));
-    grid.appendChild(statTile("Beta", s.beta.toFixed(2), "vs. SPY"));
-    var pnlSign = s.total_realized_pnl_eur >= 0 ? "+" : "−";
-    grid.appendChild(statTile("Realized P&L", pnlSign + fmtEUR(Math.abs(s.total_realized_pnl_eur)), "period total", s.total_realized_pnl_eur >= 0 ? "pos" : "neg"));
-  }
-
-  // ---------- chart ----------
-  function buildIndexed(curve) {
-    var base = curve[0].equity;
-    return curve.map(function (p) { return { t: p.t, raw: p.equity, idx: (p.equity / base) * 100 }; });
+    var start = curve.length ? curve[0].equity : current;
+    var deltaPct = start ? (current - start) / start : 0;
+    var el = document.getElementById("hero-delta");
+    el.className = "hero-delta " + (deltaPct >= 0 ? "pos" : "neg");
+    el.innerHTML = "";
+    var arrow = document.createElement("span"); arrow.textContent = deltaPct >= 0 ? "↑" : "↓";
+    var val = document.createElement("span"); val.textContent = fmtSignedPct(deltaPct) + " " + t("since_inception");
+    el.appendChild(arrow); el.appendChild(val);
   }
 
   function renderChart() {
+    var curve = activeCurve();
     var svg = document.getElementById("chart-svg");
-    var wrap = document.getElementById("chart-wrap");
-    var tooltip = document.getElementById("tooltip");
-    var portfolio = buildIndexed(DATA.equity_curve);
-    var benchmark = buildIndexed(DATA.benchmark_curve);
+    var svgNS = "http://www.w3.org/2000/svg";
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    if (curve.length < 2) return;
 
-    var width = 1040, height = 280, padL = 44, padR = 54, padT = 16, padB = 26;
+    var width = 1040, height = 260, padL = 4, padR = 54, padT = 14, padB = 22;
     var innerW = width - padL - padR, innerH = height - padT - padB;
-
-    var allIdx = portfolio.concat(benchmark).map(function (p) { return p.idx; });
-    var minV = Math.min.apply(null, allIdx), maxV = Math.max.apply(null, allIdx);
-    var span = maxV - minV;
+    var values = curve.map(function (p) { return p.equity; });
+    var minV = Math.min.apply(null, values), maxV = Math.max.apply(null, values);
+    var span = maxV - minV || 1;
     var yMin = minV - span * 0.12, yMax = maxV + span * 0.12;
+    var n = curve.length;
 
-    var n = portfolio.length;
     function x(i) { return padL + (innerW * i) / (n - 1); }
     function y(v) { return padT + innerH - ((v - yMin) / (yMax - yMin)) * innerH; }
-
-    function pathFor(series) {
-      return series.map(function (p, i) { return (i === 0 ? "M" : "L") + x(i).toFixed(2) + "," + y(p.idx).toFixed(2); }).join(" ");
-    }
-    function areaFor(series) {
-      var line = pathFor(series);
-      return line + " L" + x(n - 1).toFixed(2) + "," + (padT + innerH).toFixed(2) +
-        " L" + x(0).toFixed(2) + "," + (padT + innerH).toFixed(2) + " Z";
-    }
-
-    var svgNS = "http://www.w3.org/2000/svg";
     function el(tag, attrs) {
       var e = document.createElementNS(svgNS, tag);
       for (var k in attrs) e.setAttribute(k, attrs[k]);
@@ -490,216 +468,204 @@
     }
 
     svg.setAttribute("viewBox", "0 0 " + width + " " + height);
-    while (svg.firstChild) svg.removeChild(svg.firstChild);
 
-    // gridlines at ~4 nice steps
     var steps = 4;
     for (var g = 0; g <= steps; g++) {
       var gv = yMin + ((yMax - yMin) * g) / steps;
       var gy = y(gv);
       svg.appendChild(el("line", { x1: padL, x2: width - padR, y1: gy.toFixed(2), y2: gy.toFixed(2), class: "gridline" }));
       var label = el("text", { x: width - padR + 8, y: (gy + 4).toFixed(2), class: "axis-label" });
-      label.textContent = gv.toFixed(0);
+      label.textContent = Math.round(gv).toLocaleString(fmtLocale());
       svg.appendChild(label);
     }
 
-    // x labels: first, mid, last
     [0, Math.floor((n - 1) / 2), n - 1].forEach(function (i) {
-      var t = el("text", { x: x(i).toFixed(2), y: height - 6, class: "axis-label", "text-anchor": i === 0 ? "start" : (i === n - 1 ? "end" : "middle") });
-      t.textContent = fmtDate(portfolio[i].t);
-      svg.appendChild(t);
+      var tEl = el("text", { x: x(i).toFixed(2), y: height - 4, class: "axis-label", "text-anchor": i === 0 ? "start" : (i === n - 1 ? "end" : "middle") });
+      tEl.textContent = fmtDate(curve[i].t);
+      svg.appendChild(tEl);
     });
 
-    // portfolio area wash
-    var area = el("path", { d: areaFor(portfolio), fill: "var(--series-portfolio-wash)", stroke: "none" });
-    svg.appendChild(area);
+    var linePath = curve.map(function (p, i) { return (i === 0 ? "M" : "L") + x(i).toFixed(2) + "," + y(p.equity).toFixed(2); }).join(" ");
+    var areaPath = linePath + " L" + x(n - 1).toFixed(2) + "," + (padT + innerH).toFixed(2) + " L" + x(0).toFixed(2) + "," + (padT + innerH).toFixed(2) + " Z";
+    svg.appendChild(el("path", { d: areaPath, fill: "var(--series-portfolio-wash)", stroke: "none" }));
+    svg.appendChild(el("path", { d: linePath, fill: "none", stroke: "var(--series-portfolio)", "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }));
 
-    // benchmark line (drawn first, under portfolio)
-    var benchPath = el("path", { d: pathFor(benchmark), fill: "none", stroke: "var(--series-benchmark)", "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" });
-    svg.appendChild(benchPath);
+    var lastLabel = el("text", { x: (x(n - 1) + 8).toFixed(2), y: (y(curve[n - 1].equity) + 4).toFixed(2), class: "end-label", fill: "var(--series-portfolio)" });
+    lastLabel.textContent = Math.round(curve[n - 1].equity).toLocaleString(fmtLocale());
+    svg.appendChild(lastLabel);
 
-    // portfolio line
-    var portPath = el("path", { d: pathFor(portfolio), fill: "none", stroke: "var(--series-portfolio)", "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" });
-    svg.appendChild(portPath);
+    var slider = document.getElementById("scrub-slider");
+    slider.max = String(n - 1);
+    if (state.scrubIndex === null || state.scrubIndex > n - 1) state.scrubIndex = n - 1;
+    slider.value = String(state.scrubIndex);
 
-    // end labels
-    var portEnd = portfolio[n - 1], benchEnd = benchmark[n - 1];
-    var pLabel = el("text", { x: (x(n - 1) + 8).toFixed(2), y: (y(portEnd.idx) + 4).toFixed(2), class: "end-label", fill: "var(--series-portfolio)" });
-    pLabel.textContent = portEnd.idx.toFixed(1);
-    svg.appendChild(pLabel);
-    var bLabel = el("text", { x: (x(n - 1) + 8).toFixed(2), y: (y(benchEnd.idx) + 4).toFixed(2), class: "end-label", fill: "var(--series-benchmark)" });
-    bLabel.textContent = benchEnd.idx.toFixed(1);
-    svg.appendChild(bLabel);
+    var idx = state.scrubIndex;
+    var px = x(idx), py = y(curve[idx].equity);
+    svg.appendChild(el("line", { class: "playhead-line", x1: px.toFixed(2), x2: px.toFixed(2), y1: padT, y2: padT + innerH }));
+    svg.appendChild(el("circle", { class: "playhead-dot", cx: px.toFixed(2), cy: py.toFixed(2), r: 5 }));
 
-    // crosshair + hover dots
-    var crosshair = el("line", { class: "crosshair-line", y1: padT, y2: padT + innerH });
-    svg.appendChild(crosshair);
-    var dotP = el("circle", { class: "hover-dot", r: 4.5, fill: "var(--series-portfolio)", stroke: "var(--surface)", "stroke-width": 2 });
-    var dotB = el("circle", { class: "hover-dot", r: 4.5, fill: "var(--series-benchmark)", stroke: "var(--surface)", "stroke-width": 2 });
-    svg.appendChild(dotP); svg.appendChild(dotB);
+    document.getElementById("scrub-readout").innerHTML =
+      fmtDate(curve[idx].t) + " &middot; <strong>" + fmtEUR(curve[idx].equity) + "</strong>";
+  }
 
-    var hitRect = el("rect", { x: padL, y: padT, width: innerW, height: innerH, fill: "transparent" });
-    svg.appendChild(hitRect);
+  function renderRiskSelector() {
+    var container = document.getElementById("risk-selector");
+    container.innerHTML = "";
+    ["conservative", "balanced", "aggressive"].forEach(function (profile) {
+      var scenario = DATA.scenarios[profile];
+      if (!scenario) return;
+      var pill = document.createElement("button");
+      pill.className = "risk-pill" + (state.riskProfile === profile ? " active" : "");
+      pill.innerHTML = '<div class="risk-name"><span>' + t(profile) + "</span></div>" +
+        '<div class="risk-vol">σ ' + fmtPct(scenario.volatility, 1) + "</div>";
+      pill.addEventListener("click", function () { state.riskProfile = profile; renderAll(); });
+      container.appendChild(pill);
+    });
+  }
 
-    function showTooltip(i) {
-      var px = x(i), py = y(portfolio[i].idx), by = y(benchmark[i].idx);
-      crosshair.setAttribute("x1", px); crosshair.setAttribute("x2", px);
-      crosshair.style.opacity = 1;
-      dotP.setAttribute("cx", px); dotP.setAttribute("cy", py); dotP.style.opacity = 1;
-      dotB.setAttribute("cx", px); dotB.setAttribute("cy", by); dotB.style.opacity = 1;
+  function renderStatGrid() {
+    var scenario = DATA.scenarios[state.riskProfile];
+    var grid = document.getElementById("stat-grid");
+    grid.innerHTML = "";
+    if (!scenario) return;
+    var tiles = [
+      [t("stat_return"), fmtSignedPct(scenario.expected_return), t("stat_note_return")],
+      [t("stat_vol"), fmtPct(scenario.volatility), t("stat_note_vol")],
+      [t("stat_sharpe"), scenario.sharpe.toFixed(2), t("stat_note_sharpe")],
+      [t("stat_var"), fmtPct(scenario.var_95), t("stat_note_var")],
+      [t("stat_cvar"), fmtPct(scenario.cvar_95), t("stat_note_cvar")]
+    ];
+    tiles.forEach(function (tile) {
+      var el = document.createElement("div"); el.className = "stat-tile";
+      el.innerHTML = '<div class="stat-label">' + tile[0] + '</div><div class="stat-value tabular">' + tile[1] + '</div><div class="stat-note">' + tile[2] + "</div>";
+      grid.appendChild(el);
+    });
+  }
 
-      tooltip.innerHTML = "";
-      var dateEl = document.createElement("div"); dateEl.className = "tooltip-date"; dateEl.textContent = fmtDate(portfolio[i].t);
-      tooltip.appendChild(dateEl);
+  function renderExposure(containerId, exposure) {
+    var container = document.getElementById(containerId);
+    container.innerHTML = "";
+    var entries = Object.keys(exposure).map(function (k) { return [k, exposure[k]]; }).filter(function (e) { return e[1] > 0.001; });
+    entries.sort(function (a, b) { return b[1] - a[1]; });
+    entries.forEach(function (entry) {
+      var label = entry[0] === "Other" ? t("other_tag") : entry[0];
+      var row = document.createElement("div"); row.className = "exposure-row";
+      row.innerHTML =
+        '<div class="exposure-label">' + label + '</div>' +
+        '<div class="exposure-track"><div class="exposure-fill" style="width:' + (entry[1] * 100).toFixed(1) + '%"></div></div>' +
+        '<div class="exposure-value">' + fmtPct(entry[1], 0) + '</div>';
+      container.appendChild(row);
+    });
+  }
 
-      [["Portfolio", portfolio[i], "var(--series-portfolio)"], ["SPY", benchmark[i], "var(--series-benchmark)"]].forEach(function (row) {
-        var r = document.createElement("div"); r.className = "tooltip-row";
-        var key = document.createElement("div"); key.className = "tooltip-key";
-        var stroke = document.createElement("span"); stroke.className = "stroke"; stroke.style.background = row[2];
-        var name = document.createElement("span"); name.textContent = row[0];
-        key.appendChild(stroke); key.appendChild(name);
-        var val = document.createElement("div"); val.className = "tooltip-val"; val.textContent = row[1].idx.toFixed(1);
-        r.appendChild(key); r.appendChild(val);
-        tooltip.appendChild(r);
-      });
+  function renderHoldings() {
+    var scenario = DATA.scenarios[state.riskProfile];
+    var body = document.getElementById("holdings-body");
+    body.innerHTML = "";
+    if (!scenario) return;
+    var entries = Object.keys(scenario.weights).map(function (k) { return [k, scenario.weights[k]]; });
+    entries.sort(function (a, b) { return b[1] - a[1]; });
+    document.getElementById("holdings-sub").textContent = entries.length + (state.lang === "it" ? " posizioni · profilo " : " positions · ") + t(state.riskProfile).toLowerCase();
 
-      var rect = wrap.getBoundingClientRect();
-      var svgRect = svg.getBoundingClientRect();
-      var scale = svgRect.width / width;
-      tooltip.style.left = ((px * scale) + (svgRect.left - rect.left)) + "px";
-      tooltip.style.top = ((py * scale) + (svgRect.top - rect.top)) + "px";
-      tooltip.style.opacity = 1;
-    }
-    function hideTooltip() {
-      crosshair.style.opacity = 0; dotP.style.opacity = 0; dotB.style.opacity = 0; tooltip.style.opacity = 0;
-    }
-    function handleMove(evt) {
-      var svgRect = svg.getBoundingClientRect();
-      var scale = width / svgRect.width;
-      var mx = (evt.clientX - svgRect.left) * scale;
-      var i = Math.round(((mx - padL) / innerW) * (n - 1));
-      i = Math.max(0, Math.min(n - 1, i));
-      showTooltip(i);
-    }
-    hitRect.addEventListener("pointermove", handleMove);
-    hitRect.addEventListener("pointerleave", hideTooltip);
-    hitRect.addEventListener("pointerdown", handleMove);
-
-    // table view (accessibility fallback)
-    var tbody = document.querySelector("#equity-table tbody");
-    tbody.innerHTML = "";
-    portfolio.forEach(function (p, i) {
+    entries.forEach(function (entry) {
+      var symbol = entry[0], weight = entry[1];
+      var assetClass = ETF_TICKERS.indexOf(symbol) !== -1 ? "etf" : "equity";
+      var tag = SECTOR_MAP[symbol] || FACTOR_MAP[symbol] || t("other_tag");
       var tr = document.createElement("tr");
-      var tds = [fmtDate(p.t), p.idx.toFixed(1), benchmark[i].idx.toFixed(1), fmtEUR(p.raw)];
-      tds.forEach(function (val, idx) {
-        var td = document.createElement("td");
-        td.textContent = val;
-        tr.appendChild(td);
-      });
-      tbody.appendChild(tr);
+      tr.innerHTML =
+        '<td><span class="ticker-tag">' + symbol + '</span></td>' +
+        '<td>' + t(assetClass) + '</td>' +
+        '<td>' + tag + '</td>' +
+        '<td><div class="weight-bar-cell"><div class="weight-bar-track"><div class="weight-bar-fill" style="width:' + Math.min(100, (weight / 0.15) * 100).toFixed(0) + '%"></div></div>' + fmtPct(weight, 1) + '</div></td>';
+      body.appendChild(tr);
     });
   }
 
-  function renderToggle() {
-    var btn = document.getElementById("view-toggle");
-    var chartWrap = document.getElementById("chart-wrap");
-    var tableWrap = document.getElementById("table-wrap");
-    btn.addEventListener("click", function () {
-      var showingTable = tableWrap.style.display !== "none";
-      tableWrap.style.display = showingTable ? "none" : "block";
-      chartWrap.style.display = showingTable ? "block" : "none";
-      btn.setAttribute("aria-pressed", String(!showingTable));
-      btn.textContent = showingTable ? "View as table" : "View as chart";
-    });
-  }
+  function renderNotes() {
+    var feed = document.getElementById("notes-feed");
+    feed.innerHTML = "";
+    DATA.investment_committee_notes.forEach(function (note) {
+      var entry = document.createElement("article"); entry.className = "note-entry";
+      var top = document.createElement("div"); top.className = "note-top";
 
-  // ---------- positions ----------
-  var longArrow = '<svg viewBox="0 0 12 12"><path d="M2 8L6 3L10 8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  var shortArrow = '<svg viewBox="0 0 12 12"><path d="M2 4L6 9L10 4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      var tag = document.createElement("span"); tag.className = "ticker-tag"; tag.textContent = note.symbol;
+      var ret = document.createElement("span");
+      ret.className = "note-return " + (note.expected_return_annualized >= 0 ? "pos" : "neg");
+      ret.textContent = fmtSignedPct(note.expected_return_annualized);
 
-  function renderPositions() {
-    var list = document.getElementById("position-list");
-    var totalNotional = DATA.positions.reduce(function (a, p) { return a + p.size_eur; }, 0);
-    document.getElementById("positions-sub").textContent = DATA.positions.length + " open · " + fmtEUR(totalNotional) + " deployed";
+      var meter = document.createElement("div"); meter.className = "confidence-meter";
+      var track = document.createElement("div"); track.className = "confidence-track";
+      var fill = document.createElement("div"); fill.className = "confidence-fill"; fill.style.width = (note.confidence * 100) + "%";
+      track.appendChild(fill);
+      var val = document.createElement("span"); val.className = "confidence-value"; val.textContent = (note.confidence * 100).toFixed(0) + "%";
+      meter.appendChild(track); meter.appendChild(val);
 
-    DATA.positions.forEach(function (p) {
-      var row = document.createElement("div");
-      row.className = "position-row";
+      top.appendChild(tag); top.appendChild(ret); top.appendChild(meter);
 
-      var top = document.createElement("div"); top.className = "position-top";
-      var tag = document.createElement("span"); tag.className = "ticker-tag"; tag.textContent = p.symbol;
-      var dir = document.createElement("span"); dir.className = "dir-chip " + p.direction;
-      dir.innerHTML = (p.direction === "long" ? longArrow : shortArrow) + " " + p.direction.toUpperCase();
-      var size = document.createElement("span"); size.className = "position-size"; size.textContent = fmtEUR(p.size_eur);
-      top.appendChild(tag); top.appendChild(dir); top.appendChild(size);
-
-      var meta = document.createElement("div"); meta.className = "position-meta";
-      [["Entry", p.entry_price], ["Stop-loss", p.stop_loss_price], ["Take-profit", p.take_profit_price], ["Opened", fmtDate(p.opened_at)]].forEach(function (pair) {
-        var d = document.createElement("div");
-        var l = document.createElement("span"); l.textContent = pair[0];
-        var v = document.createElement("span"); v.textContent = typeof pair[1] === "number" ? pair[1].toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : pair[1];
-        d.appendChild(l); d.appendChild(v);
-        meta.appendChild(d);
-      });
-
-      row.appendChild(top); row.appendChild(meta);
-      list.appendChild(row);
-    });
-  }
-
-  // ---------- journal ----------
-  function renderJournal() {
-    var feed = document.getElementById("journal-feed");
-    DATA.trade_journal.forEach(function (entry) {
-      var item = document.createElement("article");
-      item.className = "journal-entry";
-      item.tabIndex = 0;
-
-      var top = document.createElement("div"); top.className = "journal-top";
-      var tag = document.createElement("span"); tag.className = "ticker-tag"; tag.textContent = entry.symbol;
-      top.appendChild(tag);
-
-      if (entry.skipped_by_risk_layer) {
-        var chip = document.createElement("span"); chip.className = "risk-gated-chip"; chip.textContent = "⚠ Blocked by risk layer";
-        top.appendChild(chip);
-      } else {
-        var dir = document.createElement("span"); dir.className = "dir-chip " + entry.direction;
-        dir.innerHTML = (entry.direction === "long" ? longArrow : entry.direction === "short" ? shortArrow : "") + " " + entry.direction.toUpperCase();
-        top.appendChild(dir);
-
-        var meter = document.createElement("div"); meter.className = "confidence-meter";
-        var track = document.createElement("div"); track.className = "confidence-track";
-        var fill = document.createElement("div"); fill.className = "confidence-fill"; fill.style.width = (entry.confidence * 100) + "%";
-        track.appendChild(fill);
-        var val = document.createElement("span"); val.className = "confidence-value"; val.textContent = (entry.confidence * 100).toFixed(0) + "%";
-        meter.appendChild(track); meter.appendChild(val);
-        top.appendChild(meter);
-      }
-
-      var time = document.createElement("span"); time.className = "journal-time"; time.textContent = fmtDateTime(entry.created_at);
-      top.appendChild(time);
-
-      var rationale = document.createElement("p"); rationale.className = "rationale"; rationale.textContent = entry.rationale;
+      var rationale = document.createElement("p"); rationale.className = "note-rationale"; rationale.textContent = note.rationale;
 
       var tags = document.createElement("div"); tags.className = "signal-tags";
-      entry.key_signals.forEach(function (s) {
-        var t = document.createElement("span"); t.className = "signal-tag"; t.textContent = s;
-        tags.appendChild(t);
+      (note.key_signals || []).forEach(function (s) {
+        var t2 = document.createElement("span"); t2.className = "signal-tag"; t2.textContent = s;
+        tags.appendChild(t2);
       });
 
-      item.appendChild(top);
-      item.appendChild(rationale);
-      item.appendChild(tags);
-      feed.appendChild(item);
+      entry.appendChild(top); entry.appendChild(rationale); entry.appendChild(tags);
+      feed.appendChild(entry);
     });
   }
 
-  renderMeta();
-  renderHero();
-  renderStats();
-  renderChart();
-  renderToggle();
-  renderPositions();
-  renderJournal();
+  function applyStaticI18n() {
+    document.querySelectorAll("[data-i18n]").forEach(function (elm) {
+      elm.textContent = t(elm.getAttribute("data-i18n"));
+    });
+  }
+
+  function renderAll() {
+    applyStaticI18n();
+    renderHero();
+    renderChart();
+    renderRiskSelector();
+    renderStatGrid();
+    renderExposure("sector-exposure", DATA.scenarios[state.riskProfile] ? DATA.scenarios[state.riskProfile].sector_exposure : {});
+    renderExposure("factor-exposure", DATA.scenarios[state.riskProfile] ? DATA.scenarios[state.riskProfile].factor_exposure : {});
+    renderHoldings();
+    renderNotes();
+  }
+
+  document.getElementById("lang-it").addEventListener("click", function () { setLang("it"); });
+  document.getElementById("lang-en").addEventListener("click", function () { setLang("en"); });
+  function setLang(lang) {
+    state.lang = lang;
+    document.getElementById("lang-it").classList.toggle("active", lang === "it");
+    document.getElementById("lang-en").classList.toggle("active", lang === "en");
+    renderAll();
+  }
+
+  document.querySelectorAll("#range-toggle button").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll("#range-toggle button").forEach(function (b) { b.classList.remove("active"); });
+      btn.classList.add("active");
+      state.range = btn.getAttribute("data-range");
+      state.scrubIndex = null;
+      renderChart();
+    });
+  });
+  document.querySelectorAll("#granularity-toggle button").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll("#granularity-toggle button").forEach(function (b) { b.classList.remove("active"); });
+      btn.classList.add("active");
+      state.granularity = btn.getAttribute("data-gran");
+      state.scrubIndex = null;
+      renderChart();
+    });
+  });
+  document.getElementById("scrub-slider").addEventListener("input", function (e) {
+    state.scrubIndex = parseInt(e.target.value, 10);
+    renderChart();
+  });
+
+  buildLogo();
+  renderAll();
 })();
 </script>
