@@ -1,0 +1,43 @@
+name: Daily equity mark
+
+on:
+  schedule:
+    # 21:15 UTC, Mon-Fri — shortly after the US market close (16:00 ET / 20:00-21:00 UTC)
+    - cron: "15 21 * * 1-5"
+  workflow_dispatch: {}
+
+concurrency:
+  # shared with weekly-rebalance.yml — both write the same SQLite ledger and
+  # must never run concurrently (binary file, no merge).
+  group: ink-ledger-db
+  cancel-in-progress: false
+
+jobs:
+  mark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -e .
+
+      - name: Mark daily equity
+        env:
+          ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
+          ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
+          ALPACA_PAPER: "true"
+        run: python -m trading_desk.cli.daily_mark
+
+      - name: Commit updated ledger
+        run: |
+          git config user.name "ink-ledger-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/trading_desk.sqlite
+          git diff --staged --quiet && exit 0
+          git commit -m "mark: daily equity $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import pandas as pd
 
-from trading_desk.data.market_data import fetch_bars, fetch_price_panel
+from trading_desk.data.market_data import fetch_bars, fetch_price_panel, fetch_volume_panel
 
 
 @dataclass
@@ -63,3 +63,11 @@ def test_fetch_price_panel_drops_rows_with_missing_data():
     client = FakeStockClient(panel_with_gap)
     panel = fetch_price_panel(["AAPL", "MSFT"], client)
     assert len(panel) == 2  # the row missing MSFT's price is dropped
+
+
+def test_fetch_volume_panel_pivots_to_wide_format():
+    client = FakeStockClient(make_multi_symbol_df())
+    panel = fetch_volume_panel(["AAPL", "MSFT"], client)
+    assert set(panel.columns) == {"AAPL", "MSFT"}
+    assert panel["AAPL"].iloc[0] == 1000
+    assert panel["MSFT"].iloc[0] == 1000

@@ -41,3 +41,20 @@ def fetch_price_panel(
         return df[["close"]].rename(columns={"close": symbols[0]})
     panel = df["close"].unstack(level="symbol")
     return panel.dropna()
+
+
+def fetch_volume_panel(
+    symbols: List[str],
+    stock_client: StockHistoricalDataClient,
+    lookback_bars: int = 252,
+    timeframe: TimeFrame = TimeFrame.Day,
+) -> pd.DataFrame:
+    """Wide panel of trading volume — used for the ETF market-cap proxy
+    (`data/fundamentals.py::dollar_volume_proxy_weights`)."""
+    request = StockBarsRequest(symbol_or_symbols=symbols, timeframe=timeframe, limit=lookback_bars)
+    bar_set = stock_client.get_stock_bars(request)
+    df = bar_set.df
+    if not isinstance(df.index, pd.MultiIndex):
+        return df[["volume"]].rename(columns={"volume": symbols[0]})
+    panel = df["volume"].unstack(level="symbol")
+    return panel.dropna()

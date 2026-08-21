@@ -1,8 +1,8 @@
 [project]
-name = "trading-desk"
-version = "0.1.0"
-description = "AI-driven paper trading desk — Finance + AI portfolio project"
-requires-python = ">=3.11"
+name = "ink-ledger"
+version = "0.2.0"
+description = "AI-augmented Black-Litterman investment desk — Finance + AI portfolio project"
+requires-python = ">=3.9"
 dependencies = [
     "alpaca-py>=0.33",
     "anthropic>=0.45",
@@ -15,6 +15,7 @@ dependencies = [
     "python-dotenv>=1.0",
     "resend>=2.4",
     "numpy>=1.26",
+    "PyPortfolioOpt>=1.5",
 ]
 
 [project.optional-dependencies]

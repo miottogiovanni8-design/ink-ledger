@@ -1,20 +1,19 @@
-name: Trading cycle — equity
+name: Weekly rebalance
 
 on:
   schedule:
-    # every 15 min, 13:00-21:00 UTC, Mon-Fri — covers US market hours (9:30-16:00 ET) with margin
-    - cron: "*/15 13-21 * * 1-5"
+    # 14:00 UTC Monday — after the US market opens (9:30 ET), before it's too busy
+    - cron: "0 14 * * 1"
   workflow_dispatch: {}
 
 concurrency:
-  # shared across the equity and crypto workflows: both write the same
-  # SQLite ledger, so they must never run concurrently (binary file, no
-  # merge) — this queues them instead of racing.
-  group: trading-desk-ledger
+  # shared with daily-mark.yml — both write the same SQLite ledger and must
+  # never run concurrently (binary file, no merge).
+  group: ink-ledger-db
   cancel-in-progress: false
 
 jobs:
-  run-cycle:
+  rebalance:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,23 +25,22 @@ jobs:
       - name: Install dependencies
         run: pip install -e .
 
-      - name: Run trading cycle
+      - name: Run weekly rebalance
         env:
           ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
           ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
           ALPACA_PAPER: "true"
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
-          ALPHAVANTAGE_API_KEY: ${{ secrets.ALPHAVANTAGE_API_KEY }}
-          DAILY_BUDGET_EUR: ${{ vars.DAILY_BUDGET_EUR }}
-        run: python -m trading_desk.cli.run_cycle --universe equity
+          ACTIVE_RISK_PROFILE: ${{ vars.ACTIVE_RISK_PROFILE }}
+        run: python -m trading_desk.cli.weekly_rebalance
 
       - name: Commit updated ledger and snapshot
         run: |
-          git config user.name "trading-desk-bot"
+          git config user.name "ink-ledger-bot"
           git config user.email "actions@users.noreply.github.com"
           git add data/trading_desk.sqlite data/dashboard_snapshot.json
           git diff --staged --quiet && exit 0
-          git commit -m "cycle: equity $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git commit -m "rebalance: weekly $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           git pull --rebase origin "${GITHUB_REF_NAME}"
           git push
