@@ -18,11 +18,20 @@ sys.path.insert(0, "src")
 import numpy as np
 import pandas as pd
 
-from trading_desk.config import DEFAULT_FACTOR_MAP, DEFAULT_NAME_MAP, DEFAULT_SECTOR_MAP  # noqa: E402
+from trading_desk.config import (  # noqa: E402
+    DEFAULT_BENCHMARK_SECTOR_WEIGHTS,
+    DEFAULT_FACTOR_MAP,
+    DEFAULT_NAME_MAP,
+    DEFAULT_SECTOR_ETF_MAP,
+    DEFAULT_SECTOR_MAP,
+)
+from trading_desk.engine.attribution import brinson_attribution  # noqa: E402
 from trading_desk.engine.black_litterman import blend_views, compute_covariance, compute_market_prior, optimize_portfolio  # noqa: E402
 from trading_desk.engine.portfolio_risk import evaluate_scenario, exposure_by_tag, historical_var_cvar  # noqa: E402
 from trading_desk.engine.schemas import PortfolioView  # noqa: E402
+from trading_desk.engine.skill_analysis import calibration_buckets, decompose_return, directional_hit, information_coefficient  # noqa: E402
 from trading_desk.metrics import stats  # noqa: E402
+from trading_desk.reporting.analytics import portfolio_sector_returns  # noqa: E402
 from trading_desk.reporting.holdings import build_holdings_detail  # noqa: E402
 
 random.seed(11)
@@ -312,8 +321,49 @@ def main():
 
     transaction_history = sorted(transactions, key=lambda t: t["executed_at"], reverse=True)
 
+    # --- skill analysis: fabricate ~24 historical (predicted, realized)
+    # pairs with a modest, realistic information coefficient (~0.2-0.3) —
+    # a real but not superhuman signal, computed through the actual
+    # information_coefficient/calibration_buckets functions.
+    skill_rng = np.random.default_rng(31)
+    n_history = 24
+    predicted = skill_rng.uniform(-0.04, 0.16, n_history)
+    confidences = skill_rng.uniform(0.3, 0.75, n_history)
+    standardized = (predicted - predicted.mean()) / predicted.std()
+    target_ic = 0.28
+    noise = skill_rng.normal(0, 0.045, n_history)
+    realized = target_ic * standardized * 0.03 + noise
+
+    outcomes = [
+        {"confidence": float(confidences[i]), "correct": directional_hit(float(predicted[i]), float(realized[i]))}
+        for i in range(n_history)
+    ]
+    skill_analysis = {
+        "sample_size": n_history,
+        "information_coefficient": information_coefficient(list(predicted), list(realized)),
+        "calibration_buckets": calibration_buckets(outcomes),
+        "return_decomposition": decompose_return(
+            performance_stats["total_return"], performance_stats["benchmark_total_return"], performance_stats["beta"]
+        ),
+    }
+
+    # --- attribution: real sector ETF price history for the benchmark
+    # side, real holdings cost-basis P&L (via portfolio_sector_returns)
+    # for the portfolio side.
+    bench_sector_returns = {
+        sector: float((price_panel[etf].iloc[-1] - price_panel[etf].iloc[0]) / price_panel[etf].iloc[0])
+        for sector, etf in DEFAULT_SECTOR_ETF_MAP.items()
+        if etf in price_panel.columns
+    }
+    port_sector_returns = portfolio_sector_returns(holdings_detail, DEFAULT_SECTOR_MAP)
+    sectors = sorted(set(scenarios["balanced"]["sector_exposure"]) | set(DEFAULT_BENCHMARK_SECTOR_WEIGHTS))
+    attribution = brinson_attribution(
+        sectors, scenarios["balanced"]["sector_exposure"], DEFAULT_BENCHMARK_SECTOR_WEIGHTS,
+        port_sector_returns, bench_sector_returns,
+    )
+
     snapshot = {
-        "schema_version": 3,
+        "schema_version": 4,
         "generated_at": "2026-08-20T21:15:00+00:00",
         "equity_curve": equity_curve,
         "benchmark_curve": benchmark_curve,
@@ -326,6 +376,8 @@ def main():
         "holdings_detail": holdings_detail,
         "transaction_history": transaction_history,
         "investment_committee_notes": committee_notes,
+        "skill_analysis": skill_analysis,
+        "attribution": attribution,
     }
 
     with open("dashboard/sample_snapshot.json", "w") as f:

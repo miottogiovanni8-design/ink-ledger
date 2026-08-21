@@ -1,5 +1,5 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "generated_at": "2026-08-20T21:15:00+00:00",
   "equity_curve": [
     {
@@ -2146,5 +2146,120 @@
         "defensive ballast against risk-on tape"
       ]
     }
-  ]
+  ],
+  "skill_analysis": {
+    "sample_size": 24,
+    "information_coefficient": 0.2521210525678245,
+    "calibration_buckets": [
+      {
+        "range_low": 0.0,
+        "range_high": 0.4,
+        "count": 4,
+        "hit_rate": 0.75
+      },
+      {
+        "range_low": 0.4,
+        "range_high": 0.6,
+        "count": 10,
+        "hit_rate": 0.3
+      },
+      {
+        "range_low": 0.6,
+        "range_high": 0.8,
+        "count": 10,
+        "hit_rate": 0.6
+      },
+      {
+        "range_low": 0.8,
+        "range_high": 1.0,
+        "count": 0,
+        "hit_rate": null
+      }
+    ],
+    "return_decomposition": {
+      "beta_contribution": 0.04508771526431035,
+      "skill_contribution": 0.07660089770060646
+    }
+  },
+  "attribution": {
+    "by_sector": [
+      {
+        "sector": "Communication Services",
+        "portfolio_weight": 0.0,
+        "benchmark_weight": 0.09,
+        "allocation_effect": -0.0024765291043427917,
+        "selection_effect": 0.0,
+        "interaction_effect": -0.0
+      },
+      {
+        "sector": "Consumer Discretionary",
+        "portfolio_weight": 0.15,
+        "benchmark_weight": 0.1,
+        "allocation_effect": 0.0013758495024126618,
+        "selection_effect": -0.0019990277214801677,
+        "interaction_effect": -0.0009995138607400836
+      },
+      {
+        "sector": "Consumer Staples",
+        "portfolio_weight": 0.0,
+        "benchmark_weight": 0.06,
+        "allocation_effect": -0.0016510194028951943,
+        "selection_effect": 0.0,
+        "interaction_effect": -0.0
+      },
+      {
+        "sector": "Energy",
+        "portfolio_weight": 0.0,
+        "benchmark_weight": 0.03,
+        "allocation_effect": -0.0008255097014475972,
+        "selection_effect": 0.0,
+        "interaction_effect": -0.0
+      },
+      {
+        "sector": "Financials",
+        "portfolio_weight": 0.15979,
+        "benchmark_weight": 0.13,
+        "allocation_effect": -0.006954434659295846,
+        "selection_effect": 0.03980774004085558,
+        "interaction_effect": 0.009122096737054514
+      },
+      {
+        "sector": "Healthcare",
+        "portfolio_weight": 0.02821,
+        "benchmark_weight": 0.11,
+        "allocation_effect": 0.021666492853617814,
+        "selection_effect": 0.021624246373115736,
+        "interaction_effect": -0.01607861009870124
+      },
+      {
+        "sector": "Industrials",
+        "portfolio_weight": 0.0538,
+        "benchmark_weight": 0.08,
+        "allocation_effect": -0.0007209451392642349,
+        "selection_effect": -0.00022736855153041718,
+        "interaction_effect": 7.446320062621163e-05
+      },
+      {
+        "sector": "Other",
+        "portfolio_weight": 0.17987999999999998,
+        "benchmark_weight": 0.08,
+        "allocation_effect": 0.002748396966019533,
+        "selection_effect": -0.004209336394571878,
+        "interaction_effect": -0.0052553564886229885
+      },
+      {
+        "sector": "Technology",
+        "portfolio_weight": 0.42830999999999997,
+        "benchmark_weight": 0.32,
+        "allocation_effect": 0.016036743813948845,
+        "selection_effect": -0.03721993618460216,
+        "interaction_effect": -0.01259778527548206
+      }
+    ],
+    "benchmark_total_return": -0.02751699004825324,
+    "total_allocation_effect": 0.029199045128753192,
+    "total_selection_effect": 0.017776317561786686,
+    "total_interaction_effect": -0.025734705785865643,
+    "total_active_return": 0.02124065690467424
+  }
 }
