@@ -12,6 +12,10 @@ EMAIL_TEMPLATE = Template(
   <h1 style="font-size: 20px;">AI Paper Trading Desk — Weekly Recap</h1>
   <p style="color: #555;">{{ period_label }}</p>
 
+  {% if narrative %}
+  <p style="background: #f7f7f7; padding: 12px 16px; border-radius: 6px; line-height: 1.5;">{{ narrative }}</p>
+  {% endif %}
+
   <table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
     <tr>
       <td style="padding: 8px 0; border-bottom: 1px solid #eee;">Equity</td>
@@ -58,7 +62,12 @@ EMAIL_TEMPLATE = Template(
 )
 
 
-def render_recap_html(period_label: str, snapshot: Dict[str, Any], top_trades_limit: int = 5) -> str:
+def render_recap_html(
+    period_label: str,
+    snapshot: Dict[str, Any],
+    narrative: str = "",
+    top_trades_limit: int = 5,
+) -> str:
     stats_view = dict(snapshot["stats"])
     stats_view.setdefault("equity_eur", snapshot["equity_curve"][-1]["equity"] if snapshot["equity_curve"] else 0.0)
     top_trades = [
@@ -66,7 +75,7 @@ def render_recap_html(period_label: str, snapshot: Dict[str, Any], top_trades_li
         for entry in snapshot["trade_journal"]
         if not entry.get("skipped_by_risk_layer") and entry.get("direction") != "hold"
     ][:top_trades_limit]
-    return EMAIL_TEMPLATE.render(period_label=period_label, stats=stats_view, top_trades=top_trades)
+    return EMAIL_TEMPLATE.render(period_label=period_label, stats=stats_view, top_trades=top_trades, narrative=narrative)
 
 
 def send_recap_email(

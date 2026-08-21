@@ -58,6 +58,16 @@ def test_render_recap_html_includes_stats_and_filters_journal():
     assert "MSFT" not in html  # skipped-by-risk-layer entries are excluded
 
 
+def test_render_recap_html_includes_narrative_when_given():
+    html = render_recap_html("Aug 14 - Aug 21, 2026", make_snapshot(), narrative="Modest gains this week.")
+    assert "Modest gains this week." in html
+
+
+def test_render_recap_html_omits_narrative_block_when_empty():
+    html = render_recap_html("Aug 14 - Aug 21, 2026", make_snapshot())
+    assert "background: #f7f7f7" not in html
+
+
 def test_send_recap_email_wires_params_correctly():
     client = FakeEmailsClient()
     send_recap_email(client, "desk@example.com", "user@example.com", "Weekly Recap", "<p>hi</p>")
