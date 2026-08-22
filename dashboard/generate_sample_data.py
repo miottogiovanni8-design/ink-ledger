@@ -1,4 +1,4 @@
-"""Generates a realistic sample dashboard_snapshot.json (schema v6) for the
+"""Generates a realistic sample dashboard_snapshot.json (schema v7) for the
 dashboard mockup, run through the project's own engine functions
 (compute_covariance, compute_market_prior, blend_views, optimize_portfolio,
 evaluate_scenario, historical_var_cvar, exposure_by_tag) so the displayed
@@ -363,7 +363,7 @@ def main():
     )
 
     snapshot = {
-        "schema_version": 6,
+        "schema_version": 7,
         "generated_at": "2026-08-20T21:15:00+00:00",
         "is_sample_data": True,
         "equity_curve": equity_curve,
@@ -380,6 +380,7 @@ def main():
         "investment_committee_notes": committee_notes,
         "skill_analysis": skill_analysis,
         "attribution": attribution,
+        "api_spend_month_to_date_usd": 0.0,
     }
 
     with open("dashboard/sample_snapshot.json", "w") as f:

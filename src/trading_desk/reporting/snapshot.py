@@ -20,10 +20,11 @@ from trading_desk.engine.attribution import brinson_attribution
 from trading_desk.engine.skill_analysis import calibration_buckets, decompose_return, information_coefficient
 from trading_desk.metrics import stats
 from trading_desk.persistence.models import EquitySnapshot, RebalanceEvent, Transaction, ViewRecord
+from trading_desk.persistence.queries import month_to_date_spend_usd
 from trading_desk.reporting.analytics import portfolio_sector_returns, sector_benchmark_returns, views_with_realized_outcomes
 from trading_desk.reporting.holdings import build_holdings_detail
 
-SCHEMA_VERSION = 6
+SCHEMA_VERSION = 7
 
 
 def _daily_marks(session: Session) -> List[EquitySnapshot]:
@@ -235,6 +236,7 @@ def build_snapshot(session: Session) -> Dict[str, Any]:
         "investment_committee_notes": notes,
         "skill_analysis": _skill_analysis(session, performance_stats),
         "attribution": _attribution(session, scenarios, active_profile, holdings_detail),
+        "api_spend_month_to_date_usd": month_to_date_spend_usd(session),
     }
 
 

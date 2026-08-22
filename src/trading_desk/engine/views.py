@@ -73,6 +73,7 @@ def request_portfolio_view(
     sentiment: Optional[Dict[str, Any]] = None,
     macro_headlines: Optional[List[str]] = None,
     model: str = VIEW_MODEL,
+    usage_log: Optional[List[Any]] = None,
 ) -> PortfolioView:
     response = client.messages.create(
         model=model,
@@ -85,4 +86,6 @@ def request_portfolio_view(
             "content": build_user_content(symbol, asset_class, headlines, sector, sentiment, macro_headlines),
         }],
     )
+    if usage_log is not None:
+        usage_log.append(response.usage)
     return parse_view_response(response)

@@ -37,8 +37,9 @@ from trading_desk.engine.schemas import PortfolioView
 from trading_desk.engine.views import request_portfolio_view
 from trading_desk.execution.broker import get_account_equity, get_open_positions
 from trading_desk.execution.rebalance import compute_rebalance_trades, positions_market_value, submit_rebalance_trades
+from trading_desk.metrics.cost_tracking import estimate_view_call_cost_usd
 from trading_desk.persistence.db import get_session, init_db
-from trading_desk.persistence.models import BaselineAllocation, RebalanceEvent, Transaction, ViewRecord
+from trading_desk.persistence.models import ApiSpendLog, BaselineAllocation, RebalanceEvent, Transaction, ViewRecord
 from trading_desk.persistence.queries import peak_equity
 from trading_desk.reporting.snapshot import build_snapshot, write_snapshot
 from trading_desk.risk.circuit_breakers import drawdown_breaker
@@ -57,7 +58,9 @@ def _sector_or_factor(symbol: str) -> str:
     return DEFAULT_SECTOR_MAP.get(symbol) or DEFAULT_FACTOR_MAP.get(symbol, "")
 
 
-def gather_views(anthropic_client, http_client, universe, macro_headlines: Optional[list] = None) -> list:
+def gather_views(
+    anthropic_client, http_client, universe, macro_headlines: Optional[list] = None, usage_log: Optional[list] = None
+) -> list:
     views: list[PortfolioView] = []
     for symbol in universe:
         headlines = []
@@ -81,6 +84,7 @@ def gather_views(anthropic_client, http_client, universe, macro_headlines: Optio
             sector=_sector_or_factor(symbol),
             sentiment=sentiment,
             macro_headlines=macro_headlines,
+            usage_log=usage_log,
         )
         views.append(view)
     return views
@@ -118,7 +122,8 @@ def run_weekly_rebalance(risk_profile_override: Optional[str] = None) -> None:
         except httpx.HTTPError as exc:
             logger.warning("macro headlines fetch failed: %s", exc)
 
-    views = gather_views(anthropic_client, http_client, universe, macro_headlines)
+    usage_log: list = []
+    views = gather_views(anthropic_client, http_client, universe, macro_headlines, usage_log)
 
     with get_session(settings.db_path) as session:
         view_records = []
@@ -176,6 +181,10 @@ def run_weekly_rebalance(risk_profile_override: Optional[str] = None) -> None:
         session.flush()
         for vr in view_records:
             vr.rebalance_event_id = rebalance_event.id
+
+        run_cost_usd = sum(estimate_view_call_cost_usd(u) for u in usage_log)
+        session.add(ApiSpendLog(rebalance_event_id=rebalance_event.id, estimated_cost_usd=run_cost_usd))
+        logger.info("estimated Claude API spend this run: $%.4f", run_cost_usd)
 
         if gate.rebalancing_allowed:
             active_weights = scenarios[active_profile]["weights"]

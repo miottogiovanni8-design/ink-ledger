@@ -1,5 +1,5 @@
 {
-  "schema_version": 6,
+  "schema_version": 7,
   "generated_at": "2026-08-20T21:15:00+00:00",
   "is_sample_data": true,
   "equity_curve": [
@@ -2263,5 +2263,6 @@
     "total_selection_effect": 0.017776317561786686,
     "total_interaction_effect": -0.025734705785865643,
     "total_active_return": 0.02124065690467424
-  }
+  },
+  "api_spend_month_to_date_usd": 0.0
 }

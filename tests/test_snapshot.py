@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from trading_desk.persistence.db import get_session
-from trading_desk.persistence.models import EquitySnapshot, RebalanceEvent, Transaction, ViewRecord
+from trading_desk.persistence.models import ApiSpendLog, EquitySnapshot, RebalanceEvent, Transaction, ViewRecord
 from trading_desk.reporting.snapshot import build_snapshot, read_snapshot, write_snapshot
 
 REBALANCE_TIME = datetime(2026, 8, 17, 9, 0, tzinfo=timezone.utc)
@@ -100,8 +100,9 @@ def test_build_snapshot_shape_and_content():
         with get_session(db_path) as session:
             snapshot = build_snapshot(session)
 
-    assert snapshot["schema_version"] == 6
+    assert snapshot["schema_version"] == 7
     assert snapshot["is_sample_data"] is False
+    assert snapshot["api_spend_month_to_date_usd"] == 0.0
     assert len(snapshot["equity_curve"]) == 4
     assert snapshot["active_risk_profile"] == "balanced"
     assert snapshot["scenarios"]["aggressive"]["volatility"] == 0.22
@@ -173,6 +174,24 @@ def test_build_snapshot_includes_baseline_curve_and_active_management_effect():
     stats = snapshot["performance_stats"]
     assert stats["baseline_total_return"] == pytest.approx((201.0 - 200.0) / 200.0)
     assert stats["active_management_effect"] == pytest.approx(stats["total_return"] - stats["baseline_total_return"])
+
+
+def test_build_snapshot_sums_this_month_api_spend():
+    # build_snapshot compares against real wall-clock "now" (no as_of override),
+    # so anchor these rows to actual now rather than the fixed REBALANCE_TIME
+    # fixture, which would drift out of the current month after a while.
+    now = datetime.now(timezone.utc)
+    with tempfile.TemporaryDirectory() as tmp:
+        db_path = str(Path(tmp) / "test.sqlite")
+        with get_session(db_path) as session:
+            _seed(session)
+            session.add(ApiSpendLog(estimated_cost_usd=0.02, created_at=now))
+            session.add(ApiSpendLog(estimated_cost_usd=0.03, created_at=now))
+
+        with get_session(db_path) as session:
+            snapshot = build_snapshot(session)
+
+    assert snapshot["api_spend_month_to_date_usd"] == pytest.approx(0.05)
 
 
 def test_build_snapshot_risk_profile_history_oldest_first():

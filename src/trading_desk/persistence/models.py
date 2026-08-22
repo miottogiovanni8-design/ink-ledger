@@ -104,3 +104,18 @@ class BaselineAllocation(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     frozen_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
     weights_json: Mapped[str] = mapped_column(Text)  # {"AAPL": 0.15, ...} — frozen once, read-only after
+
+
+class ApiSpendLog(Base):
+    """One row per weekly_rebalance run: the estimated USD cost of that
+    run's Claude view calls, computed from each response's token usage
+    against public per-token pricing (metrics/cost_tracking.py) — a public-
+    pricing estimate, not Anthropic's own billing figure. Summed over the
+    current calendar month to compare against a spend-alert threshold."""
+
+    __tablename__ = "api_spend_log"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    rebalance_event_id: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    estimated_cost_usd: Mapped[float] = mapped_column(Float)

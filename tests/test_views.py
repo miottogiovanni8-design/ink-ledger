@@ -17,6 +17,7 @@ class FakeToolUseBlock:
 @dataclass
 class FakeMessage:
     content: List[Any] = field(default_factory=list)
+    usage: Any = None
 
 
 class FakeMessagesAPI:
@@ -128,3 +129,37 @@ def test_request_portfolio_view_forwards_sentiment_and_macro_headlines():
     content = client.messages.last_call_kwargs["messages"][0]["content"]
     assert "Bullish" in content
     assert "Fed holds rates steady" in content
+
+
+def test_request_portfolio_view_appends_usage_when_log_provided():
+    payload = {
+        "symbol": "AAPL",
+        "asset_class": "equity",
+        "expected_return_annualized": 0.08,
+        "confidence": 0.5,
+        "rationale": "Steady growth.",
+    }
+    fake_usage = {"input_tokens": 120, "output_tokens": 80}
+    response = FakeMessage(content=[FakeToolUseBlock(input=payload)], usage=fake_usage)
+    client = FakeAnthropicClient(response)
+    usage_log: List[Any] = []
+
+    request_portfolio_view(client, "AAPL", "equity", [], usage_log=usage_log)
+
+    assert usage_log == [fake_usage]
+
+
+def test_request_portfolio_view_skips_usage_log_when_not_provided():
+    payload = {
+        "symbol": "AAPL",
+        "asset_class": "equity",
+        "expected_return_annualized": 0.08,
+        "confidence": 0.5,
+        "rationale": "Steady growth.",
+    }
+    response = FakeMessage(content=[FakeToolUseBlock(input=payload)], usage={"input_tokens": 1})
+    client = FakeAnthropicClient(response)
+
+    view = request_portfolio_view(client, "AAPL", "equity", [])
+
+    assert view.symbol == "AAPL"

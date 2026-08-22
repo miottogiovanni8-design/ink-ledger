@@ -15,6 +15,9 @@ concurrency:
 jobs:
   rebalance:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
     steps:
       - uses: actions/checkout@v4
 
@@ -45,3 +48,23 @@ jobs:
           git commit -m "rebalance: weekly $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           git pull --rebase origin "${GITHUB_REF_NAME}"
           git push
+
+      - name: Check API spend and alert if over threshold
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SPEND_ALERT_THRESHOLD_USD: ${{ vars.SPEND_ALERT_THRESHOLD_USD }}
+        run: |
+          SPEND=$(python -c "import json; print(json.load(open('data/dashboard_snapshot.json'))['api_spend_month_to_date_usd'])")
+          THRESHOLD="${SPEND_ALERT_THRESHOLD_USD:-1.99}"
+          MONTH_TAG=$(date -u +%Y-%m)
+          echo "month-to-date estimated Claude API spend: \$${SPEND} (alert threshold: \$${THRESHOLD})"
+          OVER=$(python -c "print(1 if float('$SPEND') >= float('$THRESHOLD') else 0)")
+          if [ "$OVER" = "1" ]; then
+            EXISTING=$(gh issue list --search "\"Anthropic API spend alert — ${MONTH_TAG}\" in:title" --state open --json number --jq '.[0].number')
+            if [ -z "$EXISTING" ]; then
+              BODY="Estimated Claude API spend this month has reached \$${SPEND}, at or above the \$${THRESHOLD} alert threshold configured for this project (repo variable \`SPEND_ALERT_THRESHOLD_USD\`).\n\nThis is a **self-reported estimate** computed from the token usage of each weekly view call against public per-token pricing — it is not Anthropic's own billing figure. Check the actual number, and your hard spend cap, in the [Anthropic Console](https://console.anthropic.com/settings/billing).\n\nOne issue per calendar month while spend stays at or above the threshold — this won't duplicate on later runs within ${MONTH_TAG}."
+              gh issue create --title "Anthropic API spend alert — ${MONTH_TAG}: \$${SPEND} this month" --body "$(printf '%b' "$BODY")"
+            else
+              echo "an open spend-alert issue already exists for ${MONTH_TAG} (#$EXISTING), not creating a duplicate"
+            fi
+          fi
