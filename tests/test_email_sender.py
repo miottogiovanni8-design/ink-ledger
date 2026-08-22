@@ -30,7 +30,15 @@ def test_render_recap_html_includes_equity_and_notes():
     assert "1025.00" in html
     assert "AAPL" in html
     assert "Strong iPhone cycle" in html
-    assert "Balanced" in html  # risk profile capitalized in the subtitle
+    assert "Bilanciato" in html  # risk profile localized in the subtitle
+
+
+def test_render_recap_html_shows_fallback_when_equity_curve_empty():
+    snapshot = make_snapshot()
+    snapshot["equity_curve"] = []
+    html = render_recap_html("Aug 14 - Aug 21, 2026", snapshot)
+    assert "nessuno storico ancora" in html
+    assert "&euro;0.00" not in html
 
 
 def test_render_recap_html_uses_active_scenario_metrics():

@@ -9,14 +9,22 @@ RECAP_MODEL = "claude-opus-5"
 
 NARRATIVE_SYSTEM_PROMPT = """You are writing a weekly recap narrative for an AI-augmented \
 Black-Litterman investment desk, read by a technical recruiter evaluating the project's \
-engineering and reasoning quality. Write 3-5 sentences, plain and honest — cite the \
-concrete numbers given (expected return, volatility, Sharpe, VaR/CVaR for the active \
-risk profile), do not editorialize or hype. If performance was poor, say so plainly and \
-note what the drawdown circuit breaker did to contain it, if anything."""
+engineering and reasoning quality. Write in Italian — the dashboard and the rest of this \
+project default to Italian for this audience. Write 3-5 complete sentences, plain and \
+honest — cite the concrete numbers given (expected return, volatility, Sharpe, VaR/CVaR \
+for the active risk profile), do not editorialize or hype. If performance was poor, say \
+so plainly and note what the drawdown circuit breaker did to contain it, if anything. If \
+there isn't yet enough equity history to say anything about realized performance, say so \
+directly instead of describing a return that doesn't exist."""
+
+_MONTHS_IT = [
+    "gen", "feb", "mar", "apr", "mag", "giu",
+    "lug", "ago", "set", "ott", "nov", "dic",
+]
 
 
 def period_label(start: date, end: date) -> str:
-    return f"{start.strftime('%b %d')} - {end.strftime('%b %d, %Y')}"
+    return f"{start.day} {_MONTHS_IT[start.month - 1]} - {end.day} {_MONTHS_IT[end.month - 1]} {end.year}"
 
 
 def generate_narrative(client: Any, snapshot: Dict[str, Any], model: str = RECAP_MODEL) -> str:
@@ -41,7 +49,7 @@ def generate_narrative(client: Any, snapshot: Dict[str, Any], model: str = RECAP
     )
     response = client.messages.create(
         model=model,
-        max_tokens=400,
+        max_tokens=1024,
         system=NARRATIVE_SYSTEM_PROMPT,
         messages=[{"role": "user", "content": user_content}],
     )

@@ -53,7 +53,7 @@ def make_snapshot():
 
 def test_period_label_formats_range():
     label = period_label(date(2026, 8, 14), date(2026, 8, 21))
-    assert label == "Aug 14 - Aug 21, 2026"
+    assert label == "14 ago - 21 ago 2026"
 
 
 def test_generate_narrative_extracts_text_block():
@@ -73,7 +73,7 @@ def test_generate_narrative_extracts_text_block():
 def test_build_recap_without_client_skips_narrative():
     recap = build_recap(make_snapshot(), date(2026, 8, 14), date(2026, 8, 21))
     assert recap["narrative"] is None
-    assert recap["period_label"] == "Aug 14 - Aug 21, 2026"
+    assert recap["period_label"] == "14 ago - 21 ago 2026"
 
 
 def test_build_recap_with_client_includes_narrative():
