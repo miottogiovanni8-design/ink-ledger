@@ -16,6 +16,7 @@ dependencies = [
     "resend>=2.4",
     "numpy>=1.26",
     "PyPortfolioOpt>=1.5",
+    "packaging>=23.0",
 ]
 
 [project.optional-dependencies]
