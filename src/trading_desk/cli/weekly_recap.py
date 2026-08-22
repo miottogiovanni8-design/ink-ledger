@@ -3,9 +3,9 @@
 Low-frequency, delay-tolerant job: reads the current DB state (already
 populated by weekly_rebalance.py, including all three risk-profile
 scenarios), generates the Claude Opus 5 narrative, sends the email, and
-regenerates the dashboard snapshot. Intended to run from a Claude Code
-scheduled routine, since it also republishes the dashboard Artifact —
-something only a Claude Code session can do, not a plain CI job.
+rewrites the dashboard snapshot JSON. Plain headless Python — the Anthropic
+and Resend SDKs are regular API calls, so this runs as a GitHub Actions job
+like weekly_rebalance.py and daily_mark.py, no Claude Code session needed.
 """
 
 import logging
