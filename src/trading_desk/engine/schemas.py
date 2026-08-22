@@ -41,9 +41,7 @@ PORTFOLIO_VIEW_TOOL = {
             },
             "confidence": {
                 "type": "number",
-                "minimum": 0.01,
-                "maximum": 0.99,
-                "description": "Idzorek-style confidence in this view, from 0.01 (almost no conviction) to 0.99 (very high conviction). Never exactly 0 or 1.",
+                "description": "Idzorek-style confidence in this view, strictly between 0 and 1 — from 0.01 (almost no conviction) to 0.99 (very high conviction). Never exactly 0 or 1; enforced server-side, so stay inside that range.",
             },
             "rationale": {"type": "string"},
             "key_signals": {
