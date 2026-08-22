@@ -28,16 +28,6 @@ jobs:
       - name: Install dependencies
         run: pip install -e .
 
-      - name: Debug - multi-symbol bars request
-        env:
-          ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
-          ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
-        run: |
-          START=$(date -u -d '30 days ago' +%Y-%m-%dT00:00:00Z)
-          curl -s -H "APCA-API-KEY-ID: $ALPACA_API_KEY" -H "APCA-API-SECRET-KEY: $ALPACA_SECRET_KEY" \
-            "https://data.alpaca.markets/v2/stocks/bars?symbols=AAPL,MSFT,NVDA,JPM,XLK,SPY&timeframe=1Day&limit=5&start=${START}" \
-            | python3 -c "import json,sys; d=json.load(sys.stdin); print('symbols returned:', list(d['bars'].keys())); print('next_page_token:', d.get('next_page_token'))"
-
       - name: Run weekly rebalance
         env:
           ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}

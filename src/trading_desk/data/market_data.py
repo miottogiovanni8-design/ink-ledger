@@ -44,8 +44,15 @@ def fetch_price_panel(
     """Wide panel — rows are dates, columns are tickers, values are close
     price — the direct input to Black-Litterman's covariance and prior
     computation (`engine/black_litterman.py`)."""
+    # For a multi-symbol request, `limit` caps the *combined* bar count
+    # across all symbols, not bars per symbol — passing lookback_bars as-is
+    # would let the first symbol alone exhaust it and silently starve the
+    # rest. Scale it to the full universe so every symbol gets its share.
     request = StockBarsRequest(
-        symbol_or_symbols=symbols, timeframe=timeframe, limit=lookback_bars, start=_lookback_start(lookback_bars)
+        symbol_or_symbols=symbols,
+        timeframe=timeframe,
+        limit=lookback_bars * len(symbols),
+        start=_lookback_start(lookback_bars),
     )
     bar_set = stock_client.get_stock_bars(request)
     df = bar_set.df
@@ -64,7 +71,10 @@ def fetch_volume_panel(
     """Wide panel of trading volume — used for the ETF market-cap proxy
     (`data/fundamentals.py::dollar_volume_proxy_weights`)."""
     request = StockBarsRequest(
-        symbol_or_symbols=symbols, timeframe=timeframe, limit=lookback_bars, start=_lookback_start(lookback_bars)
+        symbol_or_symbols=symbols,
+        timeframe=timeframe,
+        limit=lookback_bars * len(symbols),
+        start=_lookback_start(lookback_bars),
     )
     bar_set = stock_client.get_stock_bars(request)
     df = bar_set.df
