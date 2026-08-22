@@ -104,19 +104,23 @@ def test_lookback_start_pads_for_weekends_and_holidays():
     assert days_back >= 160
 
 
-def test_fetch_price_panel_scales_limit_by_symbol_count():
+def test_fetch_price_panel_leaves_limit_unset():
     # In a multi-symbol request, Alpaca's `limit` caps the *combined* bar
-    # count across all symbols, not bars per symbol — passing lookback_bars
-    # as-is would let one symbol exhaust it and starve the rest of any data.
+    # count across all symbols, not bars per symbol — any finite value here
+    # can silently starve the last few symbols once the cap is hit. `start`
+    # alone must bound the query; `limit` stays unset so pagination runs
+    # until that date floor is satisfied for every symbol.
     client = FakeStockClient(make_multi_symbol_df())
     fetch_price_panel(["AAPL", "MSFT", "NVDA"], client, lookback_bars=252)
-    assert client.last_request.limit == 252 * 3
+    assert client.last_request.limit is None
+    assert client.last_request.start is not None
 
 
-def test_fetch_volume_panel_scales_limit_by_symbol_count():
+def test_fetch_volume_panel_leaves_limit_unset():
     client = FakeStockClient(make_multi_symbol_df())
     fetch_volume_panel(["AAPL", "MSFT", "NVDA"], client, lookback_bars=252)
-    assert client.last_request.limit == 252 * 3
+    assert client.last_request.limit is None
+    assert client.last_request.start is not None
 
 
 def test_fetch_bars_does_not_scale_limit_for_single_symbol():
