@@ -32,6 +32,7 @@ jobs:
           ALPACA_PAPER: "true"
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          ALPHAVANTAGE_API_KEY: ${{ secrets.ALPHAVANTAGE_API_KEY }}
           ACTIVE_RISK_PROFILE: ${{ vars.ACTIVE_RISK_PROFILE }}
         run: python -m trading_desk.cli.weekly_rebalance
 
