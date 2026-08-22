@@ -100,7 +100,8 @@ def test_build_snapshot_shape_and_content():
         with get_session(db_path) as session:
             snapshot = build_snapshot(session)
 
-    assert snapshot["schema_version"] == 4
+    assert snapshot["schema_version"] == 6
+    assert snapshot["is_sample_data"] is False
     assert len(snapshot["equity_curve"]) == 4
     assert snapshot["active_risk_profile"] == "balanced"
     assert snapshot["scenarios"]["aggressive"]["volatility"] == 0.22
@@ -128,6 +129,50 @@ def test_build_snapshot_includes_benchmark_curve_and_alpha_beta():
     assert "alpha_annualized" in snapshot["performance_stats"]
     assert "beta" in snapshot["performance_stats"]
     assert "benchmark_total_return" in snapshot["performance_stats"]
+
+
+def test_build_snapshot_baseline_curve_empty_without_frozen_allocation():
+    with tempfile.TemporaryDirectory() as tmp:
+        db_path = str(Path(tmp) / "test.sqlite")
+        with get_session(db_path) as session:
+            _seed(session)
+
+        with get_session(db_path) as session:
+            snapshot = build_snapshot(session)
+
+    assert snapshot["baseline_curve"] == []
+    assert "baseline_total_return" not in snapshot["performance_stats"]
+    assert "active_management_effect" not in snapshot["performance_stats"]
+
+
+def test_build_snapshot_includes_baseline_curve_and_active_management_effect():
+    with tempfile.TemporaryDirectory() as tmp:
+        db_path = str(Path(tmp) / "test.sqlite")
+        with get_session(db_path) as session:
+            equities = [1000.0, 1010.0, 990.0, 1025.0]
+            baselines = [200.0, 202.0, 198.0, 201.0]  # a flat buy-and-hold basket, +0.5% total
+            for i, (equity, base) in enumerate(zip(equities, baselines)):
+                session.add(
+                    EquitySnapshot(
+                        equity_eur=equity,
+                        cash_eur=equity * 0.5,
+                        baseline_index_raw=base,
+                        taken_at=REBALANCE_TIME - timedelta(days=3 - i),
+                    )
+                )
+
+        with get_session(db_path) as session:
+            snapshot = build_snapshot(session)
+
+    baseline_curve = snapshot["baseline_curve"]
+    assert len(baseline_curve) == 4
+    # indexed to the portfolio's starting equity (1000.0), not the raw basket index (200.0)
+    assert baseline_curve[0]["equity"] == 1000.0
+    assert baseline_curve[-1]["equity"] == pytest.approx(1000.0 * (201.0 / 200.0))
+
+    stats = snapshot["performance_stats"]
+    assert stats["baseline_total_return"] == pytest.approx((201.0 - 200.0) / 200.0)
+    assert stats["active_management_effect"] == pytest.approx(stats["total_return"] - stats["baseline_total_return"])
 
 
 def test_build_snapshot_risk_profile_history_oldest_first():

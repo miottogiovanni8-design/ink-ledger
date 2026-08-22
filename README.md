@@ -53,6 +53,9 @@ equity + ETF universe (29 assets: sector-diverse large caps + sector/factor ETFs
  Ledoit-Wolf shrinkage covariance ──► CAPM-implied equilibrium prior (Pi)
         │
         ▼
+ per-asset headlines + market-wide macro headlines (Finnhub) + sentiment (Alpha Vantage, equities)
+        │
+        ▼
  Claude Sonnet 5 research view per asset (expected return + confidence)  ─── never a trade, never a weight
         │
         ▼
@@ -92,7 +95,7 @@ src/trading_desk/
 ├── data/
 │   ├── market_data.py            Alpaca price/volume panels
 │   ├── fundamentals.py           Finnhub market cap (equities) + dollar-volume ETF proxy
-│   └── news.py                   Finnhub headlines feeding the view prompt
+│   └── news.py                   Finnhub headlines (per-asset + general market) and Alpha Vantage sentiment feeding the view prompt
 ├── engine/
 │   ├── schemas.py                 PortfolioView + record_portfolio_view tool schema
 │   ├── views.py                   Claude Sonnet 5 call → PortfolioView
@@ -144,10 +147,13 @@ your behalf) and provide the API keys:
    key/secret.
 2. [Anthropic](https://console.anthropic.com) — API key for the view engine
    (separate from any Claude Code usage).
-3. [Finnhub](https://finnhub.io) — free-tier API key for headlines and
-   equity market cap.
-4. [Resend](https://resend.com) — free-tier API key for the weekly email.
-5. A GitHub repository to host this code and run the Actions workflows —
+3. [Finnhub](https://finnhub.io) — free-tier API key for headlines (per-asset
+   and general market) and equity market cap.
+4. [Alpha Vantage](https://www.alphavantage.co) — optional, free-tier API key
+   for a secondary sentiment signal on equities (thin 25 requests/day limit,
+   the system degrades gracefully and just skips it if unset or rate-limited).
+5. [Resend](https://resend.com) — free-tier API key for the weekly email.
+6. A GitHub repository to host this code and run the Actions workflows —
    copy `.env.example` values into the repo's Actions secrets (`Settings →
    Secrets and variables → Actions`), and set `ACTIVE_RISK_PROFILE` as a
    repo variable.

@@ -1,6 +1,26 @@
 import httpx
 
-from trading_desk.data.news import fetch_alphavantage_sentiment, fetch_finnhub_headlines
+from trading_desk.data.news import fetch_alphavantage_sentiment, fetch_finnhub_general_news, fetch_finnhub_headlines
+
+
+def test_fetch_finnhub_general_news_extracts_headline_field():
+    def handler(request: httpx.Request) -> httpx.Response:
+        assert "finnhub.io" in str(request.url)
+        assert request.url.path.endswith("/news")
+        assert request.url.params["category"] == "general"
+        return httpx.Response(
+            200,
+            json=[
+                {"headline": "Fed holds rates steady", "datetime": 1700000000},
+                {"headline": "S&P 500 hits new high", "datetime": 1700000100},
+                {"datetime": 1700000200},  # missing headline, should be skipped
+            ],
+        )
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    headlines = fetch_finnhub_general_news("fake-key", client)
+
+    assert headlines == ["Fed holds rates steady", "S&P 500 hits new high"]
 
 
 def test_fetch_finnhub_headlines_extracts_headline_field():

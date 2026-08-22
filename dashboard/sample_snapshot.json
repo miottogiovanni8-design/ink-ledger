@@ -1,6 +1,7 @@
 {
-  "schema_version": 4,
+  "schema_version": 6,
   "generated_at": "2026-08-20T21:15:00+00:00",
+  "is_sample_data": true,
   "equity_curve": [
     {
       "t": "2026-02-23T00:00:00+00:00",
@@ -1445,6 +1446,7 @@
       "equity": 103329.71
     }
   ],
+  "baseline_curve": [],
   "performance_stats": {
     "sharpe_ratio": 1.295700114888535,
     "sortino_ratio": 1.959755745469426,

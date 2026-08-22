@@ -25,11 +25,12 @@ import anthropic
 import httpx
 from alpaca.data.historical import StockHistoricalDataClient
 from alpaca.trading.client import TradingClient
+from sqlalchemy import select
 
 from trading_desk.config import DEFAULT_FACTOR_MAP, DEFAULT_SECTOR_MAP, settings
 from trading_desk.data.fundamentals import dollar_volume_proxy_weights, fetch_market_caps
 from trading_desk.data.market_data import fetch_price_panel, fetch_volume_panel
-from trading_desk.data.news import fetch_finnhub_headlines
+from trading_desk.data.news import fetch_alphavantage_sentiment, fetch_finnhub_general_news, fetch_finnhub_headlines
 from trading_desk.engine.black_litterman import blend_views, compute_covariance, compute_market_prior, optimize_portfolio
 from trading_desk.engine.portfolio_risk import evaluate_scenario, exposure_by_tag, historical_var_cvar
 from trading_desk.engine.schemas import PortfolioView
@@ -37,7 +38,7 @@ from trading_desk.engine.views import request_portfolio_view
 from trading_desk.execution.broker import get_account_equity, get_open_positions
 from trading_desk.execution.rebalance import compute_rebalance_trades, positions_market_value, submit_rebalance_trades
 from trading_desk.persistence.db import get_session, init_db
-from trading_desk.persistence.models import RebalanceEvent, Transaction, ViewRecord
+from trading_desk.persistence.models import BaselineAllocation, RebalanceEvent, Transaction, ViewRecord
 from trading_desk.persistence.queries import peak_equity
 from trading_desk.reporting.snapshot import build_snapshot, write_snapshot
 from trading_desk.risk.circuit_breakers import drawdown_breaker
@@ -56,17 +57,30 @@ def _sector_or_factor(symbol: str) -> str:
     return DEFAULT_SECTOR_MAP.get(symbol) or DEFAULT_FACTOR_MAP.get(symbol, "")
 
 
-def gather_views(anthropic_client, http_client, universe) -> list:
+def gather_views(anthropic_client, http_client, universe, macro_headlines: Optional[list] = None) -> list:
     views: list[PortfolioView] = []
     for symbol in universe:
         headlines = []
-        if _asset_class_for(symbol) == "equity" and settings.finnhub_api_key:
+        sentiment = None
+        is_equity = _asset_class_for(symbol) == "equity"
+        if is_equity and settings.finnhub_api_key:
             try:
                 headlines = fetch_finnhub_headlines(symbol, settings.finnhub_api_key, http_client)[:3]
             except httpx.HTTPError as exc:
                 logger.warning("%s: finnhub fetch failed: %s", symbol, exc)
+        if is_equity and settings.alphavantage_api_key:
+            try:
+                sentiment = fetch_alphavantage_sentiment(symbol, settings.alphavantage_api_key, http_client)
+            except httpx.HTTPError as exc:
+                logger.warning("%s: alphavantage fetch failed: %s", symbol, exc)
         view = request_portfolio_view(
-            anthropic_client, symbol, _asset_class_for(symbol), headlines, sector=_sector_or_factor(symbol)
+            anthropic_client,
+            symbol,
+            _asset_class_for(symbol),
+            headlines,
+            sector=_sector_or_factor(symbol),
+            sentiment=sentiment,
+            macro_headlines=macro_headlines,
         )
         views.append(view)
     return views
@@ -97,7 +111,14 @@ def run_weekly_rebalance(risk_profile_override: Optional[str] = None) -> None:
 
     prior = compute_market_prior(market_prices, market_caps, cov_matrix)
 
-    views = gather_views(anthropic_client, http_client, universe)
+    macro_headlines = []
+    if settings.finnhub_api_key:
+        try:
+            macro_headlines = fetch_finnhub_general_news(settings.finnhub_api_key, http_client)[:5]
+        except httpx.HTTPError as exc:
+            logger.warning("macro headlines fetch failed: %s", exc)
+
+    views = gather_views(anthropic_client, http_client, universe, macro_headlines)
 
     with get_session(settings.db_path) as session:
         view_records = []
@@ -133,6 +154,11 @@ def run_weekly_rebalance(risk_profile_override: Optional[str] = None) -> None:
                 "sector_exposure": exposure_by_tag(weights, DEFAULT_SECTOR_MAP),
                 "factor_exposure": exposure_by_tag(weights, DEFAULT_FACTOR_MAP),
             }
+
+        existing_baseline = session.execute(select(BaselineAllocation).limit(1)).scalars().first()
+        if existing_baseline is None:
+            session.add(BaselineAllocation(weights_json=json.dumps(scenarios[active_profile]["weights"])))
+            logger.info("froze buy-and-hold baseline at this run's %s weights", active_profile)
 
         current_equity = get_account_equity(trading_client)
         current_peak = peak_equity(session, fallback=current_equity)

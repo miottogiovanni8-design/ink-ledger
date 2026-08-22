@@ -6,7 +6,7 @@ judgment enters the pipeline, and it enters as a return expectation, not an
 instruction.
 """
 
-from typing import Any, List
+from typing import Any, Dict, List, Optional
 
 from trading_desk.engine.schemas import PORTFOLIO_VIEW_TOOL, AssetClass, PortfolioView
 
@@ -37,6 +37,8 @@ def build_user_content(
     asset_class: AssetClass,
     headlines: List[str],
     sector: str = "",
+    sentiment: Optional[Dict[str, Any]] = None,
+    macro_headlines: Optional[List[str]] = None,
 ) -> str:
     lines = [
         f"Asset: {symbol} ({asset_class})",
@@ -44,6 +46,14 @@ def build_user_content(
     if sector:
         lines.append(f"Sector/factor: {sector}")
     lines.append(f"Recent headlines: {' | '.join(headlines) if headlines else 'none'}")
+    if sentiment:
+        lines.append(
+            f"Analyst sentiment (Alpha Vantage): {sentiment.get('sentiment_label', 'Neutral')} "
+            f"(score {sentiment.get('sentiment_score', 0.0):.2f}, "
+            f"relevance {sentiment.get('relevance_score', 0.0):.2f})"
+        )
+    if macro_headlines:
+        lines.append(f"Broader market/macro headlines: {' | '.join(macro_headlines)}")
     return "\n".join(lines)
 
 
@@ -60,6 +70,8 @@ def request_portfolio_view(
     asset_class: AssetClass,
     headlines: List[str],
     sector: str = "",
+    sentiment: Optional[Dict[str, Any]] = None,
+    macro_headlines: Optional[List[str]] = None,
     model: str = VIEW_MODEL,
 ) -> PortfolioView:
     response = client.messages.create(
@@ -68,6 +80,9 @@ def request_portfolio_view(
         system=[{"type": "text", "text": SYSTEM_PROMPT, "cache_control": {"type": "ephemeral"}}],
         tools=[PORTFOLIO_VIEW_TOOL],
         tool_choice={"type": "tool", "name": "record_portfolio_view"},
-        messages=[{"role": "user", "content": build_user_content(symbol, asset_class, headlines, sector)}],
+        messages=[{
+            "role": "user",
+            "content": build_user_content(symbol, asset_class, headlines, sector, sentiment, macro_headlines),
+        }],
     )
     return parse_view_response(response)

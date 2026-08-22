@@ -1,7 +1,8 @@
 """News/sentiment feeds: Finnhub as the primary near-real-time headline source
-(generous free tier, fits a multi-times-daily cycle), Alpha Vantage sentiment
-as a slower secondary signal (thin free tier — call at most once/symbol/day
-and cache the result, never per-cycle)."""
+(generous free tier, fits a multi-times-daily cycle) — both per-symbol company
+news and general/macro market news — plus Alpha Vantage sentiment as a slower
+secondary signal (thin free tier — call at most once/symbol/day and cache the
+result, never per-cycle)."""
 
 from datetime import date, timedelta
 from typing import Any, Dict, List
@@ -26,6 +27,21 @@ def fetch_finnhub_headlines(
         "token": api_key,
     }
     response = http_client.get(f"{FINNHUB_BASE_URL}/company-news", params=params)
+    response.raise_for_status()
+    articles = response.json()
+    return [article["headline"] for article in articles if article.get("headline")]
+
+
+def fetch_finnhub_general_news(
+    api_key: str,
+    http_client: httpx.Client,
+    category: str = "general",
+) -> List[str]:
+    """Market-wide headlines (not tied to one symbol) — gives the per-asset
+    view call broader macro context (rates, indices, geopolitics) alongside
+    the company-specific headlines from `fetch_finnhub_headlines`."""
+    params = {"category": category, "token": api_key}
+    response = http_client.get(f"{FINNHUB_BASE_URL}/news", params=params)
     response.raise_for_status()
     articles = response.json()
     return [article["headline"] for article in articles if article.get("headline")]

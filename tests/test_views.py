@@ -46,6 +46,25 @@ def test_build_user_content_handles_no_headlines():
     assert "none" in content
 
 
+def test_build_user_content_includes_sentiment_when_provided():
+    sentiment = {"sentiment_label": "Somewhat-Bullish", "sentiment_score": 0.32, "relevance_score": 0.85}
+    content = build_user_content("AAPL", "equity", [], sentiment=sentiment)
+    assert "Somewhat-Bullish" in content
+    assert "0.32" in content
+    assert "0.85" in content
+
+
+def test_build_user_content_omits_sentiment_when_absent():
+    content = build_user_content("AAPL", "equity", [])
+    assert "Analyst sentiment" not in content
+
+
+def test_build_user_content_includes_macro_headlines_when_provided():
+    content = build_user_content("AAPL", "equity", [], macro_headlines=["Fed holds rates steady"])
+    assert "Fed holds rates steady" in content
+    assert "macro" in content.lower()
+
+
 def test_parse_view_response_extracts_tool_call():
     payload = {
         "symbol": "AAPL",
@@ -87,3 +106,25 @@ def test_request_portfolio_view_wires_model_and_forced_tool_choice():
     assert call_kwargs["tool_choice"] == {"type": "tool", "name": "record_portfolio_view"}
     assert call_kwargs["tools"][0]["name"] == "record_portfolio_view"
     assert call_kwargs["system"][0]["cache_control"] == {"type": "ephemeral"}
+
+
+def test_request_portfolio_view_forwards_sentiment_and_macro_headlines():
+    payload = {
+        "symbol": "XLF",
+        "asset_class": "etf",
+        "expected_return_annualized": 0.05,
+        "confidence": 0.4,
+        "rationale": "Rate cut cycle likely to support financials moderately.",
+    }
+    response = FakeMessage(content=[FakeToolUseBlock(input=payload)])
+    client = FakeAnthropicClient(response)
+    sentiment = {"sentiment_label": "Bullish", "sentiment_score": 0.5, "relevance_score": 0.9}
+
+    request_portfolio_view(
+        client, "XLF", "etf", [], sector="Financials",
+        sentiment=sentiment, macro_headlines=["Fed holds rates steady"],
+    )
+
+    content = client.messages.last_call_kwargs["messages"][0]["content"]
+    assert "Bullish" in content
+    assert "Fed holds rates steady" in content

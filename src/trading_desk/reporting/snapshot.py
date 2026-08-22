@@ -4,8 +4,9 @@ on-demand recap). Risk metrics per scenario (return/vol/Sharpe/VaR/CVaR/
 exposure) are computed once at rebalance time and stored in
 RebalanceEvent.scenarios_json — this module just reads and assembles,
 it does not recompute anything from price data. The one exception is the
-equity-vs-benchmark comparison, which only needs the daily marks already
-stored (equity + raw SPY close) — no price-panel refetch required."""
+equity-vs-benchmark and equity-vs-baseline comparisons, which only need the
+daily marks already stored (equity + raw SPY close + raw frozen-basket
+index) — no price-panel refetch required."""
 
 import json
 from datetime import datetime, timezone
@@ -22,7 +23,7 @@ from trading_desk.persistence.models import EquitySnapshot, RebalanceEvent, Tran
 from trading_desk.reporting.analytics import portfolio_sector_returns, sector_benchmark_returns, views_with_realized_outcomes
 from trading_desk.reporting.holdings import build_holdings_detail
 
-SCHEMA_VERSION = 4
+SCHEMA_VERSION = 6
 
 
 def _daily_marks(session: Session) -> List[EquitySnapshot]:
@@ -40,6 +41,23 @@ def _benchmark_curve(marks: List[EquitySnapshot]) -> List[Dict[str, Any]]:
     base_price = priced[0].benchmark_price
     return [
         {"t": m.taken_at.isoformat(), "equity": base_equity * (m.benchmark_price / base_price)}
+        for m in priced
+    ]
+
+
+def _baseline_curve(marks: List[EquitySnapshot]) -> List[Dict[str, Any]]:
+    """Indexes the frozen buy-and-hold basket to the same starting equity as
+    the portfolio — the control arm that isolates how much of the return
+    came from the AI's ongoing rebalancing versus the initial allocation
+    alone. Empty until BaselineAllocation exists (i.e. before the first
+    rebalance) or once it does, until the first daily mark after that."""
+    priced = [m for m in marks if m.baseline_index_raw is not None]
+    if not priced:
+        return []
+    base_equity = marks[0].equity_eur
+    base_index = priced[0].baseline_index_raw
+    return [
+        {"t": m.taken_at.isoformat(), "equity": base_equity * (m.baseline_index_raw / base_index)}
         for m in priced
     ]
 
@@ -154,6 +172,7 @@ def build_snapshot(session: Session) -> Dict[str, Any]:
     marks = _daily_marks(session)
     equity_curve = [{"t": m.taken_at.isoformat(), "equity": m.equity_eur} for m in marks]
     benchmark_curve = _benchmark_curve(marks)
+    baseline_curve = _baseline_curve(marks)
 
     equity_values = [point["equity"] for point in equity_curve]
     returns = stats.returns_from_equity_curve(equity_values)
@@ -190,13 +209,21 @@ def build_snapshot(session: Session) -> Dict[str, Any]:
             (benchmark_values[-1] - benchmark_values[0]) / benchmark_values[0]
         )
 
+    if len(baseline_curve) >= 2:
+        baseline_values = [point["equity"] for point in baseline_curve]
+        baseline_total_return = (baseline_values[-1] - baseline_values[0]) / baseline_values[0]
+        performance_stats["baseline_total_return"] = baseline_total_return
+        performance_stats["active_management_effect"] = performance_stats["total_return"] - baseline_total_return
+
     active_profile = rebalance.active_risk_profile if rebalance else "balanced"
 
     return {
         "schema_version": SCHEMA_VERSION,
         "generated_at": datetime.now(timezone.utc).isoformat(),
+        "is_sample_data": False,
         "equity_curve": equity_curve,
         "benchmark_curve": benchmark_curve,
+        "baseline_curve": baseline_curve,
         "performance_stats": performance_stats,
         "active_risk_profile": active_profile,
         "rebalance_generated_at": rebalance.created_at.isoformat() if rebalance else None,

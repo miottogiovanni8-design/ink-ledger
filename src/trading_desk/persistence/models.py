@@ -76,8 +76,10 @@ class Transaction(Base):
 class EquitySnapshot(Base):
     """Daily mark-to-market equity point — feeds the equity curve and the
     dashboard's day/week history scrubber. benchmark_price is the S&P 500
-    (SPY) close on the same day, stored raw (not indexed) so the snapshot
-    builder can index both series to the same starting point at read time."""
+    (SPY) close on the same day, and baseline_index_raw is the frozen
+    buy-and-hold basket's value at that day's prices — both stored raw (not
+    indexed) so the snapshot builder can index all three series to the same
+    starting point at read time."""
 
     __tablename__ = "equity_snapshots"
 
@@ -86,3 +88,19 @@ class EquitySnapshot(Base):
     equity_eur: Mapped[float] = mapped_column(Float)
     cash_eur: Mapped[float] = mapped_column(Float)
     benchmark_price: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    baseline_index_raw: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+
+
+class BaselineAllocation(Base):
+    """The very first rebalance's target weights for the active profile,
+    frozen at inception and never updated again — a buy-and-hold control arm
+    so the dashboard can show how much of the portfolio's return came from
+    the AI's ongoing rebalancing decisions versus just the initial
+    Black-Litterman allocation held untouched. Exactly one row should ever
+    exist; `weekly_rebalance.py` only inserts one if none is present yet."""
+
+    __tablename__ = "baseline_allocation"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    frozen_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    weights_json: Mapped[str] = mapped_column(Text)  # {"AAPL": 0.15, ...} — frozen once, read-only after
