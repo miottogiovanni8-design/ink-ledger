@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import pandas as pd
 
-from trading_desk.data.market_data import fetch_bars, fetch_price_panel, fetch_volume_panel
+from trading_desk.data.market_data import fetch_bars, fetch_price_panel, fetch_volume_panel, _lookback_start
 
 
 @dataclass
@@ -71,3 +71,34 @@ def test_fetch_volume_panel_pivots_to_wide_format():
     assert set(panel.columns) == {"AAPL", "MSFT"}
     assert panel["AAPL"].iloc[0] == 1000
     assert panel["MSFT"].iloc[0] == 1000
+
+
+def test_fetch_bars_always_sets_an_explicit_start():
+    # Alpaca's bars endpoint returns an empty result when no `start` is
+    # given — `limit` alone does not mean "most recent N bars." Regression
+    # guard for that: every request built by this module must set `start`.
+    client = FakeStockClient(make_single_symbol_df())
+    fetch_bars("AAPL", client, lookback_bars=30)
+    assert client.last_request.start is not None
+
+
+def test_fetch_price_panel_always_sets_an_explicit_start():
+    client = FakeStockClient(make_multi_symbol_df())
+    fetch_price_panel(["AAPL", "MSFT"], client, lookback_bars=30)
+    assert client.last_request.start is not None
+
+
+def test_fetch_volume_panel_always_sets_an_explicit_start():
+    client = FakeStockClient(make_multi_symbol_df())
+    fetch_volume_panel(["AAPL", "MSFT"], client, lookback_bars=30)
+    assert client.last_request.start is not None
+
+
+def test_lookback_start_pads_for_weekends_and_holidays():
+    start = _lookback_start(lookback_bars=100)
+    # ~1.6 calendar days per trading day plus a small pad, so it reaches
+    # noticeably further back than a naive 1-calendar-day-per-bar guess.
+    from datetime import datetime, timezone
+
+    days_back = (datetime.now(timezone.utc) - start).days
+    assert days_back >= 160
