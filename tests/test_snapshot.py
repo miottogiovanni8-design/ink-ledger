@@ -31,29 +31,29 @@ def _seed(session, include_older_rebalance=False):
             )
         )
 
+    older_event = None
     if include_older_rebalance:
-        session.add(
-            RebalanceEvent(
-                created_at=REBALANCE_TIME - timedelta(days=7),
-                active_risk_profile="conservative",
-                scenarios_json=json.dumps(SCENARIOS),
-                prior_returns_json=json.dumps({"AAPL": 0.05}),
-                posterior_returns_json=json.dumps({"AAPL": 0.06}),
-                executed=True,
-            )
-        )
-
-    session.add(
-        RebalanceEvent(
-            created_at=REBALANCE_TIME,
-            active_risk_profile="balanced",
+        older_event = RebalanceEvent(
+            created_at=REBALANCE_TIME - timedelta(days=7),
+            active_risk_profile="conservative",
             scenarios_json=json.dumps(SCENARIOS),
-            prior_returns_json=json.dumps({"AAPL": 0.07}),
-            posterior_returns_json=json.dumps({"AAPL": 0.09}),
-            latest_prices_json=json.dumps({"AAPL": 220.0}),
+            prior_returns_json=json.dumps({"AAPL": 0.05}),
+            posterior_returns_json=json.dumps({"AAPL": 0.06}),
             executed=True,
         )
+        session.add(older_event)
+
+    current_event = RebalanceEvent(
+        created_at=REBALANCE_TIME,
+        active_risk_profile="balanced",
+        scenarios_json=json.dumps(SCENARIOS),
+        prior_returns_json=json.dumps({"AAPL": 0.07}),
+        posterior_returns_json=json.dumps({"AAPL": 0.09}),
+        latest_prices_json=json.dumps({"AAPL": 220.0}),
+        executed=True,
     )
+    session.add(current_event)
+    session.flush()  # assign ids so the ViewRecords below can reference them by FK
 
     session.add(
         Transaction(
@@ -64,28 +64,34 @@ def _seed(session, include_older_rebalance=False):
             notional_usd=150.0,
             price=200.0,
             rationale="Strong iPhone cycle plus services growth.",
+            rationale_it="Forte ciclo iPhone e crescita dei servizi.",
         )
     )
 
     session.add(
         ViewRecord(
             created_at=REBALANCE_TIME + timedelta(minutes=5),
+            rebalance_event_id=current_event.id,
             symbol="AAPL",
             asset_class="equity",
             expected_return_annualized=0.09,
             confidence=0.55,
             rationale="Strong iPhone cycle plus services growth.",
+            rationale_it="Forte ciclo iPhone e crescita dei servizi.",
             key_signals=json.dumps(["services revenue +15% YoY"]),
+            sources_json=json.dumps([{"headline": "Apple beats earnings estimates", "url": "https://example.com/apple-beats"}]),
         )
     )
     session.add(
         ViewRecord(
             created_at=REBALANCE_TIME - timedelta(days=10),
+            rebalance_event_id=older_event.id if older_event else None,
             symbol="AAPL",
             asset_class="equity",
             expected_return_annualized=0.03,
             confidence=0.4,
             rationale="Old view from a prior rebalance, should not appear.",
+            rationale_it="Vecchia view da un ribilanciamento precedente, non dovrebbe apparire.",
             key_signals=json.dumps([]),
         )
     )
@@ -111,6 +117,8 @@ def test_build_snapshot_shape_and_content():
     notes = snapshot["investment_committee_notes"]
     assert len(notes) == 1
     assert notes[0]["rationale"].startswith("Strong iPhone cycle")
+    assert notes[0]["rationale_it"].startswith("Forte ciclo iPhone")
+    assert notes[0]["sources"] == [{"headline": "Apple beats earnings estimates", "url": "https://example.com/apple-beats"}]
 
 
 def test_build_snapshot_includes_benchmark_curve_and_alpha_beta():

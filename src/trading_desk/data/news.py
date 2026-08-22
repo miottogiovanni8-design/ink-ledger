@@ -18,7 +18,10 @@ def fetch_finnhub_headlines(
     api_key: str,
     http_client: httpx.Client,
     lookback_days: int = 2,
-) -> List[str]:
+) -> List[Dict[str, str]]:
+    """Returns `[{"headline": ..., "url": ...}, ...]` — the URL is carried
+    through so the dashboard can cite and link the actual source behind a
+    view's rationale, not just its text."""
     today = date.today()
     params = {
         "symbol": symbol,
@@ -29,22 +32,31 @@ def fetch_finnhub_headlines(
     response = http_client.get(f"{FINNHUB_BASE_URL}/company-news", params=params)
     response.raise_for_status()
     articles = response.json()
-    return [article["headline"] for article in articles if article.get("headline")]
+    return [
+        {"headline": article["headline"], "url": article.get("url", "")}
+        for article in articles
+        if article.get("headline")
+    ]
 
 
 def fetch_finnhub_general_news(
     api_key: str,
     http_client: httpx.Client,
     category: str = "general",
-) -> List[str]:
+) -> List[Dict[str, str]]:
     """Market-wide headlines (not tied to one symbol) — gives the per-asset
     view call broader macro context (rates, indices, geopolitics) alongside
-    the company-specific headlines from `fetch_finnhub_headlines`."""
+    the company-specific headlines from `fetch_finnhub_headlines`. Same
+    `{"headline", "url"}` shape."""
     params = {"category": category, "token": api_key}
     response = http_client.get(f"{FINNHUB_BASE_URL}/news", params=params)
     response.raise_for_status()
     articles = response.json()
-    return [article["headline"] for article in articles if article.get("headline")]
+    return [
+        {"headline": article["headline"], "url": article.get("url", "")}
+        for article in articles
+        if article.get("headline")
+    ]
 
 
 def fetch_alphavantage_sentiment(

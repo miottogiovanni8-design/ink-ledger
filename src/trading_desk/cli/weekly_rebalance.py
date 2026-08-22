@@ -60,17 +60,24 @@ def _sector_or_factor(symbol: str) -> str:
 
 def gather_views(
     anthropic_client, http_client, universe, macro_headlines: Optional[list] = None, usage_log: Optional[list] = None
-) -> list:
+) -> tuple:
+    """Returns (views, sources_by_symbol) — sources_by_symbol carries the
+    actual {"headline", "url"} items each symbol's view was shown, so the
+    dashboard can cite and link the real source behind a rationale, not
+    just its text."""
     views: list[PortfolioView] = []
+    sources_by_symbol: dict = {}
+    macro_headline_texts = [h["headline"] for h in macro_headlines] if macro_headlines else None
     for symbol in universe:
-        headlines = []
+        headline_items = []
         sentiment = None
         is_equity = _asset_class_for(symbol) == "equity"
         if is_equity and settings.finnhub_api_key:
             try:
-                headlines = fetch_finnhub_headlines(symbol, settings.finnhub_api_key, http_client)[:3]
+                headline_items = fetch_finnhub_headlines(symbol, settings.finnhub_api_key, http_client)[:3]
             except httpx.HTTPError as exc:
                 logger.warning("%s: finnhub fetch failed: %s", symbol, exc)
+        sources_by_symbol[symbol] = headline_items
         if is_equity and settings.alphavantage_api_key:
             try:
                 sentiment = fetch_alphavantage_sentiment(symbol, settings.alphavantage_api_key, http_client)
@@ -80,14 +87,14 @@ def gather_views(
             anthropic_client,
             symbol,
             _asset_class_for(symbol),
-            headlines,
+            [h["headline"] for h in headline_items],
             sector=_sector_or_factor(symbol),
             sentiment=sentiment,
-            macro_headlines=macro_headlines,
+            macro_headlines=macro_headline_texts,
             usage_log=usage_log,
         )
         views.append(view)
-    return views
+    return views, sources_by_symbol
 
 
 def run_weekly_rebalance(risk_profile_override: Optional[str] = None) -> None:
@@ -123,7 +130,7 @@ def run_weekly_rebalance(risk_profile_override: Optional[str] = None) -> None:
             logger.warning("macro headlines fetch failed: %s", exc)
 
     usage_log: list = []
-    views = gather_views(anthropic_client, http_client, universe, macro_headlines, usage_log)
+    views, sources_by_symbol = gather_views(anthropic_client, http_client, universe, macro_headlines, usage_log)
 
     with get_session(settings.db_path) as session:
         view_records = []
@@ -134,7 +141,9 @@ def run_weekly_rebalance(risk_profile_override: Optional[str] = None) -> None:
                 expected_return_annualized=view.expected_return_annualized,
                 confidence=view.confidence,
                 rationale=view.rationale,
+                rationale_it=view.rationale_it,
                 key_signals=json.dumps(view.key_signals),
+                sources_json=json.dumps(sources_by_symbol.get(view.symbol, [])),
             )
             session.add(vr)
             view_records.append(vr)
@@ -197,6 +206,7 @@ def run_weekly_rebalance(risk_profile_override: Optional[str] = None) -> None:
             for symbol, delta_usd in trades.items():
                 view = views_by_symbol.get(symbol)
                 rationale = view.rationale if view else "Rebalance toward target weight (no fresh view this cycle)."
+                rationale_it = view.rationale_it if view else "Ribilanciamento verso il peso target (nessuna nuova view questo ciclo)."
                 session.add(
                     Transaction(
                         rebalance_event_id=rebalance_event.id,
@@ -206,6 +216,7 @@ def run_weekly_rebalance(risk_profile_override: Optional[str] = None) -> None:
                         notional_usd=abs(delta_usd),
                         price=float(latest_prices.get(symbol, 0.0)),
                         rationale=rationale,
+                        rationale_it=rationale_it,
                     )
                 )
         else:

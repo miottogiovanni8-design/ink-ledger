@@ -371,6 +371,11 @@
   .note-rationale { font-size: 14px; line-height: 1.55; color: var(--text-secondary); margin: 0 0 8px; }
   .signal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
   .signal-tag { font-size: 11px; color: var(--text-muted); background: var(--surface-2); padding: 3px 8px; border-radius: 100px; }
+  .note-sources { display: flex; flex-direction: column; gap: 5px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+  .note-source-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; font-size: 12px; }
+  .note-source-headline { color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .note-source-link { color: var(--accent); text-decoration: none; white-space: nowrap; flex: none; }
+  .note-source-link:hover { text-decoration: underline; }
 
   /* ---------- benchmark comparison row ---------- */
   .benchmark-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 10px; font-size: 12.5px; color: var(--text-secondary); }
@@ -782,6 +787,7 @@
       holdings_title: "Posizioni target", th_ticker: "Titolo", th_class: "Classe", th_tag: "Settore / Fattore", th_weight: "Peso target",
       allocation_positions: "Posizioni",
       notes_title: "Note del comitato investimenti", notes_sub: "Le view generate dall'AI, con motivazione — un output di ricerca, non un ordine",
+      read_more: "Leggi di più",
       footer_disclosure: "Conto di investimento simulato — nessun fondo reale coinvolto.",
       footer_legal: "© 2026 Giovanni Miotto. Tutti i diritti riservati. Questo progetto — architettura, codice, metodologia e design — è opera originale dell'autore. Sono vietate la riproduzione, copia, distribuzione o creazione di opere derivate, totali o parziali, senza autorizzazione scritta dell'autore.",
       stat_return: "Rendimento atteso", stat_vol: "Volatilità attesa", stat_sharpe: "Sharpe atteso",
@@ -868,6 +874,7 @@
       holdings_title: "Target holdings", th_ticker: "Ticker", th_class: "Class", th_tag: "Sector / Factor", th_weight: "Target weight",
       allocation_positions: "Positions",
       notes_title: "Investment committee notes", notes_sub: "The AI's generated views, with rationale — a research output, not an order",
+      read_more: "Read more",
       footer_disclosure: "Simulated investment account — no real funds involved.",
       footer_legal: "© 2026 Giovanni Miotto. All rights reserved. This project — architecture, code, methodology, and design — is the author's original work. Reproduction, copying, distribution, or creation of derivative works, in whole or in part, is prohibited without the author's written permission.",
       stat_return: "Expected return", stat_vol: "Expected volatility", stat_sharpe: "Expected Sharpe",
@@ -1375,7 +1382,7 @@
         '<td><span class="side-chip ' + tx.side + '">' + t("side_" + tx.side) + '</span></td>' +
         '<td>' + tx.price.toLocaleString(fmtLocale(), { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</td>' +
         '<td>' + fmtEUR(tx.notional_usd) + '</td>' +
-        '<td class="rationale-cell">' + tx.rationale + '</td>';
+        '<td class="rationale-cell">' + ((state.lang === "it" && tx.rationale_it) ? tx.rationale_it : tx.rationale) + '</td>';
       body.appendChild(tr);
     });
   }
@@ -1587,7 +1594,8 @@
 
       top.appendChild(tag); top.appendChild(ret); top.appendChild(meter);
 
-      var rationale = document.createElement("p"); rationale.className = "note-rationale"; rationale.textContent = note.rationale;
+      var rationaleText = (state.lang === "it" && note.rationale_it) ? note.rationale_it : note.rationale;
+      var rationale = document.createElement("p"); rationale.className = "note-rationale"; rationale.textContent = rationaleText;
 
       var tags = document.createElement("div"); tags.className = "signal-tags";
       (note.key_signals || []).forEach(function (s) {
@@ -1596,6 +1604,22 @@
       });
 
       entry.appendChild(top); entry.appendChild(rationale); entry.appendChild(tags);
+
+      var sources = (note.sources || []).filter(function (s) { return s.url; });
+      if (sources.length) {
+        var sourcesBox = document.createElement("div"); sourcesBox.className = "note-sources";
+        sources.forEach(function (s) {
+          var row = document.createElement("div"); row.className = "note-source-row";
+          var headline = document.createElement("span"); headline.className = "note-source-headline"; headline.textContent = s.headline;
+          var link = document.createElement("a"); link.className = "note-source-link";
+          link.href = s.url; link.target = "_blank"; link.rel = "noopener noreferrer";
+          link.textContent = t("read_more") + " →";
+          row.appendChild(headline); row.appendChild(link);
+          sourcesBox.appendChild(row);
+        });
+        entry.appendChild(sourcesBox);
+      }
+
       feed.appendChild(entry);
     });
   }

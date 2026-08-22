@@ -87,49 +87,83 @@ def make_price_panel(n_days=280):
 RATIONALES = {
     "AAPL": (0.10, 0.62, "Services revenue growing ~14% YoY now outweighs hardware cyclicality; iPhone "
              "upgrade cycle in China stabilizing after two soft quarters.",
+             "I ricavi da servizi crescono di circa il 14% su base annua, ormai più rilevanti della "
+             "ciclicità dell'hardware; il ciclo di aggiornamento iPhone in Cina si sta stabilizzando "
+             "dopo due trimestri deboli.",
              ["services revenue +14% YoY", "China iPhone demand stabilizing"]),
     "NVDA": (0.16, 0.58, "Data-center capex guidance from hyperscalers still expanding for next fiscal year, "
              "but valuation already prices in a lot of that — conviction is real but not maximal.",
+             "Le indicazioni sul capex dei data center da parte degli hyperscaler restano in espansione "
+             "per il prossimo anno fiscale, ma la valutazione sconta già gran parte di questo — la "
+             "convinzione è reale ma non massima.",
              ["hyperscaler capex guidance raised", "valuation already reflects strong demand"]),
     "JPM": (0.07, 0.55, "Net interest income holding up better than peers as rate cuts arrive slower than "
              "expected; credit quality metrics remain benign.",
+             "Il margine di interesse netto tiene meglio dei competitor mentre i tagli dei tassi arrivano "
+             "più lentamente del previsto; gli indicatori di qualità del credito restano solidi.",
              ["NII resilient vs. peers", "credit quality stable"]),
     "V": (0.08, 0.60, "Cross-border payment volume reaccelerating with travel demand; take-rate stable.",
+          "Il volume dei pagamenti transfrontalieri accelera di nuovo grazie alla domanda di viaggi; il "
+          "take-rate resta stabile.",
           ["cross-border volume reaccelerating"]),
     "JNJ": (0.04, 0.45, "Pharma pipeline solid but patent-cliff exposure on two mid-size drugs caps upside "
             "near-term.",
+            "La pipeline farmaceutica è solida ma l'esposizione al 'patent cliff' su due farmaci di media "
+            "grandezza limita l'upside nel breve termine.",
             ["patent cliff exposure on two drugs"]),
     "UNH": (0.02, 0.35, "Medical cost ratio came in above guidance last quarter; regulatory overhang on "
             "Medicare Advantage reimbursement unresolved.",
+            "Il medical cost ratio è arrivato sopra le attese nell'ultimo trimestre; resta irrisolto "
+            "l'overhang regolatorio sul rimborso Medicare Advantage.",
             ["medical cost ratio above guidance", "Medicare Advantage reimbursement uncertainty"]),
     "XOM": (0.05, 0.48, "Crude inventories drawing down as OPEC+ holds supply discipline, but demand growth "
             "forecasts have been trimmed twice this year.",
+            "Le scorte di greggio si riducono mentre l'OPEC+ mantiene la disciplina sull'offerta, ma le "
+            "previsioni di crescita della domanda sono state riviste al ribasso due volte quest'anno.",
             ["OPEC+ supply discipline", "demand growth forecasts trimmed"]),
     "PG": (0.05, 0.50, "Volume growth turned positive after two quarters of price-driven declines; input cost "
            "inflation easing.",
+           "La crescita dei volumi è tornata positiva dopo due trimestri di calo trainato dai prezzi; "
+           "l'inflazione sui costi degli input si sta attenuando.",
            ["volume growth turned positive", "input costs easing"]),
     "HD": (0.06, 0.47, "Housing turnover still depressed by mortgage rates, but pro-customer segment "
            "outperforming DIY.",
+           "Il turnover immobiliare resta depresso dai tassi sui mutui, ma il segmento professionale "
+           "sovraperforma quello DIY.",
            ["pro segment outperforming DIY"]),
     "CAT": (0.09, 0.52, "Infrastructure-linked order backlog remains elevated; dealer inventory normalized "
             "after last year's destock.",
+            "Il portafoglio ordini legato alle infrastrutture resta elevato; l'inventario dei dealer si è "
+            "normalizzato dopo il destocking dell'anno scorso.",
             ["backlog elevated", "dealer inventory normalized"]),
     "XLK": (0.11, 0.55, "Sector-wide AI infrastructure spend still the dominant earnings driver across the "
             "largest constituents.",
+            "La spesa in infrastrutture AI resta il driver dominante degli utili a livello settoriale, "
+            "diffuso tra i maggiori componenti.",
             ["AI infrastructure spend broad-based"]),
     "XLF": (0.06, 0.50, "Yield curve steepening supports net interest margins across the sector into next "
             "year.",
+            "L'irripidimento della curva dei rendimenti sostiene i margini di interesse netto in tutto il "
+            "settore per il prossimo anno.",
             ["yield curve steepening"]),
     "XLV": (0.03, 0.40, "Sector laggard year-to-date on policy uncertainty around drug pricing reform.",
+            "Settore in ritardo da inizio anno per l'incertezza politica sulla riforma dei prezzi dei "
+            "farmaci.",
             ["drug pricing policy uncertainty"]),
     "MTUM": (0.09, 0.45, "Momentum factor has been crowded into a narrow set of mega-cap tech names — "
              "conviction moderate given concentration risk.",
+             "Il fattore momentum si è concentrato in un gruppo ristretto di titoli tech a "
+             "mega-capitalizzazione — convinzione moderata dato il rischio di concentrazione.",
              ["momentum concentrated in mega-cap tech"]),
     "VLUE": (0.06, 0.42, "Value spread vs. growth remains historically wide, a mean-reversion setup without a "
              "clear near-term catalyst.",
+             "Lo spread value/growth resta storicamente ampio, un setup di mean-reversion senza un "
+             "catalizzatore chiaro nel breve termine.",
              ["value-growth spread historically wide"]),
     "USMV": (0.04, 0.48, "Low-volatility sleeve provides ballast; opportunity cost has been real in a "
              "risk-on tape but that's the point of holding it.",
+             "Il segmento a bassa volatilità offre stabilità; il costo opportunità è stato reale in una "
+             "fase di risk-on, ma è esattamente il senso di detenerlo.",
              ["defensive ballast against risk-on tape"]),
 }
 
@@ -137,7 +171,7 @@ RATIONALES = {
 def build_views():
     views = []
     for symbol in UNIVERSE:
-        expected_return, confidence, rationale, signals = RATIONALES[symbol]
+        expected_return, confidence, rationale, rationale_it, signals = RATIONALES[symbol]
         asset_class = "equity" if symbol in EQUITIES else "etf"
         views.append(
             PortfolioView(
@@ -146,6 +180,7 @@ def build_views():
                 expected_return_annualized=expected_return,
                 confidence=confidence,
                 rationale=rationale,
+                rationale_it=rationale_it,
                 key_signals=signals,
             )
         )
@@ -247,7 +282,12 @@ def main():
             "expected_return_annualized": v.expected_return_annualized,
             "confidence": v.confidence,
             "rationale": v.rationale,
+            "rationale_it": v.rationale_it,
             "key_signals": v.key_signals,
+            # No fabricated source links here — real weekly runs attach the
+            # actual Finnhub article URLs the view was shown; hand-written
+            # sample rationale has no real article behind it to link to.
+            "sources": [],
         }
         for v in views
     ]
@@ -278,16 +318,22 @@ def main():
                 "notional_usd": weight * current_equity,
                 "price": entry_price,
                 "rationale": view.rationale if view else "Initial position build toward target weight.",
+                "rationale_it": view.rationale_it if view else "Costruzione iniziale della posizione verso il peso target.",
             }
         )
 
     closed_round_trips = [
         ("XOM", "2026-03-02T14:05:00+00:00", "2026-05-18T14:05:00+00:00", -0.04,
-         "Crude demand forecasts were cut twice within the quarter and OPEC+ supply discipline proved less supportive than expected — exited energy exposure ahead of the sector-wide downgrade."),
+         "Crude demand forecasts were cut twice within the quarter and OPEC+ supply discipline proved less supportive than expected — exited energy exposure ahead of the sector-wide downgrade.",
+         "Le previsioni di domanda per il greggio sono state riviste al ribasso due volte nel trimestre "
+         "e la disciplina di offerta dell'OPEC+ si è rivelata meno di supporto del previsto — uscita "
+         "dall'esposizione energetica prima del downgrade generalizzato del settore."),
         ("PG", "2026-03-09T14:05:00+00:00", "2026-06-01T14:05:00+00:00", 0.03,
-         "Two consecutive quarters of volume weakness reversed the original volume-recovery thesis; reallocated the capital to higher-conviction technology names."),
+         "Two consecutive quarters of volume weakness reversed the original volume-recovery thesis; reallocated the capital to higher-conviction technology names.",
+         "Due trimestri consecutivi di debolezza nei volumi hanno smentito la tesi originale di "
+         "recupero; capitale riallocato verso titoli tech a maggiore convinzione."),
     ]
-    for symbol, buy_date, sell_date, exit_return, exit_rationale in closed_round_trips:
+    for symbol, buy_date, sell_date, exit_return, exit_rationale, exit_rationale_it in closed_round_trips:
         buy_price = latest_prices[symbol] / 1.05
         sell_price = buy_price * (1 + exit_return)
         buy_notional = 0.08 * current_equity
@@ -299,6 +345,7 @@ def main():
                 "asset_class": "equity" if symbol in EQUITIES else "etf", "side": "buy",
                 "notional_usd": buy_notional, "price": buy_price,
                 "rationale": view.rationale if view else "Initial position build.",
+                "rationale_it": view.rationale_it if view else "Costruzione iniziale della posizione.",
             }
         )
         transactions.append(
@@ -307,6 +354,7 @@ def main():
                 "asset_class": "equity" if symbol in EQUITIES else "etf", "side": "sell",
                 "notional_usd": shares * sell_price, "price": sell_price,
                 "rationale": exit_rationale,
+                "rationale_it": exit_rationale_it,
             }
         )
 

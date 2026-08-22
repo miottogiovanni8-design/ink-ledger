@@ -73,6 +73,7 @@ def test_parse_view_response_extracts_tool_call():
         "expected_return_annualized": 0.09,
         "confidence": 0.55,
         "rationale": "Strong iPhone cycle plus services growth.",
+        "rationale_it": "Forte ciclo iPhone e crescita dei servizi.",
         "key_signals": ["services revenue +15% YoY"],
     }
     response = FakeMessage(content=[FakeToolUseBlock(input=payload)])
@@ -95,6 +96,7 @@ def test_request_portfolio_view_wires_model_and_forced_tool_choice():
         "expected_return_annualized": 0.05,
         "confidence": 0.4,
         "rationale": "Rate cut cycle likely to support financials moderately.",
+        "rationale_it": "Il ciclo di taglio dei tassi dovrebbe sostenere moderatamente il settore finanziario.",
     }
     response = FakeMessage(content=[FakeToolUseBlock(input=payload)])
     client = FakeAnthropicClient(response)
@@ -116,6 +118,7 @@ def test_request_portfolio_view_forwards_sentiment_and_macro_headlines():
         "expected_return_annualized": 0.05,
         "confidence": 0.4,
         "rationale": "Rate cut cycle likely to support financials moderately.",
+        "rationale_it": "Il ciclo di taglio dei tassi dovrebbe sostenere moderatamente il settore finanziario.",
     }
     response = FakeMessage(content=[FakeToolUseBlock(input=payload)])
     client = FakeAnthropicClient(response)
@@ -138,6 +141,7 @@ def test_request_portfolio_view_appends_usage_when_log_provided():
         "expected_return_annualized": 0.08,
         "confidence": 0.5,
         "rationale": "Steady growth.",
+        "rationale_it": "Crescita costante.",
     }
     fake_usage = {"input_tokens": 120, "output_tokens": 80}
     response = FakeMessage(content=[FakeToolUseBlock(input=payload)], usage=fake_usage)
@@ -156,6 +160,7 @@ def test_request_portfolio_view_skips_usage_log_when_not_provided():
         "expected_return_annualized": 0.08,
         "confidence": 0.5,
         "rationale": "Steady growth.",
+        "rationale_it": "Crescita costante.",
     }
     response = FakeMessage(content=[FakeToolUseBlock(input=payload)], usage={"input_tokens": 1})
     client = FakeAnthropicClient(response)

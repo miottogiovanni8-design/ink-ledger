@@ -1831,7 +1831,8 @@
       "side": "sell",
       "notional_usd": 9210.721440000001,
       "price": 130.82714820269646,
-      "rationale": "Two consecutive quarters of volume weakness reversed the original volume-recovery thesis; reallocated the capital to higher-conviction technology names."
+      "rationale": "Two consecutive quarters of volume weakness reversed the original volume-recovery thesis; reallocated the capital to higher-conviction technology names.",
+      "rationale_it": "Due trimestri consecutivi di debolezza nei volumi hanno smentito la tesi originale di recupero; capitale riallocato verso titoli tech a maggiore convinzione."
     },
     {
       "executed_at": "2026-05-18T14:05:00+00:00",
@@ -1841,7 +1842,8 @@
       "side": "sell",
       "notional_usd": 8584.75008,
       "price": 109.6854615716263,
-      "rationale": "Crude demand forecasts were cut twice within the quarter and OPEC+ supply discipline proved less supportive than expected \u2014 exited energy exposure ahead of the sector-wide downgrade."
+      "rationale": "Crude demand forecasts were cut twice within the quarter and OPEC+ supply discipline proved less supportive than expected \u2014 exited energy exposure ahead of the sector-wide downgrade.",
+      "rationale_it": "Le previsioni di domanda per il greggio sono state riviste al ribasso due volte nel trimestre e la disciplina di offerta dell'OPEC+ si \u00e8 rivelata meno di supporto del previsto \u2014 uscita dall'esposizione energetica prima del downgrade generalizzato del settore."
     },
     {
       "executed_at": "2026-05-11T14:05:00+00:00",
@@ -1851,7 +1853,8 @@
       "side": "buy",
       "notional_usd": 3153.330726,
       "price": 159.1225107005869,
-      "rationale": "Pharma pipeline solid but patent-cliff exposure on two mid-size drugs caps upside near-term."
+      "rationale": "Pharma pipeline solid but patent-cliff exposure on two mid-size drugs caps upside near-term.",
+      "rationale_it": "La pipeline farmaceutica \u00e8 solida ma l'esposizione al 'patent cliff' su due farmaci di media grandezza limita l'upside nel breve termine."
     },
     {
       "executed_at": "2026-05-11T14:05:00+00:00",
@@ -1861,7 +1864,8 @@
       "side": "buy",
       "notional_usd": 7269.092418000001,
       "price": 142.89974392231667,
-      "rationale": "Value spread vs. growth remains historically wide, a mean-reversion setup without a clear near-term catalyst."
+      "rationale": "Value spread vs. growth remains historically wide, a mean-reversion setup without a clear near-term catalyst.",
+      "rationale_it": "Lo spread value/growth resta storicamente ampio, un setup di mean-reversion senza un catalizzatore chiaro nel breve termine."
     },
     {
       "executed_at": "2026-05-04T14:05:00+00:00",
@@ -1871,7 +1875,8 @@
       "side": "buy",
       "notional_usd": 16767.09,
       "price": 232.52421225716935,
-      "rationale": "Cross-border payment volume reaccelerating with travel demand; take-rate stable."
+      "rationale": "Cross-border payment volume reaccelerating with travel demand; take-rate stable.",
+      "rationale_it": "Il volume dei pagamenti transfrontalieri accelera di nuovo grazie alla domanda di viaggi; il take-rate resta stabile."
     },
     {
       "executed_at": "2026-05-04T14:05:00+00:00",
@@ -1881,7 +1886,8 @@
       "side": "buy",
       "notional_usd": 12838.00191,
       "price": 197.80760005055453,
-      "rationale": "Momentum factor has been crowded into a narrow set of mega-cap tech names \u2014 conviction moderate given concentration risk."
+      "rationale": "Momentum factor has been crowded into a narrow set of mega-cap tech names \u2014 conviction moderate given concentration risk.",
+      "rationale_it": "Il fattore momentum si \u00e8 concentrato in un gruppo ristretto di titoli tech a mega-capitalizzazione \u2014 convinzione moderata dato il rischio di concentrazione."
     },
     {
       "executed_at": "2026-04-27T14:05:00+00:00",
@@ -1891,7 +1897,8 @@
       "side": "buy",
       "notional_usd": 1094.3320740000001,
       "price": 203.14829935404646,
-      "rationale": "Net interest income holding up better than peers as rate cuts arrive slower than expected; credit quality metrics remain benign."
+      "rationale": "Net interest income holding up better than peers as rate cuts arrive slower than expected; credit quality metrics remain benign.",
+      "rationale_it": "Il margine di interesse netto tiene meglio dei competitor mentre i tagli dei tassi arrivano pi\u00f9 lentamente del previsto; gli indicatori di qualit\u00e0 del credito restano solidi."
     },
     {
       "executed_at": "2026-04-27T14:05:00+00:00",
@@ -1901,7 +1908,8 @@
       "side": "buy",
       "notional_usd": 16767.09,
       "price": 262.37077453849685,
-      "rationale": "Sector-wide AI infrastructure spend still the dominant earnings driver across the largest constituents."
+      "rationale": "Sector-wide AI infrastructure spend still the dominant earnings driver across the largest constituents.",
+      "rationale_it": "La spesa in infrastrutture AI resta il driver dominante degli utili a livello settoriale, diffuso tra i maggiori componenti."
     },
     {
       "executed_at": "2026-04-20T14:05:00+00:00",
@@ -1911,7 +1919,8 @@
       "side": "buy",
       "notional_usd": 14342.568786000002,
       "price": 203.3045139496377,
-      "rationale": "Data-center capex guidance from hyperscalers still expanding for next fiscal year, but valuation already prices in a lot of that \u2014 conviction is real but not maximal."
+      "rationale": "Data-center capex guidance from hyperscalers still expanding for next fiscal year, but valuation already prices in a lot of that \u2014 conviction is real but not maximal.",
+      "rationale_it": "Le indicazioni sul capex dei data center da parte degli hyperscaler restano in espansione per il prossimo anno fiscale, ma la valutazione sconta gi\u00e0 gran parte di questo \u2014 la convinzione \u00e8 reale ma non massima."
     },
     {
       "executed_at": "2026-04-20T14:05:00+00:00",
@@ -1921,7 +1930,8 @@
       "side": "buy",
       "notional_usd": 6013.7962800000005,
       "price": 290.8369638278678,
-      "rationale": "Infrastructure-linked order backlog remains elevated; dealer inventory normalized after last year's destock."
+      "rationale": "Infrastructure-linked order backlog remains elevated; dealer inventory normalized after last year's destock.",
+      "rationale_it": "Il portafoglio ordini legato alle infrastrutture resta elevato; l'inventario dei dealer si \u00e8 normalizzato dopo il destocking dell'anno scorso."
     },
     {
       "executed_at": "2026-04-13T14:05:00+00:00",
@@ -1931,7 +1941,8 @@
       "side": "buy",
       "notional_usd": 16767.09,
       "price": 144.53912754761203,
-      "rationale": "Services revenue growing ~14% YoY now outweighs hardware cyclicality; iPhone upgrade cycle in China stabilizing after two soft quarters."
+      "rationale": "Services revenue growing ~14% YoY now outweighs hardware cyclicality; iPhone upgrade cycle in China stabilizing after two soft quarters.",
+      "rationale_it": "I ricavi da servizi crescono di circa il 14% su base annua, ormai pi\u00f9 rilevanti della ciclicit\u00e0 dell'hardware; il ciclo di aggiornamento iPhone in Cina si sta stabilizzando dopo due trimestri deboli."
     },
     {
       "executed_at": "2026-04-13T14:05:00+00:00",
@@ -1941,7 +1952,8 @@
       "side": "buy",
       "notional_usd": 16767.09,
       "price": 305.7070945220492,
-      "rationale": "Housing turnover still depressed by mortgage rates, but pro-customer segment outperforming DIY."
+      "rationale": "Housing turnover still depressed by mortgage rates, but pro-customer segment outperforming DIY.",
+      "rationale_it": "Il turnover immobiliare resta depresso dai tassi sui mutui, ma il segmento professionale sovraperforma quello DIY."
     },
     {
       "executed_at": "2026-03-09T14:05:00+00:00",
@@ -1951,7 +1963,8 @@
       "side": "buy",
       "notional_usd": 8942.448,
       "price": 127.016648740482,
-      "rationale": "Volume growth turned positive after two quarters of price-driven declines; input cost inflation easing."
+      "rationale": "Volume growth turned positive after two quarters of price-driven declines; input cost inflation easing.",
+      "rationale_it": "La crescita dei volumi \u00e8 tornata positiva dopo due trimestri di calo trainato dai prezzi; l'inflazione sui costi degli input si sta attenuando."
     },
     {
       "executed_at": "2026-03-02T14:05:00+00:00",
@@ -1961,7 +1974,8 @@
       "side": "buy",
       "notional_usd": 8942.448,
       "price": 114.25568913711074,
-      "rationale": "Crude inventories drawing down as OPEC+ holds supply discipline, but demand growth forecasts have been trimmed twice this year."
+      "rationale": "Crude inventories drawing down as OPEC+ holds supply discipline, but demand growth forecasts have been trimmed twice this year.",
+      "rationale_it": "Le scorte di greggio si riducono mentre l'OPEC+ mantiene la disciplina sull'offerta, ma le previsioni di crescita della domanda sono state riviste al ribasso due volte quest'anno."
     }
   ],
   "investment_committee_notes": [
@@ -1972,10 +1986,12 @@
       "expected_return_annualized": 0.1,
       "confidence": 0.62,
       "rationale": "Services revenue growing ~14% YoY now outweighs hardware cyclicality; iPhone upgrade cycle in China stabilizing after two soft quarters.",
+      "rationale_it": "I ricavi da servizi crescono di circa il 14% su base annua, ormai pi\u00f9 rilevanti della ciclicit\u00e0 dell'hardware; il ciclo di aggiornamento iPhone in Cina si sta stabilizzando dopo due trimestri deboli.",
       "key_signals": [
         "services revenue +14% YoY",
         "China iPhone demand stabilizing"
-      ]
+      ],
+      "sources": []
     },
     {
       "created_at": "2026-08-17T14:05:00+00:00",
@@ -1984,10 +2000,12 @@
       "expected_return_annualized": 0.16,
       "confidence": 0.58,
       "rationale": "Data-center capex guidance from hyperscalers still expanding for next fiscal year, but valuation already prices in a lot of that \u2014 conviction is real but not maximal.",
+      "rationale_it": "Le indicazioni sul capex dei data center da parte degli hyperscaler restano in espansione per il prossimo anno fiscale, ma la valutazione sconta gi\u00e0 gran parte di questo \u2014 la convinzione \u00e8 reale ma non massima.",
       "key_signals": [
         "hyperscaler capex guidance raised",
         "valuation already reflects strong demand"
-      ]
+      ],
+      "sources": []
     },
     {
       "created_at": "2026-08-17T14:05:00+00:00",
@@ -1996,10 +2014,12 @@
       "expected_return_annualized": 0.07,
       "confidence": 0.55,
       "rationale": "Net interest income holding up better than peers as rate cuts arrive slower than expected; credit quality metrics remain benign.",
+      "rationale_it": "Il margine di interesse netto tiene meglio dei competitor mentre i tagli dei tassi arrivano pi\u00f9 lentamente del previsto; gli indicatori di qualit\u00e0 del credito restano solidi.",
       "key_signals": [
         "NII resilient vs. peers",
         "credit quality stable"
-      ]
+      ],
+      "sources": []
     },
     {
       "created_at": "2026-08-17T14:05:00+00:00",
@@ -2008,9 +2028,11 @@
       "expected_return_annualized": 0.08,
       "confidence": 0.6,
       "rationale": "Cross-border payment volume reaccelerating with travel demand; take-rate stable.",
+      "rationale_it": "Il volume dei pagamenti transfrontalieri accelera di nuovo grazie alla domanda di viaggi; il take-rate resta stabile.",
       "key_signals": [
         "cross-border volume reaccelerating"
-      ]
+      ],
+      "sources": []
     },
     {
       "created_at": "2026-08-17T14:05:00+00:00",
@@ -2019,9 +2041,11 @@
       "expected_return_annualized": 0.04,
       "confidence": 0.45,
       "rationale": "Pharma pipeline solid but patent-cliff exposure on two mid-size drugs caps upside near-term.",
+      "rationale_it": "La pipeline farmaceutica \u00e8 solida ma l'esposizione al 'patent cliff' su due farmaci di media grandezza limita l'upside nel breve termine.",
       "key_signals": [
         "patent cliff exposure on two drugs"
-      ]
+      ],
+      "sources": []
     },
     {
       "created_at": "2026-08-17T14:05:00+00:00",
@@ -2030,10 +2054,12 @@
       "expected_return_annualized": 0.02,
       "confidence": 0.35,
       "rationale": "Medical cost ratio came in above guidance last quarter; regulatory overhang on Medicare Advantage reimbursement unresolved.",
+      "rationale_it": "Il medical cost ratio \u00e8 arrivato sopra le attese nell'ultimo trimestre; resta irrisolto l'overhang regolatorio sul rimborso Medicare Advantage.",
       "key_signals": [
         "medical cost ratio above guidance",
         "Medicare Advantage reimbursement uncertainty"
-      ]
+      ],
+      "sources": []
     },
     {
       "created_at": "2026-08-17T14:05:00+00:00",
@@ -2042,10 +2068,12 @@
       "expected_return_annualized": 0.05,
       "confidence": 0.48,
       "rationale": "Crude inventories drawing down as OPEC+ holds supply discipline, but demand growth forecasts have been trimmed twice this year.",
+      "rationale_it": "Le scorte di greggio si riducono mentre l'OPEC+ mantiene la disciplina sull'offerta, ma le previsioni di crescita della domanda sono state riviste al ribasso due volte quest'anno.",
       "key_signals": [
         "OPEC+ supply discipline",
         "demand growth forecasts trimmed"
-      ]
+      ],
+      "sources": []
     },
     {
       "created_at": "2026-08-17T14:05:00+00:00",
@@ -2054,10 +2082,12 @@
       "expected_return_annualized": 0.05,
       "confidence": 0.5,
       "rationale": "Volume growth turned positive after two quarters of price-driven declines; input cost inflation easing.",
+      "rationale_it": "La crescita dei volumi \u00e8 tornata positiva dopo due trimestri di calo trainato dai prezzi; l'inflazione sui costi degli input si sta attenuando.",
       "key_signals": [
         "volume growth turned positive",
         "input costs easing"
-      ]
+      ],
+      "sources": []
     },
     {
       "created_at": "2026-08-17T14:05:00+00:00",
@@ -2066,9 +2096,11 @@
       "expected_return_annualized": 0.06,
       "confidence": 0.47,
       "rationale": "Housing turnover still depressed by mortgage rates, but pro-customer segment outperforming DIY.",
+      "rationale_it": "Il turnover immobiliare resta depresso dai tassi sui mutui, ma il segmento professionale sovraperforma quello DIY.",
       "key_signals": [
         "pro segment outperforming DIY"
-      ]
+      ],
+      "sources": []
     },
     {
       "created_at": "2026-08-17T14:05:00+00:00",
@@ -2077,10 +2109,12 @@
       "expected_return_annualized": 0.09,
       "confidence": 0.52,
       "rationale": "Infrastructure-linked order backlog remains elevated; dealer inventory normalized after last year's destock.",
+      "rationale_it": "Il portafoglio ordini legato alle infrastrutture resta elevato; l'inventario dei dealer si \u00e8 normalizzato dopo il destocking dell'anno scorso.",
       "key_signals": [
         "backlog elevated",
         "dealer inventory normalized"
-      ]
+      ],
+      "sources": []
     },
     {
       "created_at": "2026-08-17T14:05:00+00:00",
@@ -2089,9 +2123,11 @@
       "expected_return_annualized": 0.11,
       "confidence": 0.55,
       "rationale": "Sector-wide AI infrastructure spend still the dominant earnings driver across the largest constituents.",
+      "rationale_it": "La spesa in infrastrutture AI resta il driver dominante degli utili a livello settoriale, diffuso tra i maggiori componenti.",
       "key_signals": [
         "AI infrastructure spend broad-based"
-      ]
+      ],
+      "sources": []
     },
     {
       "created_at": "2026-08-17T14:05:00+00:00",
@@ -2100,9 +2136,11 @@
       "expected_return_annualized": 0.06,
       "confidence": 0.5,
       "rationale": "Yield curve steepening supports net interest margins across the sector into next year.",
+      "rationale_it": "L'irripidimento della curva dei rendimenti sostiene i margini di interesse netto in tutto il settore per il prossimo anno.",
       "key_signals": [
         "yield curve steepening"
-      ]
+      ],
+      "sources": []
     },
     {
       "created_at": "2026-08-17T14:05:00+00:00",
@@ -2111,9 +2149,11 @@
       "expected_return_annualized": 0.03,
       "confidence": 0.4,
       "rationale": "Sector laggard year-to-date on policy uncertainty around drug pricing reform.",
+      "rationale_it": "Settore in ritardo da inizio anno per l'incertezza politica sulla riforma dei prezzi dei farmaci.",
       "key_signals": [
         "drug pricing policy uncertainty"
-      ]
+      ],
+      "sources": []
     },
     {
       "created_at": "2026-08-17T14:05:00+00:00",
@@ -2122,9 +2162,11 @@
       "expected_return_annualized": 0.09,
       "confidence": 0.45,
       "rationale": "Momentum factor has been crowded into a narrow set of mega-cap tech names \u2014 conviction moderate given concentration risk.",
+      "rationale_it": "Il fattore momentum si \u00e8 concentrato in un gruppo ristretto di titoli tech a mega-capitalizzazione \u2014 convinzione moderata dato il rischio di concentrazione.",
       "key_signals": [
         "momentum concentrated in mega-cap tech"
-      ]
+      ],
+      "sources": []
     },
     {
       "created_at": "2026-08-17T14:05:00+00:00",
@@ -2133,9 +2175,11 @@
       "expected_return_annualized": 0.06,
       "confidence": 0.42,
       "rationale": "Value spread vs. growth remains historically wide, a mean-reversion setup without a clear near-term catalyst.",
+      "rationale_it": "Lo spread value/growth resta storicamente ampio, un setup di mean-reversion senza un catalizzatore chiaro nel breve termine.",
       "key_signals": [
         "value-growth spread historically wide"
-      ]
+      ],
+      "sources": []
     },
     {
       "created_at": "2026-08-17T14:05:00+00:00",
@@ -2144,9 +2188,11 @@
       "expected_return_annualized": 0.04,
       "confidence": 0.48,
       "rationale": "Low-volatility sleeve provides ballast; opportunity cost has been real in a risk-on tape but that's the point of holding it.",
+      "rationale_it": "Il segmento a bassa volatilit\u00e0 offre stabilit\u00e0; il costo opportunit\u00e0 \u00e8 stato reale in una fase di risk-on, ma \u00e8 esattamente il senso di detenerlo.",
       "key_signals": [
         "defensive ballast against risk-on tape"
-      ]
+      ],
+      "sources": []
     }
   ],
   "skill_analysis": {

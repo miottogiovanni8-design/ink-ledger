@@ -28,6 +28,7 @@ def make_view(symbol, expected_return, confidence) -> PortfolioView:
         expected_return_annualized=expected_return,
         confidence=confidence,
         rationale="test view",
+        rationale_it="view di prova",
     )
 
 

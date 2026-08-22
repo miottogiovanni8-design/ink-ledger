@@ -18,6 +18,7 @@ class PortfolioView(BaseModel):
     expected_return_annualized: float = Field(ge=-1.0, le=2.0)
     confidence: float = Field(ge=0.01, le=0.99)
     rationale: str
+    rationale_it: str
     key_signals: List[str] = Field(default_factory=list)
 
 
@@ -43,14 +44,24 @@ PORTFOLIO_VIEW_TOOL = {
                 "type": "number",
                 "description": "Idzorek-style confidence in this view, strictly between 0 and 1 — from 0.01 (almost no conviction) to 0.99 (very high conviction). Never exactly 0 or 1; enforced server-side, so stay inside that range.",
             },
-            "rationale": {"type": "string"},
+            "rationale": {
+                "type": "string",
+                "description": "In English. Cite the specific evidence used (a headline, a fundamental metric, a macro factor) — stored verbatim in the investment committee notes.",
+            },
+            "rationale_it": {
+                "type": "string",
+                "description": "The same rationale, translated into Italian — natural, professional financial Italian, not a literal word-for-word translation. Same content and citations as rationale, just in Italian.",
+            },
             "key_signals": {
                 "type": "array",
                 "items": {"type": "string"},
                 "description": "Specific evidence cited in the rationale (a headline, a metric, a macro factor). Use an empty array if none.",
             },
         },
-        "required": ["symbol", "asset_class", "expected_return_annualized", "confidence", "rationale", "key_signals"],
+        "required": [
+            "symbol", "asset_class", "expected_return_annualized", "confidence",
+            "rationale", "rationale_it", "key_signals",
+        ],
         "additionalProperties": False,
     },
 }

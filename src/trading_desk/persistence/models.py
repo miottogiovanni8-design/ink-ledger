@@ -30,7 +30,9 @@ class ViewRecord(Base):
     expected_return_annualized: Mapped[float] = mapped_column(Float)
     confidence: Mapped[float] = mapped_column(Float)
     rationale: Mapped[str] = mapped_column(Text)
+    rationale_it: Mapped[str] = mapped_column(Text, default="")
     key_signals: Mapped[str] = mapped_column(Text)  # JSON-encoded list[str]
+    sources_json: Mapped[str] = mapped_column(Text, default="[]")  # JSON-encoded [{"headline", "url"}, ...]
 
 
 class RebalanceEvent(Base):
@@ -71,6 +73,7 @@ class Transaction(Base):
     notional_usd: Mapped[float] = mapped_column(Float)
     price: Mapped[float] = mapped_column(Float)
     rationale: Mapped[str] = mapped_column(Text)
+    rationale_it: Mapped[str] = mapped_column(Text, default="")
 
 
 class EquitySnapshot(Base):

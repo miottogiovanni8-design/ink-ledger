@@ -29,6 +29,8 @@ Rules you must respect:
 - rationale must cite the specific evidence used (a headline, a fundamental \
   metric, a macro factor) — it is stored verbatim in the investment \
   committee notes and shown to a human reviewing the process.
+- rationale_it is the same rationale in natural, professional Italian —
+  same evidence and citations, not a stiff literal translation.
 - You must call the record_portfolio_view tool exactly once."""
 
 

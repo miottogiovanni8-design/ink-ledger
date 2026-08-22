@@ -11,8 +11,8 @@ def test_fetch_finnhub_general_news_extracts_headline_field():
         return httpx.Response(
             200,
             json=[
-                {"headline": "Fed holds rates steady", "datetime": 1700000000},
-                {"headline": "S&P 500 hits new high", "datetime": 1700000100},
+                {"headline": "Fed holds rates steady", "url": "https://example.com/fed", "datetime": 1700000000},
+                {"headline": "S&P 500 hits new high", "url": "https://example.com/spx", "datetime": 1700000100},
                 {"datetime": 1700000200},  # missing headline, should be skipped
             ],
         )
@@ -20,7 +20,10 @@ def test_fetch_finnhub_general_news_extracts_headline_field():
     client = httpx.Client(transport=httpx.MockTransport(handler))
     headlines = fetch_finnhub_general_news("fake-key", client)
 
-    assert headlines == ["Fed holds rates steady", "S&P 500 hits new high"]
+    assert headlines == [
+        {"headline": "Fed holds rates steady", "url": "https://example.com/fed"},
+        {"headline": "S&P 500 hits new high", "url": "https://example.com/spx"},
+    ]
 
 
 def test_fetch_finnhub_headlines_extracts_headline_field():
@@ -30,8 +33,8 @@ def test_fetch_finnhub_headlines_extracts_headline_field():
         return httpx.Response(
             200,
             json=[
-                {"headline": "Apple beats earnings estimates", "datetime": 1700000000},
-                {"headline": "Apple announces new product", "datetime": 1700000100},
+                {"headline": "Apple beats earnings estimates", "url": "https://example.com/aapl-1", "datetime": 1700000000},
+                {"headline": "Apple announces new product", "url": "https://example.com/aapl-2", "datetime": 1700000100},
                 {"datetime": 1700000200},  # missing headline, should be skipped
             ],
         )
@@ -39,7 +42,10 @@ def test_fetch_finnhub_headlines_extracts_headline_field():
     client = httpx.Client(transport=httpx.MockTransport(handler))
     headlines = fetch_finnhub_headlines("AAPL", "fake-key", client)
 
-    assert headlines == ["Apple beats earnings estimates", "Apple announces new product"]
+    assert headlines == [
+        {"headline": "Apple beats earnings estimates", "url": "https://example.com/aapl-1"},
+        {"headline": "Apple announces new product", "url": "https://example.com/aapl-2"},
+    ]
 
 
 def test_fetch_alphavantage_sentiment_finds_matching_ticker():

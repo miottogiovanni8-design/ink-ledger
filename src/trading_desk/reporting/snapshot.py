@@ -110,15 +110,25 @@ def _transaction_history(session: Session, limit: int = 100) -> List[Dict[str, A
             "notional_usd": tx.notional_usd,
             "price": tx.price,
             "rationale": tx.rationale,
+            "rationale_it": tx.rationale_it,
         }
         for tx in rows
     ]
 
 
-def _investment_committee_notes(session: Session, since: Optional[datetime], limit: int = 50) -> List[Dict[str, Any]]:
+def _investment_committee_notes(session: Session, rebalance_event_id: Optional[int], limit: int = 50) -> List[Dict[str, Any]]:
+    # Filtered by the FK set explicitly when each ViewRecord was created,
+    # not by comparing timestamps — the RebalanceEvent row is flushed a
+    # few microseconds *after* its own ViewRecords, so `created_at >=
+    # rebalance.created_at` silently excluded every note from its own week.
     query = select(ViewRecord).order_by(ViewRecord.created_at.desc()).limit(limit)
-    if since is not None:
-        query = select(ViewRecord).where(ViewRecord.created_at >= since).order_by(ViewRecord.created_at.desc()).limit(limit)
+    if rebalance_event_id is not None:
+        query = (
+            select(ViewRecord)
+            .where(ViewRecord.rebalance_event_id == rebalance_event_id)
+            .order_by(ViewRecord.created_at.desc())
+            .limit(limit)
+        )
     rows = session.execute(query).scalars().all()
     return [
         {
@@ -128,7 +138,9 @@ def _investment_committee_notes(session: Session, since: Optional[datetime], lim
             "expected_return_annualized": v.expected_return_annualized,
             "confidence": v.confidence,
             "rationale": v.rationale,
+            "rationale_it": v.rationale_it,
             "key_signals": json.loads(v.key_signals) if v.key_signals else [],
+            "sources": json.loads(v.sources_json) if v.sources_json else [],
         }
         for v in rows
     ]
@@ -180,7 +192,7 @@ def build_snapshot(session: Session) -> Dict[str, Any]:
 
     rebalance = _latest_rebalance(session)
     scenarios = json.loads(rebalance.scenarios_json) if rebalance else {}
-    notes = _investment_committee_notes(session, since=rebalance.created_at if rebalance else None)
+    notes = _investment_committee_notes(session, rebalance_event_id=rebalance.id if rebalance else None)
 
     holdings_detail: List[Dict[str, Any]] = []
     latest_prices: Dict[str, float] = {}
