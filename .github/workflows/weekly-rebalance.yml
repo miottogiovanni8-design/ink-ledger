@@ -28,6 +28,20 @@ jobs:
       - name: Install dependencies
         run: pip install -e .
 
+      - name: Debug - test Alpaca credentials
+        env:
+          ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
+          ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
+        run: |
+          echo "trading API (paper account endpoint):"
+          curl -s -o /dev/null -w "  status: %{http_code}\n" \
+            -H "APCA-API-KEY-ID: $ALPACA_API_KEY" -H "APCA-API-SECRET-KEY: $ALPACA_SECRET_KEY" \
+            https://paper-api.alpaca.markets/v2/account
+          echo "market data API (bars endpoint):"
+          curl -s -o /dev/null -w "  status: %{http_code}\n" \
+            -H "APCA-API-KEY-ID: $ALPACA_API_KEY" -H "APCA-API-SECRET-KEY: $ALPACA_SECRET_KEY" \
+            "https://data.alpaca.markets/v2/stocks/bars?symbols=AAPL&timeframe=1Day&limit=1"
+
       - name: Run weekly rebalance
         env:
           ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
