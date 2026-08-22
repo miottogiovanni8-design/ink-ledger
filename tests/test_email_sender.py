@@ -33,6 +33,12 @@ def test_render_recap_html_includes_equity_and_notes():
     assert "Bilanciato" in html  # risk profile localized in the subtitle
 
 
+def test_render_recap_html_includes_repo_and_dashboard_links():
+    html = render_recap_html("Aug 14 - Aug 21, 2026", make_snapshot())
+    assert "github.com/miottogiovanni8-design/ink-ledger" in html
+    assert "miottogiovanni8-design.github.io/ink-ledger" in html
+
+
 def test_render_recap_html_shows_fallback_when_equity_curve_empty():
     snapshot = make_snapshot()
     snapshot["equity_curve"] = []

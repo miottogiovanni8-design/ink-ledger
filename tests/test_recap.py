@@ -3,6 +3,7 @@ from datetime import date
 from typing import Any, Dict, List
 
 from trading_desk.reporting.recap import build_recap, generate_narrative, period_label
+from trading_desk.reporting.recap import _strip_markdown
 
 
 @dataclass
@@ -68,6 +69,25 @@ def test_generate_narrative_extracts_text_block():
     assert "balanced" in user_content
     assert "Strong iPhone cycle" in user_content
     assert '"weights"' not in user_content  # weights excluded from the narrative prompt
+
+
+def test_generate_narrative_strips_stray_markdown():
+    response = FakeMessage(content=[FakeTextBlock(text="**Recap settimanale**\nRendimento *balanced* del 5%.")])
+    client = FakeAnthropicClient(response)
+
+    narrative = generate_narrative(client, make_snapshot())
+
+    assert "*" not in narrative
+    assert "Recap settimanale" in narrative
+    assert "Rendimento balanced del 5%." in narrative
+
+
+def test_strip_markdown_removes_headings_and_bullets():
+    text = "# Title\n- first point\n* second point\nplain __bold__ and *italic* text"
+    stripped = _strip_markdown(text)
+    assert "#" not in stripped
+    assert stripped.startswith("Title")
+    assert "plain bold and italic text" in stripped
 
 
 def test_build_recap_without_client_skips_narrative():

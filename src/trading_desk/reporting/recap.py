@@ -2,6 +2,7 @@
 chat command — same snapshot, same narrative generator, different trigger."""
 
 import json
+import re
 from datetime import date
 from typing import Any, Dict, Optional
 
@@ -15,7 +16,11 @@ honest — cite the concrete numbers given (expected return, volatility, Sharpe,
 for the active risk profile), do not editorialize or hype. If performance was poor, say \
 so plainly and note what the drawdown circuit breaker did to contain it, if anything. If \
 there isn't yet enough equity history to say anything about realized performance, say so \
-directly instead of describing a return that doesn't exist."""
+directly instead of describing a return that doesn't exist.
+
+Output plain prose only — no markdown (no **, *, #, -, or any other \
+formatting marks), and no title or heading of your own; the email already \
+has one. Start directly with the first sentence of the analysis."""
 
 _MONTHS_IT = [
     "gen", "feb", "mar", "apr", "mag", "giu",
@@ -25,6 +30,17 @@ _MONTHS_IT = [
 
 def period_label(start: date, end: date) -> str:
     return f"{start.day} {_MONTHS_IT[start.month - 1]} - {end.day} {_MONTHS_IT[end.month - 1]} {end.year}"
+
+
+def _strip_markdown(text: str) -> str:
+    """Defensive fallback in case the model still emits markdown despite
+    the system prompt's plain-prose instruction — strips common markers so
+    a raw ** or a leading # never reaches the plain-text email."""
+    text = re.sub(r"^#{1,6}\s*", "", text, flags=re.MULTILINE)
+    text = re.sub(r"^[*\-]\s+", "", text, flags=re.MULTILINE)
+    text = text.replace("**", "").replace("__", "")
+    text = re.sub(r"(?<!\w)\*(\S(?:[^*]*\S)?)\*(?!\w)", r"\1", text)
+    return text.strip()
 
 
 def generate_narrative(client: Any, snapshot: Dict[str, Any], model: str = RECAP_MODEL) -> str:
@@ -55,7 +71,7 @@ def generate_narrative(client: Any, snapshot: Dict[str, Any], model: str = RECAP
     )
     for block in response.content:
         if getattr(block, "type", None) == "text":
-            return block.text
+            return _strip_markdown(block.text)
     raise ValueError("recap narrative response did not include a text block")
 
 

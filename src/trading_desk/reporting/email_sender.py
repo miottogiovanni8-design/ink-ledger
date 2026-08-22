@@ -57,11 +57,16 @@ EMAIL_TEMPLATE = Template(
   </ul>
 
   <p style="color: #999; font-size: 12px; margin-top: 24px;">
-    Conto di investimento simulato &mdash; nessun fondo reale coinvolto. Dashboard completa disponibile su richiesta.
+    Conto di investimento simulato &mdash; nessun fondo reale coinvolto.<br/>
+    <a href="{{ dashboard_url }}" style="color: #666;">Dashboard completa</a> &middot;
+    <a href="{{ repo_url }}" style="color: #666;">Codice sorgente su GitHub</a>
   </p>
 </div>
 """
 )
+
+DASHBOARD_URL = "https://miottogiovanni8-design.github.io/ink-ledger/"
+REPO_URL = "https://github.com/miottogiovanni8-design/ink-ledger"
 
 
 def render_recap_html(
@@ -82,6 +87,8 @@ def render_recap_html(
         perf=snapshot["performance_stats"],
         top_notes=top_notes,
         narrative=narrative,
+        dashboard_url=DASHBOARD_URL,
+        repo_url=REPO_URL,
     )
 
 
