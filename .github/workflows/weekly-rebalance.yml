@@ -45,6 +45,11 @@ jobs:
           curl -s -H "APCA-API-KEY-ID: $ALPACA_API_KEY" -H "APCA-API-SECRET-KEY: $ALPACA_SECRET_KEY" \
             "https://data.alpaca.markets/v2/stocks/bars?symbols=AAPL&timeframe=1Day&limit=1&feed=iex" | head -c 300
           echo ""
+          echo "market data API, explicit start=30 days ago:"
+          START=$(date -u -d '30 days ago' +%Y-%m-%dT00:00:00Z)
+          curl -s -H "APCA-API-KEY-ID: $ALPACA_API_KEY" -H "APCA-API-SECRET-KEY: $ALPACA_SECRET_KEY" \
+            "https://data.alpaca.markets/v2/stocks/bars?symbols=AAPL&timeframe=1Day&limit=5&feed=iex&start=${START}" | head -c 500
+          echo ""
 
       - name: Run weekly rebalance
         env:
