@@ -29,6 +29,7 @@ PORTFOLIO_VIEW_TOOL = {
         "committee notes. This is a research view, not a trade instruction — "
         "portfolio weights are computed separately via Black-Litterman."
     ),
+    "strict": True,
     "input_schema": {
         "type": "object",
         "properties": {
@@ -45,8 +46,13 @@ PORTFOLIO_VIEW_TOOL = {
                 "description": "Idzorek-style confidence in this view, from 0.01 (almost no conviction) to 0.99 (very high conviction). Never exactly 0 or 1.",
             },
             "rationale": {"type": "string"},
-            "key_signals": {"type": "array", "items": {"type": "string"}},
+            "key_signals": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Specific evidence cited in the rationale (a headline, a metric, a macro factor). Use an empty array if none.",
+            },
         },
-        "required": ["symbol", "asset_class", "expected_return_annualized", "confidence", "rationale"],
+        "required": ["symbol", "asset_class", "expected_return_annualized", "confidence", "rationale", "key_signals"],
+        "additionalProperties": False,
     },
 }
