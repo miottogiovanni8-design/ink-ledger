@@ -1,0 +1,805 @@
+{
+  "schema_version": 7,
+  "generated_at": "2026-08-22T10:45:31.031622+00:00",
+  "is_sample_data": false,
+  "equity_curve": [],
+  "benchmark_curve": [],
+  "baseline_curve": [],
+  "performance_stats": {
+    "sharpe_ratio": 0.0,
+    "sortino_ratio": 0.0,
+    "max_drawdown": 0.0,
+    "total_return": 0.0
+  },
+  "active_risk_profile": "balanced",
+  "rebalance_generated_at": "2026-08-22T10:45:28.987185+00:00",
+  "risk_profile_history": [
+    {
+      "date": "2026-08-22T10:45:28.987185+00:00",
+      "active_risk_profile": "balanced",
+      "executed": true,
+      "skip_reason": null
+    }
+  ],
+  "scenarios": {
+    "conservative": {
+      "weights": {
+        "AAPL": 0.10339,
+        "MSFT": 0.0841,
+        "NVDA": 0.12049,
+        "GOOGL": 0.09199,
+        "JPM": 0.03642,
+        "BAC": 0.0249,
+        "V": 0.04042,
+        "XOM": 0.04957,
+        "CVX": 0.04339,
+        "JNJ": 0.04355,
+        "UNH": 0.01766,
+        "PG": 0.03142,
+        "KO": 0.04022,
+        "HD": 0.02155,
+        "MCD": 0.032,
+        "CAT": 0.01437,
+        "HON": 0.02547,
+        "DIS": 0.01516,
+        "XLK": 0.00186,
+        "XLF": 0.01695,
+        "XLE": 0.0125,
+        "XLV": 0.01911,
+        "XLY": 0.0,
+        "XLP": 0.02543,
+        "XLI": 0.01232,
+        "MTUM": 0.01447,
+        "VLUE": 0.01316,
+        "QUAL": 0.02002,
+        "USMV": 0.02812
+      },
+      "expected_return": 0.09991527072365197,
+      "volatility": 0.08000106669809931,
+      "sharpe": 1.2489242312318543,
+      "var_95": 0.010045767605533733,
+      "cvar_95": 0.013024134858017636,
+      "sector_exposure": {
+        "Technology": 0.40182999999999996,
+        "Financials": 0.11868999999999999,
+        "Energy": 0.10546,
+        "Healthcare": 0.08032,
+        "Consumer Staples": 0.09706999999999999,
+        "Consumer Discretionary": 0.05355,
+        "Industrials": 0.05216,
+        "Communication Services": 0.01516,
+        "Other": 0.07577
+      },
+      "factor_exposure": {
+        "Other": 0.9242399999999998,
+        "Momentum": 0.01447,
+        "Value": 0.01316,
+        "Quality": 0.02002,
+        "Low Volatility": 0.02812
+      }
+    },
+    "balanced": {
+      "weights": {
+        "AAPL": 0.12666,
+        "MSFT": 0.09726,
+        "NVDA": 0.14951,
+        "GOOGL": 0.11274,
+        "JPM": 0.03964,
+        "BAC": 0.02381,
+        "V": 0.04154,
+        "XOM": 0.04725,
+        "CVX": 0.03801,
+        "JNJ": 0.041,
+        "UNH": 0.01598,
+        "PG": 0.02708,
+        "KO": 0.0354,
+        "HD": 0.02126,
+        "MCD": 0.02679,
+        "CAT": 0.01347,
+        "HON": 0.02546,
+        "DIS": 0.01234,
+        "XLK": 0.00109,
+        "XLF": 0.01114,
+        "XLE": 0.00949,
+        "XLV": 0.01294,
+        "XLY": 0.0,
+        "XLP": 0.01734,
+        "XLI": 0.00566,
+        "MTUM": 0.00577,
+        "VLUE": 0.00614,
+        "QUAL": 0.01425,
+        "USMV": 0.021
+      },
+      "expected_return": 0.1127505500238473,
+      "volatility": 0.08937036910172907,
+      "sharpe": 1.261609985022048,
+      "var_95": 0.011572562749131456,
+      "cvar_95": 0.014388176878617195,
+      "sector_exposure": {
+        "Technology": 0.48726,
+        "Financials": 0.11613,
+        "Energy": 0.09475,
+        "Healthcare": 0.06992000000000001,
+        "Consumer Staples": 0.07982,
+        "Consumer Discretionary": 0.04805,
+        "Industrials": 0.04459,
+        "Communication Services": 0.01234,
+        "Other": 0.04716000000000001
+      },
+      "factor_exposure": {
+        "Other": 0.95286,
+        "Momentum": 0.00577,
+        "Value": 0.00614,
+        "Quality": 0.01425,
+        "Low Volatility": 0.021
+      }
+    },
+    "aggressive": {
+      "weights": {
+        "AAPL": 0.15,
+        "MSFT": 0.15,
+        "NVDA": 0.15,
+        "GOOGL": 0.15,
+        "JPM": 0.15,
+        "BAC": 0.0,
+        "V": 0.0,
+        "XOM": 0.0,
+        "CVX": 0.0,
+        "JNJ": 0.0,
+        "UNH": 0.0,
+        "PG": 0.0,
+        "KO": 0.0,
+        "HD": 0.0,
+        "MCD": 0.0,
+        "CAT": 0.1,
+        "HON": 0.0,
+        "DIS": 0.0,
+        "XLK": 0.15,
+        "XLF": 0.0,
+        "XLE": 0.0,
+        "XLV": 0.0,
+        "XLY": 0.0,
+        "XLP": 0.0,
+        "XLI": 0.0,
+        "MTUM": 0.0,
+        "VLUE": 0.0,
+        "QUAL": 0.0,
+        "USMV": 0.0
+      },
+      "expected_return": 0.13956968729256933,
+      "volatility": 0.1379640124577332,
+      "sharpe": 1.0116383599333778,
+      "var_95": 0.01857220139611204,
+      "cvar_95": 0.026714585424609905,
+      "sector_exposure": {
+        "Technology": 0.75,
+        "Financials": 0.15,
+        "Energy": 0.0,
+        "Healthcare": 0.0,
+        "Consumer Staples": 0.0,
+        "Consumer Discretionary": 0.0,
+        "Industrials": 0.1,
+        "Communication Services": 0.0,
+        "Other": 0.0
+      },
+      "factor_exposure": {
+        "Other": 1.0,
+        "Momentum": 0.0,
+        "Value": 0.0,
+        "Quality": 0.0,
+        "Low Volatility": 0.0
+      }
+    }
+  },
+  "latest_prices": {
+    "AAPL": 309.35,
+    "BAC": 61.69,
+    "CAT": 827.9,
+    "CVX": 205.27,
+    "DIS": 107.78,
+    "GOOGL": 344.82,
+    "HD": 335.61,
+    "HON": 215.9,
+    "JNJ": 270.24,
+    "JPM": 351.58,
+    "KO": 91.1,
+    "MCD": 270.95,
+    "MSFT": 483.24,
+    "MTUM": 305.17,
+    "NVDA": 214.72,
+    "PG": 144.68,
+    "QUAL": 223.22,
+    "SPY": 765.72,
+    "UNH": 390.11,
+    "USMV": 101.23,
+    "V": 371.04,
+    "VLUE": 202.52,
+    "XLE": 63.64,
+    "XLF": 57.48,
+    "XLI": 180.25,
+    "XLK": 183.31,
+    "XLP": 85.99,
+    "XLV": 174.62,
+    "XLY": 118.02,
+    "XOM": 165.11
+  },
+  "holdings_detail": [
+    {
+      "symbol": "NVDA",
+      "name": "NVIDIA Corporation",
+      "weight": 0.14951,
+      "market_value_usd": 0.0,
+      "current_price": 214.72,
+      "cost_basis": 214.71999999999997,
+      "pct_since_purchase": 1.3236638147542852e-16
+    },
+    {
+      "symbol": "AAPL",
+      "name": "Apple Inc.",
+      "weight": 0.12666,
+      "market_value_usd": 0.0,
+      "current_price": 309.35,
+      "cost_basis": 309.35,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "GOOGL",
+      "name": "Alphabet Inc.",
+      "weight": 0.11274,
+      "market_value_usd": 0.0,
+      "current_price": 344.82,
+      "cost_basis": 344.82,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "MSFT",
+      "name": "Microsoft Corporation",
+      "weight": 0.09726,
+      "market_value_usd": 0.0,
+      "current_price": 483.24,
+      "cost_basis": 483.24,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "XOM",
+      "name": "Exxon Mobil Corporation",
+      "weight": 0.04725,
+      "market_value_usd": 0.0,
+      "current_price": 165.11,
+      "cost_basis": 165.11,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "V",
+      "name": "Visa Inc.",
+      "weight": 0.04154,
+      "market_value_usd": 0.0,
+      "current_price": 371.04,
+      "cost_basis": 371.04,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "JNJ",
+      "name": "Johnson & Johnson",
+      "weight": 0.041,
+      "market_value_usd": 0.0,
+      "current_price": 270.24,
+      "cost_basis": 270.24,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "JPM",
+      "name": "JPMorgan Chase & Co.",
+      "weight": 0.03964,
+      "market_value_usd": 0.0,
+      "current_price": 351.58,
+      "cost_basis": 351.58,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "CVX",
+      "name": "Chevron Corporation",
+      "weight": 0.03801,
+      "market_value_usd": 0.0,
+      "current_price": 205.27,
+      "cost_basis": 205.27,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "KO",
+      "name": "The Coca-Cola Company",
+      "weight": 0.0354,
+      "market_value_usd": 0.0,
+      "current_price": 91.1,
+      "cost_basis": 91.1,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "PG",
+      "name": "Procter & Gamble Company",
+      "weight": 0.02708,
+      "market_value_usd": 0.0,
+      "current_price": 144.68,
+      "cost_basis": 144.68,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "MCD",
+      "name": "McDonald's Corporation",
+      "weight": 0.02679,
+      "market_value_usd": 0.0,
+      "current_price": 270.95,
+      "cost_basis": 270.95,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "HON",
+      "name": "Honeywell International Inc.",
+      "weight": 0.02546,
+      "market_value_usd": 0.0,
+      "current_price": 215.9,
+      "cost_basis": 215.9,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "BAC",
+      "name": "Bank of America Corporation",
+      "weight": 0.02381,
+      "market_value_usd": 0.0,
+      "current_price": 61.69,
+      "cost_basis": 61.69,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "HD",
+      "name": "The Home Depot Inc.",
+      "weight": 0.02126,
+      "market_value_usd": 0.0,
+      "current_price": 335.61,
+      "cost_basis": 335.61,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "USMV",
+      "name": "iShares MSCI USA Min Vol Factor ETF",
+      "weight": 0.021,
+      "market_value_usd": 0.0,
+      "current_price": 101.23,
+      "cost_basis": 101.23,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "XLP",
+      "name": "Consumer Staples Select Sector SPDR Fund",
+      "weight": 0.01734,
+      "market_value_usd": 0.0,
+      "current_price": 85.99,
+      "cost_basis": 85.99,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "UNH",
+      "name": "UnitedHealth Group Incorporated",
+      "weight": 0.01598,
+      "market_value_usd": 0.0,
+      "current_price": 390.11,
+      "cost_basis": 390.11,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "QUAL",
+      "name": "iShares MSCI USA Quality Factor ETF",
+      "weight": 0.01425,
+      "market_value_usd": 0.0,
+      "current_price": 223.22,
+      "cost_basis": 223.22,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "CAT",
+      "name": "Caterpillar Inc.",
+      "weight": 0.01347,
+      "market_value_usd": 0.0,
+      "current_price": 827.9,
+      "cost_basis": 827.9,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "XLV",
+      "name": "Health Care Select Sector SPDR Fund",
+      "weight": 0.01294,
+      "market_value_usd": 0.0,
+      "current_price": 174.62,
+      "cost_basis": 174.62,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "DIS",
+      "name": "The Walt Disney Company",
+      "weight": 0.01234,
+      "market_value_usd": 0.0,
+      "current_price": 107.78,
+      "cost_basis": 107.78,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "XLF",
+      "name": "Financial Select Sector SPDR Fund",
+      "weight": 0.01114,
+      "market_value_usd": 0.0,
+      "current_price": 57.48,
+      "cost_basis": 57.48,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "XLE",
+      "name": "Energy Select Sector SPDR Fund",
+      "weight": 0.00949,
+      "market_value_usd": 0.0,
+      "current_price": 63.64,
+      "cost_basis": 63.64,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "VLUE",
+      "name": "iShares MSCI USA Value Factor ETF",
+      "weight": 0.00614,
+      "market_value_usd": 0.0,
+      "current_price": 202.52,
+      "cost_basis": 202.52,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "MTUM",
+      "name": "iShares MSCI USA Momentum Factor ETF",
+      "weight": 0.00577,
+      "market_value_usd": 0.0,
+      "current_price": 305.17,
+      "cost_basis": 305.17,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "XLI",
+      "name": "Industrial Select Sector SPDR Fund",
+      "weight": 0.00566,
+      "market_value_usd": 0.0,
+      "current_price": 180.25,
+      "cost_basis": 180.25,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "XLK",
+      "name": "Technology Select Sector SPDR Fund",
+      "weight": 0.00109,
+      "market_value_usd": 0.0,
+      "current_price": 183.31,
+      "cost_basis": 183.31,
+      "pct_since_purchase": 0.0
+    },
+    {
+      "symbol": "XLY",
+      "name": "Consumer Discretionary Select Sector SPDR Fund",
+      "weight": 0.0,
+      "market_value_usd": 0.0,
+      "current_price": 118.02,
+      "cost_basis": null,
+      "pct_since_purchase": null
+    }
+  ],
+  "transaction_history": [
+    {
+      "executed_at": "2026-08-22T10:45:31.025030",
+      "symbol": "XLF",
+      "name": "Financial Select Sector SPDR Fund",
+      "asset_class": "etf",
+      "side": "buy",
+      "notional_usd": 1114.0,
+      "price": 57.48,
+      "rationale": "No sector-specific catalysts or earnings/credit-quality headlines for financials this period, so the view defaults to a modest above-cash total return consistent with financials' typical dividend yield plus modest earnings growth in a normalized rate environment. Macro backdrop is mixed: elevated geopolitical risk (Iran/Hormuz tensions, hostile US-Iran rhetoric ahead of new sanctions) could pressure oil prices higher and add volatility/risk-off pressure to equities broadly, which is a headwind for a rate-and-growth sensitive sector like financials. Bond yields are flagged as 'in focus' per Reuters, and financials' net interest margins are highly sensitive to the yield curve trajectory. Bessent's upcoming Treasury press conference is a watch-item for fiscal/rate-policy signals that could move bank sentiment either way, but the content is unknown. Given the absence of any XLF- or bank-specific fundamental data (loan growth, credit losses, capital ratios, earnings revisions) and only ambiguous macro cross-currents, this is a low-conviction, near-neutral-to-slightly-positive view."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025029",
+      "symbol": "XLI",
+      "name": "Industrial Select Sector SPDR Fund",
+      "asset_class": "etf",
+      "side": "buy",
+      "notional_usd": 566.0,
+      "price": 180.25,
+      "rationale": "No sector-specific news on industrials this period, so the view leans on broad macro read-through. Headlines center on elevated Iran/Hormuz tensions and new US sanctions rhetoric, which raise geopolitical risk to oil transit and could push energy input costs higher for industrial/manufacturing names, while also keeping bond yields in focus per Reuters ('bond yields and Iran in focus'). Higher-for-longer yields are a modest headwind for capex-sensitive industrials, but the Iran-Iraq tanker permission signals some de-escalation of the worst-case shipping disruption scenario. Absent company/sector fundamentals (order books, PMI, capex data) in the provided news, I default to a roughly market-average total return expectation for a cyclical, capex/trade-sensitive sector, with wide uncertainty band given the lack of direct evidence."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025028",
+      "symbol": "CAT",
+      "name": "Caterpillar Inc.",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 1347.0,
+      "price": 827.9,
+      "rationale": "Headline data point on Philadelphia Fed factory optimism hitting a 43-year high is a constructive read-through for industrial capex and heavy equipment demand, which benefits CAT as a bellwether machinery name. However, the CAT-specific headlines are generic ('Dow stocks moving Friday/Thursday') and provide no new fundamental catalyst (no updated guidance, order backlog, or margin data). Macro backdrop is mixed-to-cautious: elevated geopolitical risk around Iran/Hormuz shipping lanes and new sanctions rhetoric could pressure energy costs and global trade flows, which are relevant to CAT's international equipment sales and input costs. Absent Iran-related disruption, the regional manufacturing optimism signal is a modest positive tailwind, but with no company-specific earnings or order data cited, conviction is limited to a modest above-average-market return expectation."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025027",
+      "symbol": "DIS",
+      "name": "The Walt Disney Company",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 1234.0,
+      "price": 107.78,
+      "rationale": "Headlines provided are generic Dow Jones mover roundups with no DIS-specific fundamental catalysts (no earnings, streaming subscriber, or parks data cited), so this view leans on sector/macro context rather than company-specific evidence. Disney sits in Communication Services alongside legacy media/streaming peers, a group facing ongoing linear TV secular decline offset by streaming profitability improvements and parks resilience \u2014 a balanced but not strongly differentiated setup. Macro backdrop is mixed: elevated Hormuz/Iran geopolitical risk and sanction rhetoric raise energy-price and risk-premium uncertainty, while bond yields remain a focus per Reuters, which could pressure high-multiple growth/media names if rates stay elevated. Absent a clear positive or negative company-specific catalyst, I default to a modest above-cash-but-market-like equity return expectation, consistent with broad Dow large-cap exposure in a choppy macro tape (Wall St up on the day but down for the week per Reuters)."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025027",
+      "symbol": "XLV",
+      "name": "Health Care Select Sector SPDR Fund",
+      "asset_class": "etf",
+      "side": "buy",
+      "notional_usd": 1294.0,
+      "price": 174.62,
+      "rationale": "No sector-specific headlines this period, so the view rests on healthcare's typical defensive fundamental profile (stable earnings, demographic-driven demand) rather than any new catalyst. Macro backdrop is dominated by Middle East/Hormuz tensions (Iran-Iraq tanker passage, US-Iran sanctions rhetoric) and rate/fiscal focus (Treasury Secretary Bessent press conference), which are more relevant to energy prices and bond yields than to healthcare fundamentals directly. Elevated geopolitical risk and yield uncertainty support a modest allocation tilt toward defensive sectors like healthcare, but absence of sector-specific news limits conviction. Expecting roughly market-to-slightly-below-market total return given rich valuations in parts of the sector and ongoing drug-pricing policy overhang typical of election-cycle years (midterms referenced in headlines), balanced by defensive demand stability."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025026",
+      "symbol": "KO",
+      "name": "The Coca-Cola Company",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 3540.0,
+      "price": 91.1,
+      "rationale": "KO is a defensive consumer staples name with stable, recession-resistant demand for beverages, a durable brand moat, and a long history of dividend growth (60+ consecutive years), which supports a modest but reliable total return profile. Recent headlines are largely noise for the fundamental case: SCHD-related commentary reflects dividend-ETF investor sentiment shifts rather than KO-specific fundamentals, and the Cramer 'buy Bitcoin not this crypto stock' headline is unrelated to KO's core business. Broader macro headlines center on Iran/Hormuz tensions and US-Iran sanctions rhetoric, which could pressure energy costs (packaging, transport, sweeteners) and add input-cost inflation risk, a modest headwind to margins. Elevated bond yields (noted in the 'Wall St rises but falls for week; bond yields and Iran in focus' headline) are a mild negative for staples valuations given their bond-proxy characteristics and dividend yield comparison. Absent a specific KO earnings catalyst or guidance revision in the provided headlines, I default to a modest single-digit total return expectation consistent with staples-sector base rates (dividend yield ~3% plus low-single-digit earnings/volume growth), with moderate-low confidence given the lack of company-specific fundamental data points in the news flow."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025026",
+      "symbol": "GOOGL",
+      "name": "Alphabet Inc.",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 11274.0,
+      "price": 344.82,
+      "rationale": "Headlines provided are largely non-fundamental for GOOGL specifically (13F tracking of RenTec's Q2 2026 portfolio, generic Dow Jones movers list, and buzz around unrelated names like MRNA/SPCX/MSTR), giving little new company-specific information to update on. In the absence of fresh earnings, ad-revenue, cloud growth, or regulatory data points, I default to a base-rate view consistent with Alphabet's underlying fundamentals: durable Search/YouTube ad monopoly economics, high-margin Google Cloud scaling toward profitability, and a strong net cash balance sheet, which historically support high-single-digit to low-double-digit annualized total returns for a mega-cap quality compounder. Macro backdrop (Iran-Hormuz tensions, US-Iran sanctions rhetoric, Wall St ending the week lower amid bond-yield and geopolitical risk) is a modest headwind via higher risk premia and potential energy-cost/inflation pass-through, but Alphabet's direct exposure to oil/Hormuz-related supply risk is minimal, tempering the impact to a small discount rather than a large one. Given the lack of asset-specific catalysts in the supplied headlines, confidence is kept moderate-low."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025025",
+      "symbol": "JNJ",
+      "name": "Johnson & Johnson",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 4100.0,
+      "price": 270.24,
+      "rationale": "Headlines are largely generic (JNJ noted as a Dow mover, and listed as a Dividend Champion/Contender in the Aug 23 dividend series) rather than company-specific fundamental catalysts, so there is little new information to sharply revise the base case. JNJ's investment case remains anchored in its long-standing status as a Dividend King/Champion with a diversified pharma/medtech portfolio, stable cash flows, and defensive earnings profile typical of large-cap healthcare. Macro backdrop (Iran-related oil/Hormuz tensions, US-Iran sanctions rhetoric, elevated bond yields, midterm political uncertainty per Reuters) supports a modest rotation toward defensive, dividend-paying large caps like JNJ as a relative safe haven versus more cyclical/rate-sensitive names, but these macro factors are not JNJ-specific. Given the lack of concrete fundamental catalysts (no earnings, guidance, litigation, or pipeline news cited) and the defensive-but-low-growth nature of JNJ, I expect a return roughly in line with its historical steady total-return profile (dividend yield ~3% plus modest earnings/multiple growth), slightly favored by risk-off macro flows into defensives."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025024",
+      "symbol": "BAC",
+      "name": "Bank of America Corporation",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 2381.0,
+      "price": 61.69,
+      "rationale": "Headlines are largely idiosyncratic/noise (whale option alerts, preferred share comparisons) rather than fundamental catalysts, so no strong company-specific signal to lean on. Macro backdrop is mixed-to-cautious: elevated Iran/Hormuz tensions and hostile US-Iran rhetoric raise oil-shock and geopolitical risk, which could pressure risk assets and complicate the Fed's rate path, while bond yields remain a focus per Reuters. Financials like BAC are sensitive to net interest margin trends and yield curve moves, but with no fresh earnings, credit quality, or NIM data cited, I default to a moderate market-like return expectation for a large-cap money-center bank, roughly in line with long-run equity/financials sector returns, without a strong directional edge from current news flow."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025024",
+      "symbol": "XLE",
+      "name": "Energy Select Sector SPDR Fund",
+      "asset_class": "etf",
+      "side": "buy",
+      "notional_usd": 949.0,
+      "price": 63.64,
+      "rationale": "No XLE/energy-company-specific headlines this period, so the view rests entirely on macro/geopolitical context around Iran-US tensions and Hormuz Strait shipping, which are the main swing factors for oil price risk premia that drive energy-sector earnings. Reuters reports Iran granting passage to Iraqi tankers through Hormuz is a mild de-escalation signal reducing near-term supply-disruption risk, while simultaneously 'US, Iran keep up hostile rhetoric ahead of new sanctions' keeps a geopolitical risk premium alive in crude prices. New US sanctions on Iran, if implemented, could tighten supply and support energy equity margins, but the offsetting tanker-passage news and lack of confirmed disruption limits conviction. Broader risk-off tone ('Wall St... falls for the week; bond yields and Iran in focus') and an upcoming Treasury Secretary press conference add macro uncertainty (rate/yield path) that affects capex-sensitive energy names and discount rates. Net: modestly positive expected return reflecting a balanced mix of supportive sanctions/geopolitical risk premium against de-escalation and macro headwinds, with no company-level fundamental data available to sharpen the view."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025023",
+      "symbol": "HON",
+      "name": "Honeywell International Inc.",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 2546.0,
+      "price": 215.9,
+      "rationale": "Headline cites \"good revenue acceleration and earnings growth prospects at a reasonable valuation,\" suggesting Honeywell's diversified industrials portfolio (aerospace, building automation, energy transition) is executing well and trading at a valuation that doesn't fully price in growth. As a Dow component with defensive industrial diversification, HON should hold up reasonably in a mixed macro backdrop. However, macro headlines flag elevated geopolitical risk (Iran/Hormuz tensions, hostile US-Iran rhetoric, new sanctions) that could pressure energy costs and supply chains relevant to industrials, plus bond yield volatility noted in \"Wall St rises on the day but falls for the week; bond yields and Iran in focus\" adds rate-sensitivity risk to capex-heavy industrial names. Net view is modestly positive but not high-conviction given generic \"movers\" headlines add little specific signal and geopolitical/rate crosscurrents create two-sided risk."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025023",
+      "symbol": "XOM",
+      "name": "Exxon Mobil Corporation",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 4725.0,
+      "price": 165.11,
+      "rationale": "XOM remains a diversified integrated major with strong balance sheet and shareholder returns (dividend/buyback focus), consistent with its inclusion in income-oriented strategies (e.g., '8% Yielding Income Powerhouse' and direct-indexing S&P 500 income lists cited in recent coverage). The Targa Resources deal with ExxonMobil signals continued portfolio optimization and midstream integration that could support downstream margins and growth optionality. Macro backdrop is mixed: Iran-Hormuz tensions (Iran permitting Iraqi tankers through Hormuz) and escalating US-Iran rhetoric ahead of new sanctions create geopolitical risk premium supportive of oil prices and energy equities, but broader market softness (Wall St down for the week, bond yields in focus) and lack of clear US foreign policy wins add macro uncertainty. Net effect: modestly positive fundamental case for XOM with above-average dividend support, tempered by macro/geopolitical volatility that could swing crude prices in either direction."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025022",
+      "symbol": "QUAL",
+      "name": "iShares MSCI USA Quality Factor ETF",
+      "asset_class": "etf",
+      "side": "buy",
+      "notional_usd": 1425.0,
+      "price": 223.22,
+      "rationale": "No stock-specific headlines for QUAL, so the view rests on the quality factor's defensive fundamentals (high ROE, low leverage, stable earnings) amid an elevated macro risk backdrop. Headlines point to Middle East tension (Iran-US hostile rhetoric ahead of new sanctions, Iran permitting Iraqi tankers through Hormuz) and geopolitical/energy risk, plus 'Wall St rises on the day but falls for the week; bond yields and Iran in focus' showing yield and volatility sensitivity, and political uncertainty ('Trump heads into midterms short on foreign policy wins'). In this environment, high-quality companies with strong balance sheets and earnings stability typically outperform lower-quality cyclicals during risk-off episodes tied to geopolitical shocks and bond-yield volatility, supporting a modest positive expected return roughly in line with long-run equity premium, but conviction is limited given absence of company/factor-specific catalysts."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025022",
+      "symbol": "USMV",
+      "name": "iShares MSCI USA Min Vol Factor ETF",
+      "asset_class": "etf",
+      "side": "buy",
+      "notional_usd": 2100.0,
+      "price": 101.23,
+      "rationale": "No stock-specific news for USMV, so the view rests on macro risk backdrop. Headlines point to elevated geopolitical risk (Iran-Hormuz tanker tensions, hostile US-Iran rhetoric ahead of new sanctions) and policy uncertainty (Bessent Treasury press conference, midterm-related foreign policy pressure on Trump), alongside a market that 'rises on the day but falls for the week' with bond yields in focus. This mix of elevated macro/geopolitical uncertainty and yield volatility is a favorable backdrop for a defensive, low-volatility min-vol factor ETF like USMV, which historically outperforms cap-weighted benchmarks on a risk-adjusted basis during risk-off/uncertain regimes due to its tilt toward stable-earnings, lower-beta stocks. Expected total return of 7%/year is set modestly above long-run low-vol equity averages to reflect this defensive tailwind, but conviction is only moderate given the absence of any fund-specific fundamental data (valuation, sector tilts, holdings changes) and the generic nature of the macro read-through."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025021",
+      "symbol": "XLP",
+      "name": "Consumer Staples Select Sector SPDR Fund",
+      "asset_class": "etf",
+      "side": "buy",
+      "notional_usd": 1734.0000000000002,
+      "price": 85.99,
+      "rationale": "No sector-specific news on XLP or its consumer staples constituents this period, so the view rests on macro context rather than fresh fundamental catalysts. Headlines are dominated by Middle East geopolitical tension (Iran-Iraq tanker passage through Hormuz, hostile US-Iran rhetoric ahead of new sanctions) and rising bond yields, both of which support a defensive-sector rotation thesis: staples typically outperform cyclicals when oil-supply risk and yield volatility weigh on risk appetite ('Wall St rises on the day but falls for the week; bond yields and Iran in focus'). However, higher energy prices from Hormuz tension and elevated bond yields are a headwind for staples' input costs and relative valuation versus bonds, capping upside. Absent company-level earnings or margin data, I expect XLP to deliver a modest, roughly market-average total return with lower volatility, consistent with its low-beta defensive profile, rather than a strong outperformance or underperformance."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025020",
+      "symbol": "JPM",
+      "name": "JPMorgan Chase & Co.",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 3964.0,
+      "price": 351.58,
+      "rationale": "Headlines are largely non-fundamental noise for JPM specifically (whale-alert options flow, generic Dow-mover mentions, and a former exec's advisory appointment to Social Security, which has no direct earnings impact). Underlying view rests on JPM's continued status as the largest, most diversified US bank with scale advantages in trading, IB and consumer banking, which historically supports steady high-single-digit to low-double-digit total returns (dividends + buybacks + modest book value growth) absent a credit shock. Macro backdrop is mixed-to-supportive: elevated bond yields (per 'bond yields and Iran in focus' headline) generally aid net interest margins for large banks, but rising Iran/Hormuz tensions and new US sanctions rhetoric add macro/geopolitical risk (oil price spike risk, risk-off equity pressure) that could compress multiples broadly, including financials. No JPM-specific catalyst (earnings beat/miss, credit quality data, regulatory capital change) is present in the headlines, so this is a moderate, largely sector/macro-driven view rather than a high-conviction stock-specific call."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025020",
+      "symbol": "MTUM",
+      "name": "iShares MSCI USA Momentum Factor ETF",
+      "asset_class": "etf",
+      "side": "buy",
+      "notional_usd": 577.0,
+      "price": 305.17,
+      "rationale": "No MTUM-specific news is available, so this view is based on macro context and generic factor reasoning rather than idiosyncratic evidence. Momentum ETFs like MTUM tend to be pro-cyclical and sensitive to shifts in risk sentiment; current headlines point to elevated geopolitical risk (Iran/Hormuz tensions, hostile US-Iran rhetoric ahead of new sanctions) and macro uncertainty (upcoming Treasury Secretary Bessent press conference, bond yield focus, midterm-related policy uncertainty per 'Trump heads into midterms short on foreign policy wins'). Wall St up on the day but down for the week suggests choppy, headline-driven trading rather than a clear trend, which is a mixed backdrop for a momentum factor strategy that performs best in sustained trending markets. Absent stock-specific or factor-specific catalysts, I default to a modest positive equity-risk-premium-like return assumption, tempered by macro/geopolitical uncertainty that could disrupt prevailing trends and factor leadership."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025019",
+      "symbol": "PG",
+      "name": "Procter & Gamble Company",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 2708.0,
+      "price": 144.68,
+      "rationale": "No stock-specific fundamental catalysts in the available headlines beyond generic \"Dow movers\" mentions, so the view defaults to PG's typical consumer-staples profile: stable demand, pricing power, and dividend aristocrat status support mid-single-digit total returns. Macro backdrop is mixed-to-risk-off (Iran/Hormuz tension, hostile US-Iran rhetoric ahead of new sanctions, elevated bond yields, and equity market weakness on the week per Reuters), which typically favors defensive staples names like PG on a relative basis as investors rotate to lower-beta, dividend-paying stocks amid geopolitical and rate uncertainty. However, higher-for-longer bond yields are a headwind for staples valuations given their bond-proxy characteristics, capping upside."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025019",
+      "symbol": "XLK",
+      "name": "Technology Select Sector SPDR Fund",
+      "asset_class": "etf",
+      "side": "buy",
+      "notional_usd": 109.0,
+      "price": 183.31,
+      "rationale": "No stock- or sector-specific catalysts this period; view rests on baseline tech-sector fundamentals (secular AI/cloud capex demand, still-elevated but historically normal earnings growth for mega-cap tech constituents) rather than any new company news. Macro backdrop is mixed-to-risk-off: Reuters headlines show elevated Iran/Hormuz tension, hostile US-Iran rhetoric ahead of new sanctions, and 'Wall St rises on the day but falls for the week' with bond yields and Iran in focus, signaling geopolitical risk premium and rate volatility that could pressure high-multiple tech via higher discount rates or risk-off flows. Upcoming Treasury Secretary Bessent press conference adds policy uncertainty. Given absence of sector-specific news, I default to a modestly above-market-average return consistent with tech's structural growth premium, tempered for macro/geopolitical downside risk."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025018",
+      "symbol": "MCD",
+      "name": "McDonald's Corporation",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 2679.0,
+      "price": 270.95,
+      "rationale": "MCD is a defensive, franchise-heavy consumer discretionary name whose value-menu positioning benefits from cost relief and low-income consumer stress. Headline that an agreement was reached to 'substantially lower the price of ground beef' is a modest positive for input cost (beef/COGS) pressure that has weighed on margins across the QSR industry. Separately, commentary that sub-$40K earners 'spend 100% of income and save nothing' underscores a bifurcated consumer backdrop: value-oriented chains like MCD (with its $5 meal deals and value platform) tend to gain relative share when lower-income consumers are stretched, supporting traffic resilience even if overall discretionary spending softens. Broader macro risk (Iran/Hormuz tensions, new sanctions, elevated bond yields per Reuters) could pressure energy costs and consumer sentiment, a mild offset. No company-specific earnings/guidance data in headlines, so this view leans on sector/macro read-through rather than hard fundamentals, warranting moderate-low confidence. Expect MCD to deliver roughly market-in-line to slightly above total return over 12 months, consistent with its historical low-volatility compounding profile plus dividend yield (~2.3%)."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025018",
+      "symbol": "NVDA",
+      "name": "NVIDIA Corporation",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 14951.0,
+      "price": 214.72,
+      "rationale": "Headlines are largely generic/non-fundamental for NVDA specifically (13F tracking of RenTec holdings, general 'most active stocks' mentions), providing no new information on demand, margins, or product cycle. NVDA's core investment case still rests on continued AI/data-center capex from hyperscalers and its dominant accelerator market share, which remains intact absent contrary news. However, macro backdrop is a headwind to risk appetite: Iran-Hormuz tensions, hostile US-Iran rhetoric ahead of new sanctions, and elevated bond yields create risk of multiple compression for high-multiple growth/tech names, and equity markets closed the week lower despite an up day. Net view is a modest positive expected return reflecting durable secular AI demand, tempered by geopolitical/macro risk and lack of company-specific catalysts in the headlines, hence only moderate-low confidence."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025017",
+      "symbol": "HD",
+      "name": "The Home Depot Inc.",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 2126.0,
+      "price": 335.61,
+      "rationale": "Home Depot is a large-cap, high-quality retailer exposed to housing turnover, home-improvement spend, and discretionary consumer health. Recent cross-retailer earnings commentary (Walmart, Lowe's, La-Z-Boy) points to a resilient but selective consumer \u2014 spending is holding up on essentials and value but is more cautious on big-ticket discretionary/furniture-related categories, which is a mixed signal for HD given its exposure to larger remodeling projects. No HD-specific earnings beat/miss or guidance change was cited in the headlines, so this is largely a sector-read-through rather than company-specific evidence. Macro backdrop is a headwind: elevated bond yields pressure both housing turnover (mortgage rate sensitivity) and consumer discretionary valuations, while heightened Iran/Hormuz tensions and hostile US-Iran rhetoric raise geopolitical/oil-price risk that could further squeeze consumer real income if energy prices spike. Absent a housing-market catalyst (e.g., rate cuts reviving existing-home sales, a key HD volume driver), I expect HD to deliver modest, roughly market-in-line total returns over the next 12 months, with risk skewed by macro/rate uncertainty rather than company fundamentals."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025017",
+      "symbol": "AAPL",
+      "name": "Apple Inc.",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 12666.0,
+      "price": 309.35,
+      "rationale": "Company-specific headlines are generic 'most active stock' mentions with no new fundamental catalysts (earnings, product cycle, margin data) disclosed. Macro backdrop shows elevated geopolitical risk (Iran/Hormuz tensions, new US sanctions rhetoric) that could pressure risk assets and energy costs, plus bond yields in focus per Reuters, which raises discount-rate uncertainty for high-multiple tech names like AAPL. Absent firm-specific fundamental signals, I default to a modest positive return in line with long-run large-cap tech equity risk premium, tempered by macro uncertainty (Iran tensions, yield volatility, lack of policy clarity ahead of midterms)."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025016",
+      "symbol": "VLUE",
+      "name": "iShares MSCI USA Value Factor ETF",
+      "asset_class": "etf",
+      "side": "buy",
+      "notional_usd": 614.0,
+      "price": 202.52,
+      "rationale": "No stock- or factor-specific news on VLUE itself, so this view leans on macro context rather than idiosyncratic catalysts. Geopolitical tension around Hormuz (Iran granting passage to some Iraqi tankers amid ongoing hostile rhetoric with the US ahead of new sanctions) keeps energy-price and inflation risk elevated, which historically has been a mixed-to-supportive backdrop for value/cyclical factor exposure versus growth, since value tilts (energy, financials, industrials) can benefit from higher rates and inflation-sensitive sectors. Wall St closing the week lower with bond yields in focus, plus a pending Treasury Secretary press conference, signal continued uncertainty on the rate path, which also tends to favor value over duration-sensitive growth stocks. However, none of this is VLUE-specific, and 'Trump heads into midterms short on foreign policy wins' adds political uncertainty that could cut either way. Given the absence of direct fundamental data (P/E, book yield, earnings revisions) on the ETF's holdings, I default to a modest positive tilt near long-run value factor premium expectations rather than a strong directional call."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025015",
+      "symbol": "MSFT",
+      "name": "Microsoft Corporation",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 9726.0,
+      "price": 483.24,
+      "rationale": "Headlines are mostly tangential to MSFT's core business (Anthropic hardware push, Marvell chip commentary, generic tech whale activity) rather than direct catalysts, so no idiosyncratic re-rating evidence exists this period. Base case rests on MSFT's durable fundamentals: Azure/cloud and AI-infused Office 365/Copilot monetization continue to underpin double-digit revenue growth and best-in-class margins/cash generation, supporting a market-plus total return over 12 months. Macro backdrop is a mild headwind/uncertainty: Iran-Hormuz tensions and hostile US-Iran rhetoric ahead of new sanctions raise geopolitical/oil-price risk, and elevated bond yields (noted in 'Wall St rises on the day but falls for the week; bond yields and Iran in focus') pressure long-duration mega-cap tech valuations. Net effect: moderate positive expected return with only moderate confidence given the lack of company-specific catalysts and mixed macro cross-currents."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025015",
+      "symbol": "CVX",
+      "name": "Chevron Corporation",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 3801.0,
+      "price": 205.27,
+      "rationale": "CVX is a diversified integrated major with resilient downstream/chemicals cash flow that partially offsets crude price volatility, and it retains an investment-grade balance sheet supporting its dividend growth track record. Near-term macro backdrop is a two-sided risk to oil prices: Iran granting Iraqi tankers passage through Hormuz reduces immediate supply-disruption risk (bearish for crude/CVX upstream margins), while ongoing hostile US-Iran rhetoric ahead of new sanctions and ongoing tension keep a geopolitical risk premium embedded in oil prices (supportive for CVX). Broader market headlines show equities up on the day but down for the week with bond yields in focus, indicating a cautious, rate-sensitive risk environment rather than a clear directional catalyst for energy equities. No CVX-specific fundamental catalysts (earnings, guidance, production data) were present in the headlines, only generic 'movers' mentions, so this view leans on sector/macro balance rather than firm-specific evidence, warranting moderate-low confidence."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025014",
+      "symbol": "UNH",
+      "name": "UnitedHealth Group Incorporated",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 1598.0000000000002,
+      "price": 390.11,
+      "rationale": "Headlines provided are generic \"Dow movers\" mentions with no company-specific fundamental data (no update on medical loss ratio trends, Medicare Advantage reimbursement rates, or the DOJ/legal overhang UNH has faced in prior periods). Absent specific catalysts, I default to a modest positive return in line with a large-cap, defensive healthcare franchise with strong underlying fundamentals (diversified Optum/UnitedHealthcare model, historically consistent double-digit EPS growth), tempered by continued regulatory/political risk to managed care margins under a value-based care and drug-pricing reform push. Macro backdrop (Iran/Hormuz tension, bond yields in focus, Wall St flat-to-down for the week) suggests a risk-off tilt that could favor defensive healthcare names relative to cyclicals, but this is not company-specific enough to raise conviction. Low confidence reflects lack of concrete fundamental catalysts in the supplied headlines."
+    },
+    {
+      "executed_at": "2026-08-22T10:45:31.025011",
+      "symbol": "V",
+      "name": "Visa Inc.",
+      "asset_class": "equity",
+      "side": "buy",
+      "notional_usd": 4154.0,
+      "price": 371.04,
+      "rationale": "Visa remains a high-quality, structurally advantaged payments network with strong secular tailwinds from the ongoing global shift from cash to electronic payments, high incremental margins, and durable network-effect moats. Headlines are largely generic 'top mover' noise without a specific fundamental catalyst, so this view leans on the company's known steady double-digit EPS growth profile and duopoly (with Mastercard) position rather than any new company-specific data point. Macro backdrop is mixed: elevated geopolitical risk (Iran/Hormuz tensions, hostile US-Iran rhetoric) and a lack of near-term US foreign-policy wins ahead of midterms could pressure risk sentiment and bond yields, which is a modest headwind for high-multiple financials/tech-adjacent names like Visa. Treasury Secretary Bessent's upcoming press conference adds policy uncertainty. Net effect: continue to expect solid but not exceptional returns, moderated by macro/geopolitical uncertainty and yield volatility."
+    }
+  ],
+  "investment_committee_notes": [],
+  "skill_analysis": {
+    "sample_size": 0,
+    "information_coefficient": null,
+    "calibration_buckets": [
+      {
+        "range_low": 0.0,
+        "range_high": 0.4,
+        "count": 0,
+        "hit_rate": null
+      },
+      {
+        "range_low": 0.4,
+        "range_high": 0.6,
+        "count": 0,
+        "hit_rate": null
+      },
+      {
+        "range_low": 0.6,
+        "range_high": 0.8,
+        "count": 0,
+        "hit_rate": null
+      },
+      {
+        "range_low": 0.8,
+        "range_high": 1.0,
+        "count": 0,
+        "hit_rate": null
+      }
+    ],
+    "return_decomposition": null
+  },
+  "attribution": {},
+  "api_spend_month_to_date_usd": 0.36087585
+}
