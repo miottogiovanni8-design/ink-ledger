@@ -259,7 +259,7 @@
   .risk-pill.active .risk-name { color: var(--accent); }
   .risk-pill:not(.active):hover { border-color: var(--text-muted); }
 
-  .stat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 16px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; margin-top: 16px; }
   .stat-grid.stat-grid-4 { grid-template-columns: repeat(4, 1fr); }
   @media (max-width: 900px) { .stat-grid, .stat-grid.stat-grid-4 { grid-template-columns: repeat(2, 1fr); } }
   .hit-rate-cell { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
@@ -310,7 +310,7 @@
   .quiz-nav-btn:disabled { opacity: 0.35; cursor: default; }
   .quiz-nav-btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
   .quiz-nav-btn.primary:hover:not(:disabled) { filter: brightness(1.08); color: var(--accent-ink); }
-  .stat-tile { background: var(--surface); padding: 14px 16px; display: flex; flex-direction: column; gap: 5px; }
+  .stat-tile { background: var(--surface); padding: 14px 16px; display: flex; flex-direction: column; gap: 5px; border-radius: 8px; }
   .stat-label { font-size: 11.5px; color: var(--text-secondary); }
   .stat-value { font-size: 21px; font-weight: 600; font-family: "Space Grotesk", sans-serif; }
 
@@ -396,7 +396,7 @@
   .method-step-title { font-size: 13px; font-weight: 600; }
   .method-step-body { font-size: 12px; line-height: 1.5; color: var(--text-secondary); }
 
-  [data-tip] { position: relative; cursor: help; border-bottom: 1px dotted var(--text-muted); outline: none; }
+  [data-tip] { position: relative; cursor: help; outline: none; }
   [data-tip]::after {
     content: attr(data-tip);
     position: absolute; left: 0; bottom: calc(100% + 9px);
