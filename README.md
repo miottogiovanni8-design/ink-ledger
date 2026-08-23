@@ -1,4 +1,4 @@
-# Ink Ledger — AI-Augmented Black-Litterman Investment Desk
+# Ink Ledger — A Black-Litterman Investment Desk
 
 An autonomous investment desk that operationalizes portfolio theory taught
 in university finance coursework — CAPM equilibrium, Black-Litterman,

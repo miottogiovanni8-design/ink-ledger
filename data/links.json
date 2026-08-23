@@ -19,6 +19,15 @@
       "primary": false
     },
     {
+      "key": "alpaca",
+      "label_it": "Broker: Alpaca",
+      "label_en": "Broker: Alpaca",
+      "desc_it": "L'infrastruttura di brokeraggio reale su cui girano gli ordini paper",
+      "desc_en": "The real brokerage infrastructure the paper orders run on",
+      "url": "https://alpaca.markets/",
+      "primary": false
+    },
+    {
       "key": "github",
       "label_it": "Codice sorgente",
       "label_en": "Source Code",
