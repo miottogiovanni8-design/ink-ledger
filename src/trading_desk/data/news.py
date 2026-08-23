@@ -1,8 +1,7 @@
-"""News/sentiment feeds: Finnhub as the primary near-real-time headline source
-(generous free tier, fits a multi-times-daily cycle) — both per-symbol company
-news and general/macro market news — plus Alpha Vantage sentiment as a slower
-secondary signal (thin free tier — call at most once/symbol/day and cache the
-result, never per-cycle)."""
+"""News/sentiment feeds: Finnhub as the primary headline source (generous
+free tier) — both per-symbol company news and general/macro market news —
+plus Alpha Vantage sentiment as a slower secondary signal (thin free tier —
+call at most once/symbol/day and cache the result, never per-cycle)."""
 
 from datetime import date, timedelta
 from typing import Any, Dict, List
@@ -17,11 +16,13 @@ def fetch_finnhub_headlines(
     symbol: str,
     api_key: str,
     http_client: httpx.Client,
-    lookback_days: int = 2,
+    lookback_days: int = 7,
 ) -> List[Dict[str, str]]:
     """Returns `[{"headline": ..., "url": ...}, ...]` — the URL is carried
     through so the dashboard can cite and link the actual source behind a
-    view's rationale, not just its text."""
+    view's rationale, not just its text. Default lookback matches the
+    weekly rebalance cadence (cli/weekly_rebalance.py calls this with no
+    override) so no day's company news falls in the gap between two runs."""
     today = date.today()
     params = {
         "symbol": symbol,
