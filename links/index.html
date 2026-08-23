@@ -1,0 +1,222 @@
+<meta charset="utf-8">
+<title>Ink Ledger Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #f4f4f6;
+    --surface: #ffffff;
+    --surface-2: #ececf0;
+    --border: #e0e0e6;
+    --text-primary: #101014;
+    --text-secondary: #55555f;
+    --text-muted: #85858f;
+    --accent: #6d4fe0;
+    --accent-rgb: 109, 79, 224;
+    --accent-ink: #ffffff;
+    --status-good: #0b8f0b;
+    --status-good-soft: #e2f3df;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0a0a0c;
+      --surface: #131316;
+      --surface-2: #1a1a1f;
+      --border: #232328;
+      --text-primary: #f5f5f4;
+      --text-secondary: #a3a3ab;
+      --text-muted: #67676f;
+      --accent: #8b7cf6;
+      --accent-rgb: 139, 124, 246;
+      --accent-ink: #0a0a0c;
+      --status-good: #35c235;
+      --status-good-soft: #163318;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0a0a0c;
+    --surface: #131316;
+    --surface-2: #1a1a1f;
+    --border: #232328;
+    --text-primary: #f5f5f4;
+    --text-secondary: #a3a3ab;
+    --text-muted: #67676f;
+    --accent: #8b7cf6;
+    --accent-rgb: 139, 124, 246;
+    --accent-ink: #0a0a0c;
+    --status-good: #35c235;
+    --status-good-soft: #163318;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+  }
+  .page { width: 100%; max-width: 440px; display: flex; flex-direction: column; align-items: center; }
+
+  .lang-toggle { display: flex; align-self: flex-end; border: 1px solid var(--border); border-radius: 100px; padding: 2px; margin-bottom: 28px; }
+  .lang-toggle button {
+    background: transparent; border: none; color: var(--text-secondary); font-family: "JetBrains Mono", monospace;
+    font-size: 11px; font-weight: 600; padding: 5px 11px; border-radius: 100px; cursor: pointer; letter-spacing: 0.02em;
+  }
+  .lang-toggle button.active { background: var(--accent); color: var(--accent-ink); }
+
+  .brand { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: 6px; }
+  .brand svg { width: 40px; height: 40px; }
+  .brand-name { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 24px; letter-spacing: -0.01em; }
+  .tagline { font-size: 13.5px; color: var(--text-secondary); text-align: center; line-height: 1.55; max-width: 360px; margin: 10px 0 0; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 16px; padding: 5px 12px 5px 10px;
+    border-radius: 100px; background: var(--surface-2); font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; font-weight: 600; letter-spacing: 0.03em; color: var(--text-secondary); text-transform: uppercase;
+  }
+  .badge .dot { width: 6px; height: 6px; border-radius: 50%; flex: none; background: var(--status-good); box-shadow: 0 0 0 3px var(--status-good-soft); }
+
+  .links { width: 100%; display: flex; flex-direction: column; gap: 10px; margin-top: 32px; }
+
+  a.link-card {
+    display: flex; flex-direction: column; gap: 2px; width: 100%; text-decoration: none;
+    padding: 15px 18px; border-radius: 14px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text-primary);
+    transition: transform .12s ease, border-color .12s ease, background .12s ease;
+  }
+  a.link-card:hover { transform: translateY(-1px); border-color: var(--accent); }
+  a.link-card:active { transform: translateY(0); }
+  a.link-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  a.link-card.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  a.link-card.primary .link-desc { color: var(--accent-ink); opacity: 0.75; }
+  .lang-toggle button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    a.link-card, a.link-card:hover, .link-arrow { transition: none; }
+  }
+
+  .link-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .link-label { font-family: "Space Grotesk", sans-serif; font-weight: 600; font-size: 15px; }
+  .link-arrow { font-size: 15px; opacity: 0.5; flex: none; transition: transform .12s ease; }
+  a.link-card:hover .link-arrow { transform: translateX(2px); opacity: 0.9; }
+  .link-desc { font-size: 12.5px; color: var(--text-secondary); line-height: 1.4; }
+
+  footer { margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .credit { font-size: 11.5px; color: var(--text-muted); text-align: center; }
+  .credit a { color: var(--text-muted); }
+
+  .error-box { font-size: 13px; color: var(--text-muted); text-align: center; line-height: 1.6; margin-top: 32px; }
+</style>
+
+<div class="page">
+  <div class="lang-toggle">
+    <button id="lang-it" class="active" data-lang="it">IT</button>
+    <button id="lang-en" data-lang="en">EN</button>
+  </div>
+
+  <div class="brand">
+    <svg id="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
+    <span class="brand-name">Ink Ledger</span>
+    <p class="tagline" id="tagline">AI-augmented Black-Litterman investment desk — portfolio project by Giovanni Miotto</p>
+    <span class="badge"><span class="dot"></span><span id="badge-text">PAPER — SIMULATED FUNDS</span></span>
+  </div>
+
+  <div class="links" id="links-container"></div>
+
+  <footer>
+    <div class="credit">Giovanni Miotto — Ca' Foscari Venezia</div>
+  </footer>
+</div>
+
+<script>
+(async function () {
+  var LINKS = null;
+  try {
+    LINKS = await fetch("../data/links.json").then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    });
+  } catch (err) {
+    document.getElementById("links-container").innerHTML =
+      '<div class="error-box">Could not load links (data/links.json).</div>';
+    return;
+  }
+
+  var I18N = {
+    it: {
+      tagline: "Desk di investimento Black-Litterman aumentato con AI — progetto di Giovanni Miotto",
+      badge: "PAPER — FONDI SIMULATI"
+    },
+    en: {
+      tagline: "AI-augmented Black-Litterman investment desk — portfolio project by Giovanni Miotto",
+      badge: "PAPER — SIMULATED FUNDS"
+    }
+  };
+
+  var state = { lang: "it" };
+
+  function buildLogo() {
+    var svg = document.getElementById("logo-mark");
+    var svgNS = "http://www.w3.org/2000/svg";
+    var cx = 16, cy = 16, n = 14;
+    for (var i = 0; i < n; i++) {
+      var angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+      var rInner = 6, rOuter = i % 2 === 0 ? 14 : 11;
+      var x1 = cx + rInner * Math.cos(angle), y1 = cy + rInner * Math.sin(angle);
+      var x2 = cx + rOuter * Math.cos(angle), y2 = cy + rOuter * Math.sin(angle);
+      var line = document.createElementNS(svgNS, "line");
+      line.setAttribute("x1", x1.toFixed(2)); line.setAttribute("y1", y1.toFixed(2));
+      line.setAttribute("x2", x2.toFixed(2)); line.setAttribute("y2", y2.toFixed(2));
+      line.setAttribute("stroke", "var(--accent)");
+      line.setAttribute("stroke-width", "2");
+      line.setAttribute("stroke-linecap", "round");
+      svg.appendChild(line);
+    }
+  }
+
+  function render() {
+    document.getElementById("tagline").textContent = I18N[state.lang].tagline;
+    document.getElementById("badge-text").textContent = I18N[state.lang].badge;
+
+    var container = document.getElementById("links-container");
+    container.innerHTML = "";
+    (LINKS.links || []).forEach(function (link) {
+      var a = document.createElement("a");
+      a.className = "link-card" + (link.primary ? " primary" : "");
+      a.href = link.url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      var label = state.lang === "it" ? link.label_it : link.label_en;
+      var desc = state.lang === "it" ? link.desc_it : link.desc_en;
+      a.innerHTML =
+        '<div class="link-top"><span class="link-label">' + label + '</span><span class="link-arrow">→</span></div>' +
+        '<span class="link-desc">' + desc + '</span>';
+      container.appendChild(a);
+    });
+  }
+
+  document.getElementById("lang-it").addEventListener("click", function () {
+    state.lang = "it";
+    document.getElementById("lang-it").classList.add("active");
+    document.getElementById("lang-en").classList.remove("active");
+    render();
+  });
+  document.getElementById("lang-en").addEventListener("click", function () {
+    state.lang = "en";
+    document.getElementById("lang-en").classList.add("active");
+    document.getElementById("lang-it").classList.remove("active");
+    render();
+  });
+
+  buildLogo();
+  render();
+})();
+</script>

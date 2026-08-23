@@ -1,0 +1,40 @@
+{
+  "links": [
+    {
+      "key": "dashboard",
+      "label_it": "Dashboard live",
+      "label_en": "Live Dashboard",
+      "desc_it": "Dati reali, aggiornati ogni settimana dalla pipeline",
+      "desc_en": "Real data, updated weekly by the live pipeline",
+      "url": "https://miottogiovanni8-design.github.io/ink-ledger/",
+      "primary": true
+    },
+    {
+      "key": "artifact",
+      "label_it": "Demo interattiva",
+      "label_en": "Interactive Demo",
+      "desc_it": "Stessa dashboard, dati di esempio, ospitata su Claude",
+      "desc_en": "Same dashboard, sample data, hosted on Claude",
+      "url": "https://claude.ai/code/artifact/a0ca0c75-07b8-4a42-893b-cbede34a0e68",
+      "primary": false
+    },
+    {
+      "key": "github",
+      "label_it": "Codice sorgente",
+      "label_en": "Source Code",
+      "desc_it": "Repository completo: motore, test, GitHub Actions",
+      "desc_en": "Full repository: engine, tests, GitHub Actions",
+      "url": "https://github.com/miottogiovanni8-design/ink-ledger",
+      "primary": false
+    },
+    {
+      "key": "methodology",
+      "label_it": "Metodologia",
+      "label_en": "Methodology",
+      "desc_it": "La logica accademica del progetto e le metriche usate",
+      "desc_en": "The academic reasoning behind the project and the metrics used",
+      "url": "https://github.com/miottogiovanni8-design/ink-ledger/blob/main/README.md",
+      "primary": false
+    }
+  ]
+}
