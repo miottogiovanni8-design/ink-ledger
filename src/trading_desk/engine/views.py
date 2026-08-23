@@ -62,7 +62,15 @@ def build_user_content(
 def parse_view_response(response: Any) -> PortfolioView:
     for block in response.content:
         if getattr(block, "type", None) == "tool_use" and getattr(block, "name", None) == "record_portfolio_view":
-            return PortfolioView(**block.input)
+            try:
+                return PortfolioView(**block.input)
+            except Exception as exc:
+                if getattr(response, "stop_reason", None) == "max_tokens":
+                    raise ValueError(
+                        "view response was cut off by max_tokens before the tool call finished "
+                        "(raise max_tokens in request_portfolio_view)"
+                    ) from exc
+                raise
     raise ValueError("view response did not include a record_portfolio_view tool call")
 
 
@@ -79,7 +87,7 @@ def request_portfolio_view(
 ) -> PortfolioView:
     response = client.messages.create(
         model=model,
-        max_tokens=1024,
+        max_tokens=2048,
         system=[{"type": "text", "text": SYSTEM_PROMPT, "cache_control": {"type": "ephemeral"}}],
         tools=[PORTFOLIO_VIEW_TOOL],
         tool_choice={"type": "tool", "name": "record_portfolio_view"},
