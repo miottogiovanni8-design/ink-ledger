@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>Ink Ledger</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -312,7 +313,6 @@
   .stat-tile { background: var(--surface); padding: 14px 16px; display: flex; flex-direction: column; gap: 5px; }
   .stat-label { font-size: 11.5px; color: var(--text-secondary); }
   .stat-value { font-size: 21px; font-weight: 600; font-family: "Space Grotesk", sans-serif; }
-  .stat-note { font-size: 11px; color: var(--text-muted); }
 
   .exposure-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
   @media (max-width: 720px) { .exposure-grid { grid-template-columns: 1fr; } }
@@ -369,11 +369,16 @@
   .confidence-fill { height: 100%; background: var(--accent); border-radius: 3px; }
   .confidence-value { font-size: 11px; color: var(--text-muted); font-family: "JetBrains Mono", monospace; }
   .note-rationale { font-size: 14px; line-height: 1.55; color: var(--text-secondary); margin: 0 0 8px; }
+  .note-rationale.clamped { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .note-expand-btn { background: none; border: none; padding: 0; margin: 0 0 10px; color: var(--accent); font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+  .note-expand-btn:hover { text-decoration: underline; }
+  .note-expand-btn .chevron { display: inline-block; font-size: 9px; line-height: 1; transition: transform .15s ease; }
+  .note-entry.expanded .note-expand-btn .chevron { transform: rotate(180deg); }
   .signal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
   .signal-tag { font-size: 11px; color: var(--text-muted); background: var(--surface-2); padding: 3px 8px; border-radius: 100px; }
   .note-sources { display: flex; flex-direction: column; gap: 5px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
   .note-source-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; font-size: 12px; }
-  .note-source-headline { color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .note-source-headline { color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
   .note-source-link { color: var(--accent); text-decoration: none; white-space: nowrap; flex: none; }
   .note-source-link:hover { text-decoration: underline; }
 
@@ -391,7 +396,21 @@
   .method-step-title { font-size: 13px; font-weight: 600; }
   .method-step-body { font-size: 12px; line-height: 1.5; color: var(--text-secondary); }
 
-  [data-tip] { position: relative; cursor: help; border-bottom: 1px dotted var(--text-muted); }
+  [data-tip] { position: relative; cursor: help; border-bottom: 1px dotted var(--text-muted); outline: none; }
+  [data-tip]::after {
+    content: attr(data-tip);
+    position: absolute; left: 0; bottom: calc(100% + 9px);
+    width: 220px; max-width: 60vw;
+    background: var(--surface-2); color: var(--text-primary);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 9px 11px; font-size: 11.5px; line-height: 1.5; font-weight: 400;
+    font-family: "Inter", sans-serif; white-space: normal; text-align: left;
+    box-shadow: 0 10px 24px rgba(0,0,0,.35);
+    opacity: 0; visibility: hidden; transform: translateY(4px);
+    transition: opacity .14s ease, transform .14s ease;
+    pointer-events: none; z-index: 40;
+  }
+  [data-tip]:hover::after, [data-tip]:focus-visible::after { opacity: 1; visibility: visible; transform: translateY(0); }
 
   /* ---------- risk profile history ---------- */
   .history-list { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; border-top: 1px solid var(--border); padding-top: 14px; }
@@ -747,6 +766,7 @@
     }
   }
 
+
   var SECTOR_MAP = {
     AAPL: "Technology", MSFT: "Technology", NVDA: "Technology", GOOGL: "Technology",
     JPM: "Financials", BAC: "Financials", V: "Financials",
@@ -787,20 +807,20 @@
       holdings_title: "Posizioni target", th_ticker: "Titolo", th_class: "Classe", th_tag: "Settore / Fattore", th_weight: "Peso target",
       allocation_positions: "Posizioni",
       notes_title: "Note del comitato investimenti", notes_sub: "Le view generate dall'AI, con motivazione — un output di ricerca, non un ordine",
-      read_more: "Leggi di più",
+      read_more: "Leggi di più", expand: "Espandi", collapse: "Comprimi",
       footer_disclosure: "Conto di investimento simulato — nessun fondo reale coinvolto.",
       footer_legal: "© 2026 Giovanni Miotto. Tutti i diritti riservati. Questo progetto — architettura, codice, metodologia e design — è opera originale dell'autore. Sono vietate la riproduzione, copia, distribuzione o creazione di opere derivate, totali o parziali, senza autorizzazione scritta dell'autore.",
       stat_return: "Rendimento atteso", stat_vol: "Volatilità attesa", stat_sharpe: "Sharpe atteso",
       stat_var: "VaR 95% (1gg)", stat_cvar: "CVaR 95% (1gg)",
-      stat_note_return: "annualizzato, posteriore BL", stat_note_vol: "annualizzata", stat_note_sharpe: "rf = 0%",
-      stat_note_var: "simulazione storica", stat_note_cvar: "shortfall atteso",
       conservative: "Conservativo", balanced: "Bilanciato", aggressive: "Aggressivo",
       equity: "Azione", etf: "ETF", since_inception: "da inizio periodo",
       confidence: "conviction", other_tag: "Altro",
       legend_portfolio: "Portfolio", legend_benchmark: "S&P 500 (SPY)", legend_baseline: "Baseline (buy & hold)",
-      bench_return: "vs S&P 500", bench_alpha: "alfa (ann.)", bench_beta: "beta", bench_baseline: "vs baseline",
-      tip_sharpe: "Rendimento atteso in eccesso rispetto al tasso privo di rischio, per unità di volatilità.",
-      tip_var: "Perdita massima attesa in un giorno, nel 95% dei casi, stimata sui rendimenti storici.",
+      bench_return: "vs S&P 500", bench_alpha: "alpha (ann.)", bench_beta: "beta", bench_baseline: "vs baseline",
+      tip_return: "Rendimento annualizzato atteso dal posteriore Black-Litterman per lo scenario di rischio selezionato.",
+      tip_vol: "Volatilità annualizzata attesa del portafoglio in questo scenario, dalla matrice di covarianza Ledoit-Wolf.",
+      tip_sharpe: "Rendimento atteso in eccesso rispetto al tasso privo di rischio, per unità di volatilità (si assume un tasso privo di rischio dello 0%).",
+      tip_var: "Perdita massima attesa in un giorno, nel 95% dei casi, stimata su simulazione storica dei rendimenti.",
       tip_cvar: "Perdita media attesa nel 5% di giorni peggiori — più severa del VaR, cattura la coda della distribuzione.",
       tip_alpha: "Rendimento del portfolio non spiegato dal movimento del benchmark — la parte 'aggiunta' dalle view AI.",
       tip_beta: "Sensibilità del portfolio ai movimenti dell'S&P 500. Beta 1.0 = si muove come il mercato.",
@@ -824,12 +844,17 @@
       th_sector: "Settore", th_port_weight: "Peso portfolio", th_bench_weight: "Peso benchmark",
       th_allocation: "Allocazione", th_selection: "Selezione",
       stat_ic: "Information Coefficient", stat_sample_size: "Campione (view)",
-      stat_beta_contrib: "Contributo beta", stat_skill_contrib: "Contributo skill",
+      stat_beta_contrib: "Beta contribution", stat_skill_contrib: "Skill contribution",
       stat_active_return: "Rendimento attivo", stat_allocation_effect: "Effetto allocazione",
       stat_selection_effect: "Effetto selezione", stat_interaction_effect: "Effetto interazione",
       tip_ic: "Correlazione tra il rendimento atteso previsto dalle view e quello realmente realizzato. Vicino a 0 = nessuno skill predittivo; oltre 0,05-0,10 è considerato un vero segnale nella prassi quant.",
+      tip_sample_size: "Numero di view storiche dell'AI con un esito ormai realizzato, usate per calcolare l'Information Coefficient e la calibrazione.",
       tip_beta_contrib: "Quota del rendimento spiegabile solo dall'esposizione beta al benchmark — quello che otterresti restando semplicemente long mercato.",
       tip_skill_contrib: "Rendimento residuo non spiegato dal beta — la parte attribuibile alle view AI e ai tilt dell'ottimizzatore.",
+      tip_active_return: "Rendimento del portfolio in eccesso rispetto al benchmark S&P 500, scomposto in effetto di allocazione settoriale e di selezione titoli.",
+      tip_allocation_effect: "Rendimento attivo dovuto al sovra/sottopeso di interi settori rispetto al benchmark, indipendentemente dai titoli scelti al loro interno.",
+      tip_selection_effect: "Rendimento attivo dovuto alla scelta dei singoli titoli all'interno di ciascun settore, a parità di peso settoriale.",
+      tip_interaction_effect: "Termine residuo Brinson-Fachler: la parte di rendimento attivo che dipende congiuntamente da allocazione e selezione insieme.",
       insufficient_data: "Dati insufficienti — servono più settimane di storico per un segnale statisticamente significativo.",
       insufficient_attribution: "Dati insufficienti per l'attribution — servono almeno due ribilanciamenti con prezzi settoriali tracciati.",
       not_available: "n/d",
@@ -874,20 +899,20 @@
       holdings_title: "Target holdings", th_ticker: "Ticker", th_class: "Class", th_tag: "Sector / Factor", th_weight: "Target weight",
       allocation_positions: "Positions",
       notes_title: "Investment committee notes", notes_sub: "The AI's generated views, with rationale — a research output, not an order",
-      read_more: "Read more",
+      read_more: "Read more", expand: "Expand", collapse: "Collapse",
       footer_disclosure: "Simulated investment account — no real funds involved.",
       footer_legal: "© 2026 Giovanni Miotto. All rights reserved. This project — architecture, code, methodology, and design — is the author's original work. Reproduction, copying, distribution, or creation of derivative works, in whole or in part, is prohibited without the author's written permission.",
       stat_return: "Expected return", stat_vol: "Expected volatility", stat_sharpe: "Expected Sharpe",
       stat_var: "VaR 95% (1-day)", stat_cvar: "CVaR 95% (1-day)",
-      stat_note_return: "annualized, BL posterior", stat_note_vol: "annualized", stat_note_sharpe: "rf = 0%",
-      stat_note_var: "historical simulation", stat_note_cvar: "expected shortfall",
       conservative: "Conservative", balanced: "Balanced", aggressive: "Aggressive",
       equity: "Equity", etf: "ETF", since_inception: "since inception",
       confidence: "conviction", other_tag: "Other",
       legend_portfolio: "Portfolio", legend_benchmark: "S&P 500 (SPY)", legend_baseline: "Baseline (buy & hold)",
       bench_return: "vs S&P 500", bench_alpha: "alpha (ann.)", bench_beta: "beta", bench_baseline: "vs baseline",
-      tip_sharpe: "Expected return in excess of the risk-free rate, per unit of volatility.",
-      tip_var: "Maximum expected one-day loss, 95% of the time, estimated from historical returns.",
+      tip_return: "Annualized expected return from the Black-Litterman posterior for the selected risk scenario.",
+      tip_vol: "Annualized expected portfolio volatility in this scenario, from the Ledoit-Wolf covariance matrix.",
+      tip_sharpe: "Expected return in excess of the risk-free rate, per unit of volatility (assumes a 0% risk-free rate).",
+      tip_var: "Maximum expected one-day loss, 95% of the time, estimated from historical return simulation.",
       tip_cvar: "Average expected loss on the worst 5% of days — harsher than VaR, captures the tail of the distribution.",
       tip_alpha: "Portfolio return not explained by the benchmark's own move — the part the AI views 'added.'",
       tip_beta: "Portfolio sensitivity to S&P 500 moves. Beta 1.0 = moves in line with the market.",
@@ -915,8 +940,13 @@
       stat_active_return: "Active return", stat_allocation_effect: "Allocation effect",
       stat_selection_effect: "Selection effect", stat_interaction_effect: "Interaction effect",
       tip_ic: "Correlation between the view's predicted return and what actually happened. Near 0 = no predictive skill; above 0.05-0.10 is considered a genuine signal in quant practice.",
+      tip_sample_size: "Number of past AI views with a realized outcome, used to compute the Information Coefficient and calibration.",
       tip_beta_contrib: "The share of return explainable by benchmark beta exposure alone — what you'd get from simply being long the market.",
       tip_skill_contrib: "Residual return not explained by beta — the part attributable to the AI's views and the optimizer's tilts.",
+      tip_active_return: "Portfolio return in excess of the S&P 500 benchmark, decomposed into sector allocation and stock selection effects.",
+      tip_allocation_effect: "Active return from over/underweighting entire sectors versus the benchmark, independent of which stocks were picked within them.",
+      tip_selection_effect: "Active return from picking individual stocks within each sector, holding the sector weight constant.",
+      tip_interaction_effect: "Brinson-Fachler residual term: the share of active return that depends jointly on allocation and selection together.",
       insufficient_data: "Insufficient data — needs more weeks of history for a statistically meaningful signal.",
       insufficient_attribution: "Insufficient data for attribution — needs at least two rebalances with tracked sector prices.",
       not_available: "n/a",
@@ -1205,16 +1235,16 @@
     grid.innerHTML = "";
     if (!scenario) return;
     var tiles = [
-      [t("stat_return"), fmtSignedPct(scenario.expected_return), t("stat_note_return"), null],
-      [t("stat_vol"), fmtPct(scenario.volatility), t("stat_note_vol"), null],
-      [t("stat_sharpe"), scenario.sharpe.toFixed(2), t("stat_note_sharpe"), t("tip_sharpe")],
-      [t("stat_var"), fmtPct(scenario.var_95), t("stat_note_var"), t("tip_var")],
-      [t("stat_cvar"), fmtPct(scenario.cvar_95), t("stat_note_cvar"), t("tip_cvar")]
+      [t("stat_return"), fmtSignedPct(scenario.expected_return), t("tip_return")],
+      [t("stat_vol"), fmtPct(scenario.volatility), t("tip_vol")],
+      [t("stat_sharpe"), scenario.sharpe.toFixed(2), t("tip_sharpe")],
+      [t("stat_var"), fmtPct(scenario.var_95), t("tip_var")],
+      [t("stat_cvar"), fmtPct(scenario.cvar_95), t("tip_cvar")]
     ];
     tiles.forEach(function (tile) {
       var el = document.createElement("div"); el.className = "stat-tile";
-      var labelAttr = tile[3] ? ' data-tip title="' + tile[3].replace(/"/g, "&quot;") + '"' : "";
-      el.innerHTML = '<div class="stat-label"' + labelAttr + '>' + tile[0] + '</div><div class="stat-value tabular">' + tile[1] + '</div><div class="stat-note">' + tile[2] + "</div>";
+      var labelAttr = ' data-tip="' + tile[2].replace(/"/g, "&quot;") + '" tabindex="0"';
+      el.innerHTML = '<div class="stat-label"' + labelAttr + '>' + tile[0] + '</div><div class="stat-value tabular">' + tile[1] + '</div>';
       grid.appendChild(el);
     });
   }
@@ -1387,10 +1417,10 @@
     });
   }
 
-  function statTileHtml(label, value, note, tip) {
-    var labelAttr = tip ? ' data-tip title="' + tip.replace(/"/g, "&quot;") + '"' : "";
+  function statTileHtml(label, value, tip) {
+    var labelAttr = tip ? ' data-tip="' + tip.replace(/"/g, "&quot;") + '" tabindex="0"' : "";
     return '<div class="stat-tile"><div class="stat-label"' + labelAttr + '>' + label + '</div>' +
-      '<div class="stat-value tabular">' + value + '</div><div class="stat-note">' + (note || "") + '</div></div>';
+      '<div class="stat-value tabular">' + value + '</div></div>';
   }
 
   function renderSkillAnalysis() {
@@ -1399,10 +1429,10 @@
     var icValue = (skill.information_coefficient != null) ? skill.information_coefficient.toFixed(3) : t("not_available");
     var decomp = skill.return_decomposition;
     grid.innerHTML =
-      statTileHtml(t("stat_ic"), icValue, "", t("tip_ic")) +
-      statTileHtml(t("stat_sample_size"), skill.sample_size != null ? skill.sample_size : 0, "") +
-      statTileHtml(t("stat_beta_contrib"), decomp ? fmtSignedPct(decomp.beta_contribution) : t("not_available"), "", t("tip_beta_contrib")) +
-      statTileHtml(t("stat_skill_contrib"), decomp ? fmtSignedPct(decomp.skill_contribution) : t("not_available"), "", t("tip_skill_contrib"));
+      statTileHtml(t("stat_ic"), icValue, t("tip_ic")) +
+      statTileHtml(t("stat_sample_size"), skill.sample_size != null ? skill.sample_size : 0, t("tip_sample_size")) +
+      statTileHtml(t("stat_beta_contrib"), decomp ? fmtSignedPct(decomp.beta_contribution) : t("not_available"), t("tip_beta_contrib")) +
+      statTileHtml(t("stat_skill_contrib"), decomp ? fmtSignedPct(decomp.skill_contribution) : t("not_available"), t("tip_skill_contrib"));
 
     var body = document.getElementById("calibration-body");
     var buckets = skill.calibration_buckets || [];
@@ -1437,10 +1467,10 @@
     }
 
     grid.innerHTML =
-      statTileHtml(t("stat_active_return"), fmtSignedPct(attribution.total_active_return), "vs S&P 500") +
-      statTileHtml(t("stat_allocation_effect"), fmtSignedPct(attribution.total_allocation_effect), "") +
-      statTileHtml(t("stat_selection_effect"), fmtSignedPct(attribution.total_selection_effect), "") +
-      statTileHtml(t("stat_interaction_effect"), fmtSignedPct(attribution.total_interaction_effect), "");
+      statTileHtml(t("stat_active_return"), fmtSignedPct(attribution.total_active_return), t("tip_active_return")) +
+      statTileHtml(t("stat_allocation_effect"), fmtSignedPct(attribution.total_allocation_effect), t("tip_allocation_effect")) +
+      statTileHtml(t("stat_selection_effect"), fmtSignedPct(attribution.total_selection_effect), t("tip_selection_effect")) +
+      statTileHtml(t("stat_interaction_effect"), fmtSignedPct(attribution.total_interaction_effect), t("tip_interaction_effect"));
 
     var body = document.getElementById("attribution-body");
     body.innerHTML = "";
@@ -1522,11 +1552,11 @@
     var grid = document.getElementById("profile-stat-grid");
     if (!scenario) { grid.innerHTML = ""; return; }
     grid.innerHTML =
-      statTileHtml(t("stat_return"), fmtSignedPct(scenario.expected_return), t("stat_note_return")) +
-      statTileHtml(t("stat_vol"), fmtPct(scenario.volatility), t("stat_note_vol")) +
-      statTileHtml(t("stat_sharpe"), scenario.sharpe.toFixed(2), t("stat_note_sharpe")) +
-      statTileHtml(t("stat_var"), fmtPct(scenario.var_95), t("stat_note_var")) +
-      statTileHtml(t("stat_cvar"), fmtPct(scenario.cvar_95), t("stat_note_cvar"));
+      statTileHtml(t("stat_return"), fmtSignedPct(scenario.expected_return), t("tip_return")) +
+      statTileHtml(t("stat_vol"), fmtPct(scenario.volatility), t("tip_vol")) +
+      statTileHtml(t("stat_sharpe"), scenario.sharpe.toFixed(2), t("tip_sharpe")) +
+      statTileHtml(t("stat_var"), fmtPct(scenario.var_95), t("tip_var")) +
+      statTileHtml(t("stat_cvar"), fmtPct(scenario.cvar_95), t("tip_cvar"));
 
     renderExposure("profile-sector-exposure", scenario.sector_exposure || {});
     renderExposure("profile-factor-exposure", scenario.factor_exposure || {});
@@ -1595,7 +1625,10 @@
       top.appendChild(tag); top.appendChild(ret); top.appendChild(meter);
 
       var rationaleText = (state.lang === "it" && note.rationale_it) ? note.rationale_it : note.rationale;
-      var rationale = document.createElement("p"); rationale.className = "note-rationale"; rationale.textContent = rationaleText;
+      var needsClamp = rationaleText.length > 180;
+      var rationale = document.createElement("p");
+      rationale.className = "note-rationale" + (needsClamp ? " clamped" : "");
+      rationale.textContent = rationaleText;
 
       var tags = document.createElement("div"); tags.className = "signal-tags";
       (note.key_signals || []).forEach(function (s) {
@@ -1603,7 +1636,23 @@
         tags.appendChild(t2);
       });
 
-      entry.appendChild(top); entry.appendChild(rationale); entry.appendChild(tags);
+      entry.appendChild(top); entry.appendChild(rationale);
+
+      if (needsClamp) {
+        var expandBtn = document.createElement("button");
+        expandBtn.type = "button"; expandBtn.className = "note-expand-btn";
+        var expandLabel = document.createElement("span"); expandLabel.className = "expand-label"; expandLabel.textContent = t("expand");
+        var chevron = document.createElement("span"); chevron.className = "chevron"; chevron.textContent = "▾";
+        expandBtn.appendChild(expandLabel); expandBtn.appendChild(chevron);
+        expandBtn.addEventListener("click", function () {
+          var isExpanded = entry.classList.toggle("expanded");
+          rationale.classList.toggle("clamped", !isExpanded);
+          expandLabel.textContent = isExpanded ? t("collapse") : t("expand");
+        });
+        entry.appendChild(expandBtn);
+      }
+
+      entry.appendChild(tags);
 
       var sources = (note.sources || []).filter(function (s) { return s.url; });
       if (sources.length) {
