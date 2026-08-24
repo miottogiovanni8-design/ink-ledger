@@ -356,20 +356,18 @@
   .weight-bar-track { width: 60px; height: 5px; border-radius: 3px; background: var(--surface-2); overflow: hidden; }
   .weight-bar-fill { height: 100%; background: var(--accent); border-radius: 3px; }
 
-  /* ---------- notes feed ---------- */
-  .notes-search-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
-  .notes-search {
-    flex: 1; max-width: 280px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px;
-    padding: 9px 12px; font-family: "JetBrains Mono", monospace; font-size: 13px; color: var(--text-primary);
+  /* ---------- analyst search ---------- */
+  .analyst-search-hero { margin: 4px 0 4px; }
+  .analyst-search {
+    width: 100%; max-width: 420px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; font-family: "JetBrains Mono", monospace; font-size: 16px; color: var(--text-primary);
   }
-  .notes-search::placeholder { color: var(--text-muted); }
-  .notes-search:focus { outline: none; border-color: var(--accent); }
-  .notes-search-clear {
-    background: none; border: none; color: var(--accent); font-family: "Inter", sans-serif; font-size: 12.5px;
-    font-weight: 600; cursor: pointer; padding: 4px 0;
-  }
-  .notes-search-clear:hover { text-decoration: underline; }
+  .analyst-search::placeholder { color: var(--text-muted); }
+  .analyst-search:focus { outline: none; border-color: var(--accent); }
+  .analyst-prompt { padding: 28px 2px; text-align: center; color: var(--text-muted); font-size: 13.5px; }
   .notes-empty { padding: 20px 2px; text-align: center; color: var(--text-muted); font-size: 13px; }
+
+  /* ---------- notes feed ---------- */
   .notes-feed { display: flex; flex-direction: column; }
   .note-entry { padding: 14px 2px; border-bottom: 1px solid var(--border); }
   .note-entry:last-child { border-bottom: none; }
@@ -489,6 +487,7 @@
       <button class="nav-link" data-page="analytics"><span data-i18n="nav_analytics">Analytics</span></button>
       <button class="nav-link" data-page="profile"><span data-i18n="nav_profile">Il tuo profilo</span></button>
       <button class="nav-link" data-page="committee"><span data-i18n="nav_committee">Fonti</span></button>
+      <button class="nav-link" data-page="analyst"><span data-i18n="nav_analyst">Analista</span></button>
     </nav>
   </header>
 
@@ -724,13 +723,7 @@
         <div class="card-sub" data-i18n="notes_sub">Le view generate dall'AI, con motivazione: un output di ricerca, non un ordine</div>
       </div>
     </div>
-    <div class="notes-search-row">
-      <input type="text" class="notes-search" id="notes-search" list="notes-search-list" data-i18n-placeholder="notes_search_placeholder" placeholder="Cerca un titolo (es. AAPL)" autocomplete="off">
-      <datalist id="notes-search-list"></datalist>
-      <button type="button" class="notes-search-clear" id="notes-search-clear" data-i18n="notes_search_clear" style="display:none">Mostra tutte</button>
-    </div>
     <div class="notes-feed" id="notes-feed"></div>
-    <div class="notes-empty" id="notes-empty" style="display:none" data-i18n="notes_search_empty">Nessuna view per questo titolo questa settimana.</div>
   </section>
 
   <section class="card">
@@ -755,6 +748,27 @@
         <tbody id="transactions-body"></tbody>
       </table>
     </div>
+  </section>
+
+  </div>
+
+  <div id="page-analyst" class="page-view" style="display:none">
+
+  <section class="card">
+    <div class="card-head">
+      <div>
+        <h2 data-i18n="analyst_title">Analista</h2>
+        <div class="card-sub" data-i18n="analyst_sub">Cerca un titolo tra quelli coperti dal desk per vedere l'ultima view generata dall'AI: rendimento atteso, confidenza, motivazione e fonti</div>
+      </div>
+    </div>
+    <div class="analyst-search-hero">
+      <input type="text" class="analyst-search" id="analyst-search" list="analyst-search-list" data-i18n-placeholder="analyst_search_placeholder" placeholder="Cerca un titolo (es. AAPL)" autocomplete="off">
+      <datalist id="analyst-search-list"></datalist>
+    </div>
+    <div class="analyst-prompt" id="analyst-prompt" data-i18n="analyst_prompt">Cerca un titolo per vedere la sua view più recente.</div>
+    <div class="notes-feed" id="analyst-result"></div>
+    <div class="notes-empty" id="analyst-empty" style="display:none" data-i18n="notes_search_empty">Nessuna view per questo titolo questa settimana.</div>
+    <div class="method-note" data-i18n="analyst_note">Copre solo i titoli attualmente analizzati dal desk ogni settimana — non è un consiglio personalizzato, è la stessa view di ricerca già generata per quel titolo.</div>
   </section>
 
   </div>
@@ -813,8 +827,12 @@
       holdings_title: "Posizioni target", th_ticker: "Titolo", th_class: "Classe", th_tag: "Settore / Fattore", th_weight: "Peso target",
       allocation_positions: "Posizioni",
       notes_title: "Note del comitato investimenti", notes_sub: "Le view generate dall'AI, con motivazione: un output di ricerca, non un ordine",
-      notes_search_placeholder: "Cerca un titolo (es. AAPL)", notes_search_clear: "Mostra tutte",
       notes_search_empty: "Nessuna view per questo titolo questa settimana.",
+      nav_analyst: "Analista", analyst_title: "Analista",
+      analyst_sub: "Cerca un titolo tra quelli coperti dal desk per vedere l'ultima view generata dall'AI: rendimento atteso, confidenza, motivazione e fonti",
+      analyst_search_placeholder: "Cerca un titolo (es. AAPL)",
+      analyst_prompt: "Cerca un titolo per vedere la sua view più recente.",
+      analyst_note: "Copre solo i titoli attualmente analizzati dal desk ogni settimana: non è un consiglio personalizzato, è la stessa view di ricerca già generata per quel titolo.",
       read_more: "Leggi di più", expand: "Espandi", collapse: "Comprimi",
       footer_disclosure: "Conto di investimento simulato — nessun fondo reale coinvolto.",
       footer_legal: "© 2026 Giovanni Miotto. Tutti i diritti riservati. Questo progetto — architettura, codice, metodologia e design — è opera originale dell'autore. Sono vietate la riproduzione, copia, distribuzione o creazione di opere derivate, totali o parziali, senza autorizzazione scritta dell'autore.",
@@ -907,8 +925,12 @@
       holdings_title: "Target holdings", th_ticker: "Ticker", th_class: "Class", th_tag: "Sector / Factor", th_weight: "Target weight",
       allocation_positions: "Positions",
       notes_title: "Investment committee notes", notes_sub: "The AI's generated views, with rationale: a research output, not an order",
-      notes_search_placeholder: "Search a ticker (e.g. AAPL)", notes_search_clear: "Show all",
       notes_search_empty: "No view for this ticker this week.",
+      nav_analyst: "Analyst", analyst_title: "Analyst",
+      analyst_sub: "Search a ticker the desk covers to see the AI's latest view for it: expected return, confidence, rationale, and sources",
+      analyst_search_placeholder: "Search a ticker (e.g. AAPL)",
+      analyst_prompt: "Search a ticker to see its most recent view.",
+      analyst_note: "Only covers tickers the desk currently analyzes weekly: this isn't personalized advice, it's the same research view already generated for that ticker.",
       read_more: "Read more", expand: "Expand", collapse: "Collapse",
       footer_disclosure: "Simulated investment account — no real funds involved.",
       footer_legal: "© 2026 Giovanni Miotto. All rights reserved. This project — architecture, code, methodology, and design — is the author's original work. Reproduction, copying, distribution, or creation of derivative works, in whole or in part, is prohibited without the author's written permission.",
@@ -1613,103 +1635,118 @@
     document.getElementById("profile-intro").style.display = "block";
   });
 
+  function buildNoteEntryElement(note) {
+    var entry = document.createElement("article"); entry.className = "note-entry";
+    entry.dataset.symbol = (note.symbol || "").toLowerCase();
+    var top = document.createElement("div"); top.className = "note-top";
+
+    var tag = document.createElement("span"); tag.className = "ticker-tag"; tag.textContent = note.symbol;
+    var ret = document.createElement("span");
+    ret.className = "note-return " + (note.expected_return_annualized >= 0 ? "pos" : "neg");
+    ret.textContent = fmtSignedPct(note.expected_return_annualized);
+
+    var meter = document.createElement("div"); meter.className = "confidence-meter";
+    var track = document.createElement("div"); track.className = "confidence-track";
+    var fill = document.createElement("div"); fill.className = "confidence-fill"; fill.style.width = (note.confidence * 100) + "%";
+    track.appendChild(fill);
+    var val = document.createElement("span"); val.className = "confidence-value"; val.textContent = (note.confidence * 100).toFixed(0) + "%";
+    meter.appendChild(track); meter.appendChild(val);
+
+    top.appendChild(tag); top.appendChild(ret); top.appendChild(meter);
+
+    var rationaleText = (state.lang === "it" && note.rationale_it) ? note.rationale_it : note.rationale;
+    var needsClamp = rationaleText.length > 180;
+    var rationale = document.createElement("p");
+    rationale.className = "note-rationale" + (needsClamp ? " clamped" : "");
+    rationale.textContent = rationaleText;
+
+    var tags = document.createElement("div"); tags.className = "signal-tags";
+    (note.key_signals || []).forEach(function (s) {
+      var t2 = document.createElement("span"); t2.className = "signal-tag"; t2.textContent = s;
+      tags.appendChild(t2);
+    });
+
+    entry.appendChild(top); entry.appendChild(rationale);
+
+    if (needsClamp) {
+      var expandBtn = document.createElement("button");
+      expandBtn.type = "button"; expandBtn.className = "note-expand-btn";
+      var expandLabel = document.createElement("span"); expandLabel.className = "expand-label"; expandLabel.textContent = t("expand");
+      var chevron = document.createElement("span"); chevron.className = "chevron"; chevron.textContent = "▾";
+      expandBtn.appendChild(expandLabel); expandBtn.appendChild(chevron);
+      expandBtn.addEventListener("click", function () {
+        var isExpanded = entry.classList.toggle("expanded");
+        rationale.classList.toggle("clamped", !isExpanded);
+        expandLabel.textContent = isExpanded ? t("collapse") : t("expand");
+      });
+      entry.appendChild(expandBtn);
+    }
+
+    entry.appendChild(tags);
+
+    var sources = (note.sources || []).filter(function (s) { return s.url; });
+    if (sources.length) {
+      var sourcesBox = document.createElement("div"); sourcesBox.className = "note-sources";
+      sources.forEach(function (s) {
+        var row = document.createElement("div"); row.className = "note-source-row";
+        var headline = document.createElement("span"); headline.className = "note-source-headline"; headline.textContent = s.headline;
+        var link = document.createElement("a"); link.className = "note-source-link";
+        link.href = s.url; link.target = "_blank"; link.rel = "noopener noreferrer";
+        link.textContent = t("read_more") + " →";
+        row.appendChild(headline); row.appendChild(link);
+        sourcesBox.appendChild(row);
+      });
+      entry.appendChild(sourcesBox);
+    }
+
+    return entry;
+  }
+
   function renderNotes() {
     var feed = document.getElementById("notes-feed");
     feed.innerHTML = "";
     DATA.investment_committee_notes.forEach(function (note) {
-      var entry = document.createElement("article"); entry.className = "note-entry";
-      entry.dataset.symbol = (note.symbol || "").toLowerCase();
-      var top = document.createElement("div"); top.className = "note-top";
-
-      var tag = document.createElement("span"); tag.className = "ticker-tag"; tag.textContent = note.symbol;
-      var ret = document.createElement("span");
-      ret.className = "note-return " + (note.expected_return_annualized >= 0 ? "pos" : "neg");
-      ret.textContent = fmtSignedPct(note.expected_return_annualized);
-
-      var meter = document.createElement("div"); meter.className = "confidence-meter";
-      var track = document.createElement("div"); track.className = "confidence-track";
-      var fill = document.createElement("div"); fill.className = "confidence-fill"; fill.style.width = (note.confidence * 100) + "%";
-      track.appendChild(fill);
-      var val = document.createElement("span"); val.className = "confidence-value"; val.textContent = (note.confidence * 100).toFixed(0) + "%";
-      meter.appendChild(track); meter.appendChild(val);
-
-      top.appendChild(tag); top.appendChild(ret); top.appendChild(meter);
-
-      var rationaleText = (state.lang === "it" && note.rationale_it) ? note.rationale_it : note.rationale;
-      var needsClamp = rationaleText.length > 180;
-      var rationale = document.createElement("p");
-      rationale.className = "note-rationale" + (needsClamp ? " clamped" : "");
-      rationale.textContent = rationaleText;
-
-      var tags = document.createElement("div"); tags.className = "signal-tags";
-      (note.key_signals || []).forEach(function (s) {
-        var t2 = document.createElement("span"); t2.className = "signal-tag"; t2.textContent = s;
-        tags.appendChild(t2);
-      });
-
-      entry.appendChild(top); entry.appendChild(rationale);
-
-      if (needsClamp) {
-        var expandBtn = document.createElement("button");
-        expandBtn.type = "button"; expandBtn.className = "note-expand-btn";
-        var expandLabel = document.createElement("span"); expandLabel.className = "expand-label"; expandLabel.textContent = t("expand");
-        var chevron = document.createElement("span"); chevron.className = "chevron"; chevron.textContent = "▾";
-        expandBtn.appendChild(expandLabel); expandBtn.appendChild(chevron);
-        expandBtn.addEventListener("click", function () {
-          var isExpanded = entry.classList.toggle("expanded");
-          rationale.classList.toggle("clamped", !isExpanded);
-          expandLabel.textContent = isExpanded ? t("collapse") : t("expand");
-        });
-        entry.appendChild(expandBtn);
-      }
-
-      entry.appendChild(tags);
-
-      var sources = (note.sources || []).filter(function (s) { return s.url; });
-      if (sources.length) {
-        var sourcesBox = document.createElement("div"); sourcesBox.className = "note-sources";
-        sources.forEach(function (s) {
-          var row = document.createElement("div"); row.className = "note-source-row";
-          var headline = document.createElement("span"); headline.className = "note-source-headline"; headline.textContent = s.headline;
-          var link = document.createElement("a"); link.className = "note-source-link";
-          link.href = s.url; link.target = "_blank"; link.rel = "noopener noreferrer";
-          link.textContent = t("read_more") + " →";
-          row.appendChild(headline); row.appendChild(link);
-          sourcesBox.appendChild(row);
-        });
-        entry.appendChild(sourcesBox);
-      }
-
-      feed.appendChild(entry);
+      feed.appendChild(buildNoteEntryElement(note));
     });
+  }
 
+  function populateAnalystDatalist() {
     var symbols = [];
     DATA.investment_committee_notes.forEach(function (note) {
       if (note.symbol && symbols.indexOf(note.symbol) === -1) symbols.push(note.symbol);
     });
     symbols.sort();
-    var datalist = document.getElementById("notes-search-list");
+    var datalist = document.getElementById("analyst-search-list");
     datalist.innerHTML = "";
     symbols.forEach(function (sym) {
       var opt = document.createElement("option"); opt.value = sym;
       datalist.appendChild(opt);
     });
-
-    applyNotesFilter();
   }
 
-  function applyNotesFilter() {
-    var input = document.getElementById("notes-search");
-    var query = input.value.trim().toLowerCase();
-    var entries = document.querySelectorAll("#notes-feed .note-entry");
-    var visibleCount = 0;
-    entries.forEach(function (entry) {
-      var matches = !query || entry.dataset.symbol.indexOf(query) === 0;
-      entry.style.display = matches ? "" : "none";
-      if (matches) visibleCount++;
+  function applyAnalystSearch() {
+    var query = document.getElementById("analyst-search").value.trim().toLowerCase();
+    var result = document.getElementById("analyst-result");
+    var prompt = document.getElementById("analyst-prompt");
+    var empty = document.getElementById("analyst-empty");
+    result.innerHTML = "";
+
+    if (!query) {
+      prompt.style.display = "";
+      empty.style.display = "none";
+      return;
+    }
+    prompt.style.display = "none";
+
+    var match = (DATA.investment_committee_notes || []).find(function (n) {
+      return (n.symbol || "").toLowerCase() === query;
     });
-    document.getElementById("notes-search-clear").style.display = query ? "" : "none";
-    document.getElementById("notes-empty").style.display = (query && visibleCount === 0) ? "" : "none";
+    if (!match) {
+      empty.style.display = "";
+      return;
+    }
+    empty.style.display = "none";
+    result.appendChild(buildNoteEntryElement(match));
   }
 
   function applyStaticI18n() {
@@ -1764,6 +1801,8 @@
     renderTransactions();
     renderSkillAnalysis();
     renderAttribution();
+    populateAnalystDatalist();
+    applyAnalystSearch();
   }
 
   document.querySelectorAll(".nav-link").forEach(function (btn) {
@@ -1775,6 +1814,7 @@
       document.getElementById("page-committee").style.display = page === "committee" ? "flex" : "none";
       document.getElementById("page-analytics").style.display = page === "analytics" ? "flex" : "none";
       document.getElementById("page-profile").style.display = page === "profile" ? "flex" : "none";
+      document.getElementById("page-analyst").style.display = page === "analyst" ? "flex" : "none";
       window.scrollTo(0, 0);
     });
   });
@@ -1782,11 +1822,7 @@
   document.getElementById("lang-it").addEventListener("click", function () { setLang("it"); });
   document.getElementById("lang-en").addEventListener("click", function () { setLang("en"); });
 
-  document.getElementById("notes-search").addEventListener("input", applyNotesFilter);
-  document.getElementById("notes-search-clear").addEventListener("click", function () {
-    document.getElementById("notes-search").value = "";
-    applyNotesFilter();
-  });
+  document.getElementById("analyst-search").addEventListener("input", applyAnalystSearch);
   function setLang(lang) {
     state.lang = lang;
     document.getElementById("lang-it").classList.toggle("active", lang === "it");
