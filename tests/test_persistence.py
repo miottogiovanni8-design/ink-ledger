@@ -1,4 +1,5 @@
 import json
+import sqlite3
 import tempfile
 from pathlib import Path
 
@@ -86,3 +87,58 @@ def test_equity_snapshot_persists():
             rows = session.query(EquitySnapshot).all()
             assert len(rows) == 1
             assert rows[0].equity_eur == 1000.0
+
+
+def test_get_session_backfills_columns_added_to_the_model_after_the_db_was_created():
+    """Reproduces the exact production incident: a live db file created
+    before rationale_it/sources_json existed on the model, still missing
+    them, with a pre-existing row that must survive the migration."""
+    with tempfile.TemporaryDirectory() as tmp:
+        db_path = str(Path(tmp) / "test.sqlite")
+        conn = sqlite3.connect(db_path)
+        conn.execute(
+            """
+            CREATE TABLE view_records (
+                id INTEGER PRIMARY KEY,
+                created_at DATETIME,
+                rebalance_event_id INTEGER,
+                symbol VARCHAR(16),
+                asset_class VARCHAR(8),
+                expected_return_annualized FLOAT,
+                confidence FLOAT,
+                rationale TEXT,
+                key_signals TEXT
+            )
+            """
+        )
+        conn.execute(
+            "INSERT INTO view_records (symbol, asset_class, expected_return_annualized, confidence, rationale, key_signals)"
+            " VALUES ('AAPL', 'equity', 0.09, 0.55, 'pre-migration row', '[]')"
+        )
+        conn.commit()
+        conn.close()
+
+        with get_session(db_path) as session:
+            stored = session.query(ViewRecord).filter_by(symbol="AAPL").one()
+            assert stored.rationale == "pre-migration row"
+            assert stored.rationale_it == ""
+            assert stored.sources_json == "[]"
+
+            session.add(
+                ViewRecord(
+                    symbol="NVDA",
+                    asset_class="equity",
+                    expected_return_annualized=0.12,
+                    confidence=0.6,
+                    rationale="AI capex still expanding.",
+                    rationale_it="Il capex AI è ancora in espansione.",
+                    key_signals=json.dumps([]),
+                    sources_json=json.dumps([{"headline": "h", "url": "https://example.com"}]),
+                )
+            )
+
+        with get_session(db_path) as session:
+            rows = {r.symbol: r for r in session.query(ViewRecord).all()}
+            assert rows["AAPL"].rationale_it == ""
+            assert rows["NVDA"].rationale_it == "Il capex AI è ancora in espansione."
+            assert json.loads(rows["NVDA"].sources_json)[0]["headline"] == "h"
