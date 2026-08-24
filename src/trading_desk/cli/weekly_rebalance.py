@@ -93,6 +93,15 @@ def gather_views(
             macro_headlines=macro_headline_texts,
             usage_log=usage_log,
         )
+        # The symbol on `view` is whatever Claude echoed back in the tool
+        # call, not the one we actually asked about — and it can come back
+        # corrupted (a live run once got '">V for "V", almost certainly a
+        # scraped headline's stray markup bleeding into the model's output)
+        # or just wrong. We already know which asset this view is for, so
+        # there's no reason to trust an LLM-echoed value for it: force it
+        # back to the ground truth rather than letting a bad symbol reach
+        # the optimizer, where it fails on an unhelpful ValueError instead.
+        view.symbol = symbol
         views.append(view)
     return views, sources_by_symbol
 
@@ -104,7 +113,7 @@ def run_weekly_rebalance(risk_profile_override: Optional[str] = None) -> None:
     universe = settings.equity_universe + settings.etf_universe
     stock_client = StockHistoricalDataClient(settings.alpaca_api_key, settings.alpaca_secret_key)
     trading_client = TradingClient(settings.alpaca_api_key, settings.alpaca_secret_key, paper=settings.alpaca_paper)
-    anthropic_client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
+    anthropic_client = anthropic.Anthropic(api_key=settings.anthropic_api_key, max_retries=5)
     http_client = httpx.Client(timeout=10.0)
 
     full_symbols = universe + [settings.benchmark_symbol]
