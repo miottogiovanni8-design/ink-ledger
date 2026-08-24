@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field
 from typing import Any, Dict, List
 
+import anthropic
+import httpx
 import pytest
 
 from trading_desk.engine.schemas import PortfolioView
@@ -33,6 +35,39 @@ class FakeMessagesAPI:
 class FakeAnthropicClient:
     def __init__(self, response: FakeMessage):
         self.messages = FakeMessagesAPI(response)
+
+
+class FlakyMessagesAPI:
+    """Raises `error` on the first `fail_times` calls, then returns `response`."""
+
+    def __init__(self, response: FakeMessage, error: Exception, fail_times: int = 1):
+        self._response = response
+        self._error = error
+        self._fail_times = fail_times
+        self.call_count = 0
+
+    def create(self, **kwargs):
+        self.call_count += 1
+        if self.call_count <= self._fail_times:
+            raise self._error
+        return self._response
+
+
+class FlakyAnthropicClient:
+    def __init__(self, response: FakeMessage, error: Exception, fail_times: int = 1):
+        self.messages = FlakyMessagesAPI(response, error, fail_times)
+
+
+def _make_internal_server_error() -> anthropic.InternalServerError:
+    request = httpx.Request("POST", "https://api.anthropic.com/v1/messages")
+    body = {"type": "error", "error": {"type": "api_error", "message": "Internal server error"}}
+    response = httpx.Response(500, request=request, json=body)
+    return anthropic.InternalServerError("Internal server error", response=response, body=body)
+
+
+def _make_connection_error() -> anthropic.APIConnectionError:
+    request = httpx.Request("POST", "https://api.anthropic.com/v1/messages")
+    return anthropic.APIConnectionError(request=request)
 
 
 def test_build_user_content_includes_headlines_and_sector():
@@ -168,3 +203,62 @@ def test_request_portfolio_view_skips_usage_log_when_not_provided():
     view = request_portfolio_view(client, "AAPL", "equity", [])
 
     assert view.symbol == "AAPL"
+
+
+def test_request_portfolio_view_retries_on_internal_server_error_then_succeeds(monkeypatch):
+    monkeypatch.setattr("trading_desk.engine.views.time.sleep", lambda _seconds: None)
+    payload = {
+        "symbol": "AAPL",
+        "asset_class": "equity",
+        "expected_return_annualized": 0.08,
+        "confidence": 0.5,
+        "rationale": "Steady growth.",
+        "rationale_it": "Crescita costante.",
+    }
+    response = FakeMessage(content=[FakeToolUseBlock(input=payload)])
+    client = FlakyAnthropicClient(response, _make_internal_server_error(), fail_times=1)
+
+    view = request_portfolio_view(client, "AAPL", "equity", [])
+
+    assert isinstance(view, PortfolioView)
+    assert view.symbol == "AAPL"
+    assert client.messages.call_count == 2
+
+
+def test_request_portfolio_view_retries_on_connection_error_then_succeeds(monkeypatch):
+    monkeypatch.setattr("trading_desk.engine.views.time.sleep", lambda _seconds: None)
+    payload = {
+        "symbol": "AAPL",
+        "asset_class": "equity",
+        "expected_return_annualized": 0.08,
+        "confidence": 0.5,
+        "rationale": "Steady growth.",
+        "rationale_it": "Crescita costante.",
+    }
+    response = FakeMessage(content=[FakeToolUseBlock(input=payload)])
+    client = FlakyAnthropicClient(response, _make_connection_error(), fail_times=1)
+
+    view = request_portfolio_view(client, "AAPL", "equity", [])
+
+    assert isinstance(view, PortfolioView)
+    assert view.symbol == "AAPL"
+    assert client.messages.call_count == 2
+
+
+def test_request_portfolio_view_raises_after_exhausting_retries(monkeypatch):
+    monkeypatch.setattr("trading_desk.engine.views.time.sleep", lambda _seconds: None)
+    payload = {
+        "symbol": "AAPL",
+        "asset_class": "equity",
+        "expected_return_annualized": 0.08,
+        "confidence": 0.5,
+        "rationale": "Steady growth.",
+        "rationale_it": "Crescita costante.",
+    }
+    response = FakeMessage(content=[FakeToolUseBlock(input=payload)])
+    client = FlakyAnthropicClient(response, _make_internal_server_error(), fail_times=99)
+
+    with pytest.raises(anthropic.InternalServerError):
+        request_portfolio_view(client, "AAPL", "equity", [])
+
+    assert client.messages.call_count == 3

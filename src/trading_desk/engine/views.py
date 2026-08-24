@@ -6,11 +6,23 @@ judgment enters the pipeline, and it enters as a return expectation, not an
 instruction.
 """
 
+import time
 from typing import Any, Dict, List, Optional
+
+import anthropic
 
 from trading_desk.engine.schemas import PORTFOLIO_VIEW_TOOL, AssetClass, PortfolioView
 
 VIEW_MODEL = "claude-sonnet-5"
+
+# anthropic.InternalServerError covers all 5xx responses (500, 502, 503, 529
+# overloaded, ...); the SDK's own max_retries already retries these once or
+# twice at the transport level, but a persistent blip can still exhaust that
+# — retry once more here so one upstream 500 doesn't kill a whole
+# gather_views() run partway through.
+RETRYABLE_ERRORS = (anthropic.InternalServerError, anthropic.APIConnectionError)
+MAX_ATTEMPTS = 3
+RETRY_BASE_DELAY_SECONDS = 1.0
 
 SYSTEM_PROMPT = """You are a fundamental/macro research analyst at an \
 investment desk. For the asset described in the user message, form a \
@@ -85,7 +97,7 @@ def request_portfolio_view(
     model: str = VIEW_MODEL,
     usage_log: Optional[List[Any]] = None,
 ) -> PortfolioView:
-    response = client.messages.create(
+    request_kwargs = dict(
         model=model,
         max_tokens=2048,
         system=[{"type": "text", "text": SYSTEM_PROMPT, "cache_control": {"type": "ephemeral"}}],
@@ -96,6 +108,14 @@ def request_portfolio_view(
             "content": build_user_content(symbol, asset_class, headlines, sector, sentiment, macro_headlines),
         }],
     )
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        try:
+            response = client.messages.create(**request_kwargs)
+            break
+        except RETRYABLE_ERRORS:
+            if attempt == MAX_ATTEMPTS:
+                raise
+            time.sleep(RETRY_BASE_DELAY_SECONDS * (2 ** (attempt - 1)))
     if usage_log is not None:
         usage_log.append(response.usage)
     return parse_view_response(response)
