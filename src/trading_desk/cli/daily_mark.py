@@ -24,6 +24,7 @@ from trading_desk.data.market_data import fetch_bars, fetch_price_panel
 from trading_desk.execution.broker import get_account_cash, get_account_equity
 from trading_desk.persistence.db import get_session, init_db
 from trading_desk.persistence.models import BaselineAllocation, EquitySnapshot
+from trading_desk.reporting.snapshot import build_snapshot, write_snapshot
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger("daily_mark")
@@ -89,6 +90,14 @@ def run_daily_mark() -> None:
                 baseline_index_raw=baseline_index_raw,
             )
         )
+
+    # Without this, today's mark sits in the database until the next
+    # weekly rebalance or recap happens to regenerate dashboard_snapshot.json
+    # — the only file the live dashboard actually reads — defeating the
+    # entire point of a *daily* mark (a scrubber with daily granularity).
+    with get_session(settings.db_path) as session:
+        snapshot = build_snapshot(session)
+    write_snapshot(snapshot, settings.snapshot_path)
 
     logger.info(
         "marked equity=%.2f cash=%.2f benchmark=%s baseline_index=%s",
