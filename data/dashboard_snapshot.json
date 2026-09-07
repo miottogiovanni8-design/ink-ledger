@@ -1,6 +1,6 @@
 {
   "schema_version": 7,
-  "generated_at": "2026-09-07T18:34:17.547575+00:00",
+  "generated_at": "2026-09-07T23:30:15.244468+00:00",
   "is_sample_data": false,
   "equity_curve": [
     {
@@ -54,6 +54,10 @@
     {
       "t": "2026-09-04T23:03:18.408053",
       "equity": 100937.5
+    },
+    {
+      "t": "2026-09-07T23:30:15.226815",
+      "equity": 100955.01
     }
   ],
   "benchmark_curve": [
@@ -108,6 +112,10 @@
     {
       "t": "2026-09-04T23:03:18.408053",
       "equity": 99947.87934067365
+    },
+    {
+      "t": "2026-09-07T23:30:15.226815",
+      "equity": 99701.60922535669
     }
   ],
   "baseline_curve": [
@@ -162,21 +170,25 @@
     {
       "t": "2026-09-04T23:03:18.408053",
       "equity": 101447.07361767016
+    },
+    {
+      "t": "2026-09-07T23:30:15.226815",
+      "equity": 101447.07361767016
     }
   ],
   "performance_stats": {
-    "sharpe_ratio": 2.5052683686967088,
-    "sortino_ratio": 4.0018394345968975,
+    "sharpe_ratio": 2.4580554775628016,
+    "sortino_ratio": 3.915254275796291,
     "max_drawdown": 0.010221913272542873,
-    "total_return": 0.009375,
-    "alpha_annualized": 0.19519548610971615,
-    "beta": -0.4066321960600969,
-    "benchmark_total_return": -0.0005212065932634869,
+    "total_return": 0.009550099999999947,
+    "alpha_annualized": 0.16527874500589473,
+    "beta": -0.3860430034944303,
+    "benchmark_total_return": -0.002983907746433106,
     "baseline_total_return": 0.014470736176701611,
-    "active_management_effect": -0.005095736176701612
+    "active_management_effect": -0.0049206361767016645
   },
   "active_risk_profile": "balanced",
-  "rebalance_generated_at": "2026-09-07T18:34:15.668253+00:00",
+  "rebalance_generated_at": "2026-09-07T18:34:15.668253",
   "risk_profile_history": [
     {
       "date": "2026-08-22T10:45:28.987185",
@@ -197,7 +209,7 @@
       "skip_reason": null
     },
     {
-      "date": "2026-09-07T18:34:15.668253+00:00",
+      "date": "2026-09-07T18:34:15.668253",
       "active_risk_profile": "balanced",
       "executed": true,
       "skip_reason": null
@@ -410,7 +422,7 @@
       "symbol": "NVDA",
       "name": "NVIDIA Corporation",
       "weight": 0.1483,
-      "market_value_usd": 14969.031249999998,
+      "market_value_usd": 14971.627982999998,
       "current_price": 230.36,
       "cost_basis": 214.71999999999997,
       "pct_since_purchase": 0.07283904619970215
@@ -419,7 +431,7 @@
       "symbol": "AAPL",
       "name": "Apple Inc.",
       "weight": 0.10791,
-      "market_value_usd": 10892.165625000001,
+      "market_value_usd": 10894.0551291,
       "current_price": 319.97,
       "cost_basis": 309.52423131722145,
       "pct_since_purchase": 0.03374782206331706
@@ -428,7 +440,7 @@
       "symbol": "GOOGL",
       "name": "Alphabet Inc.",
       "weight": 0.10172,
-      "market_value_usd": 10267.362500000001,
+      "market_value_usd": 10269.1436172,
       "current_price": 338.46,
       "cost_basis": 344.4493801228196,
       "pct_since_purchase": -0.01738827377388226
@@ -437,7 +449,7 @@
       "symbol": "MSFT",
       "name": "Microsoft Corporation",
       "weight": 0.09277,
-      "market_value_usd": 9363.971875000001,
+      "market_value_usd": 9365.5962777,
       "current_price": 499.7,
       "cost_basis": 483.4786817343777,
       "pct_since_purchase": 0.033551258573453015
@@ -446,7 +458,7 @@
       "symbol": "V",
       "name": "Visa Inc.",
       "weight": 0.0578,
-      "market_value_usd": 5834.1875,
+      "market_value_usd": 5835.199578,
       "current_price": 375.07,
       "cost_basis": 371.98815439128373,
       "pct_since_purchase": 0.008284795019237519
@@ -455,7 +467,7 @@
       "symbol": "XOM",
       "name": "Exxon Mobil Corporation",
       "weight": 0.04512,
-      "market_value_usd": 4554.3,
+      "market_value_usd": 4555.0900512,
       "current_price": 159.47,
       "cost_basis": 165.11,
       "pct_since_purchase": -0.034159045484828385
@@ -464,7 +476,7 @@
       "symbol": "JNJ",
       "name": "Johnson & Johnson",
       "weight": 0.04464,
-      "market_value_usd": 4505.85,
+      "market_value_usd": 4506.631646399999,
       "current_price": 275.23,
       "cost_basis": 270.1379192248262,
       "pct_since_purchase": 0.018849929657360945
@@ -473,7 +485,7 @@
       "symbol": "MCD",
       "name": "McDonald's Corporation",
       "weight": 0.04138,
-      "market_value_usd": 4176.79375,
+      "market_value_usd": 4177.5183138,
       "current_price": 255.69,
       "cost_basis": 266.87505088010323,
       "pct_since_purchase": -0.04191118968677312
@@ -482,7 +494,7 @@
       "symbol": "CVX",
       "name": "Chevron Corporation",
       "weight": 0.04063,
-      "market_value_usd": 4101.090625,
+      "market_value_usd": 4101.8020563,
       "current_price": 208.6,
       "cost_basis": 205.27,
       "pct_since_purchase": 0.016222536171871117
@@ -491,7 +503,7 @@
       "symbol": "KO",
       "name": "The Coca-Cola Company",
       "weight": 0.0365,
-      "market_value_usd": 3684.2187499999995,
+      "market_value_usd": 3684.8578649999995,
       "current_price": 88.07,
       "cost_basis": 90.46027455187928,
       "pct_since_purchase": -0.026423472222698773
@@ -500,7 +512,7 @@
       "symbol": "JPM",
       "name": "JPMorgan Chase & Co.",
       "weight": 0.03321,
-      "market_value_usd": 3352.1343750000005,
+      "market_value_usd": 3352.7158821000003,
       "current_price": 358.64,
       "cost_basis": 351.58,
       "pct_since_purchase": 0.02008077820126288
@@ -509,7 +521,7 @@
       "symbol": "CAT",
       "name": "Caterpillar Inc.",
       "weight": 0.03004,
-      "market_value_usd": 3032.1625,
+      "market_value_usd": 3032.6885004,
       "current_price": 813.94,
       "cost_basis": 822.5219260167163,
       "pct_since_purchase": -0.010433674465404861
@@ -518,7 +530,7 @@
       "symbol": "BAC",
       "name": "Bank of America Corporation",
       "weight": 0.0288,
-      "market_value_usd": 2907.0,
+      "market_value_usd": 2907.5042879999996,
       "current_price": 62.68,
       "cost_basis": 61.9075756934498,
       "pct_since_purchase": 0.012477056287505806
@@ -527,7 +539,7 @@
       "symbol": "PG",
       "name": "Procter & Gamble Company",
       "weight": 0.02863,
-      "market_value_usd": 2889.840625,
+      "market_value_usd": 2890.3419363,
       "current_price": 146.44,
       "cost_basis": 144.8188911848043,
       "pct_since_purchase": 0.011194042448004867
@@ -536,7 +548,7 @@
       "symbol": "USMV",
       "name": "iShares MSCI USA Min Vol Factor ETF",
       "weight": 0.02332,
-      "market_value_usd": 2353.8625,
+      "market_value_usd": 2354.2708331999997,
       "current_price": 100.8,
       "cost_basis": 101.25030123876927,
       "pct_since_purchase": -0.0044474064102522195
@@ -545,7 +557,7 @@
       "symbol": "HD",
       "name": "The Home Depot Inc.",
       "weight": 0.02006,
-      "market_value_usd": 2024.80625,
+      "market_value_usd": 2025.1575006,
       "current_price": 321.05,
       "cost_basis": 332.32349286333164,
       "pct_since_purchase": -0.03392324980156567
@@ -554,7 +566,7 @@
       "symbol": "XLP",
       "name": "Consumer Staples Select Sector SPDR Fund",
       "weight": 0.01697,
-      "market_value_usd": 1712.909375,
+      "market_value_usd": 1713.2065196999997,
       "current_price": 84.58,
       "cost_basis": 85.99,
       "pct_since_purchase": -0.01639725549482494
@@ -563,7 +575,7 @@
       "symbol": "UNH",
       "name": "UnitedHealth Group Incorporated",
       "weight": 0.01642,
-      "market_value_usd": 1657.39375,
+      "market_value_usd": 1657.6812642,
       "current_price": 397.14,
       "cost_basis": 390.1422221601237,
       "pct_since_purchase": 0.017936479166831172
@@ -572,7 +584,7 @@
       "symbol": "QUAL",
       "name": "iShares MSCI USA Quality Factor ETF",
       "weight": 0.01382,
-      "market_value_usd": 1394.9562500000002,
+      "market_value_usd": 1395.1982382,
       "current_price": 222.58,
       "cost_basis": 223.15165395255536,
       "pct_since_purchase": -0.002561728503598238
@@ -581,7 +593,7 @@
       "symbol": "HON",
       "name": "Honeywell International Inc.",
       "weight": 0.01294,
-      "market_value_usd": 1306.13125,
+      "market_value_usd": 1306.3578294,
       "current_price": 209.61,
       "cost_basis": 215.90000000000003,
       "pct_since_purchase": -0.029133858267716625
@@ -590,7 +602,7 @@
       "symbol": "XLV",
       "name": "Health Care Select Sector SPDR Fund",
       "weight": 0.01251,
-      "market_value_usd": 1262.728125,
+      "market_value_usd": 1262.9471750999999,
       "current_price": 171.45,
       "cost_basis": 174.07511251552964,
       "pct_since_purchase": -0.015080343637838858
@@ -599,7 +611,7 @@
       "symbol": "XLF",
       "name": "Financial Select Sector SPDR Fund",
       "weight": 0.01055,
-      "market_value_usd": 1064.890625,
+      "market_value_usd": 1065.0753555,
       "current_price": 58.1,
       "cost_basis": 57.5183945240619,
       "pct_since_purchase": 0.010111643079585599
@@ -608,7 +620,7 @@
       "symbol": "XLE",
       "name": "Energy Select Sector SPDR Fund",
       "weight": 0.01027,
-      "market_value_usd": 1036.628125,
+      "market_value_usd": 1036.8079527,
       "current_price": 64.06,
       "cost_basis": 63.669375679002115,
       "pct_since_purchase": 0.006135199486913031
@@ -617,7 +629,7 @@
       "symbol": "DIS",
       "name": "The Walt Disney Company",
       "weight": 0.00913,
-      "market_value_usd": 921.5593749999999,
+      "market_value_usd": 921.7192412999999,
       "current_price": 105.31,
       "cost_basis": 107.77999999999999,
       "pct_since_purchase": -0.022917053256633745
@@ -626,7 +638,7 @@
       "symbol": "VLUE",
       "name": "iShares MSCI USA Value Factor ETF",
       "weight": 0.00578,
-      "market_value_usd": 583.41875,
+      "market_value_usd": 583.5199578,
       "current_price": 205.51,
       "cost_basis": 202.51999999999998,
       "pct_since_purchase": 0.014763973928500936
@@ -635,7 +647,7 @@
       "symbol": "XLI",
       "name": "Industrial Select Sector SPDR Fund",
       "weight": 0.00534,
-      "market_value_usd": 539.00625,
+      "market_value_usd": 539.0997533999999,
       "current_price": 175.27,
       "cost_basis": 180.25,
       "pct_since_purchase": -0.027628294036060968
@@ -644,7 +656,7 @@
       "symbol": "MTUM",
       "name": "iShares MSCI USA Momentum Factor ETF",
       "weight": 0.00451,
-      "market_value_usd": 455.22812500000003,
+      "market_value_usd": 455.30709509999997,
       "current_price": 304.86,
       "cost_basis": 305.1227929884971,
       "pct_since_purchase": -0.0008612696086162394
@@ -653,7 +665,7 @@
       "symbol": "XLK",
       "name": "Technology Select Sector SPDR Fund",
       "weight": 0.0009,
-      "market_value_usd": 90.84375,
+      "market_value_usd": 90.85950899999999,
       "current_price": 187.28,
       "cost_basis": 185.47204686100602,
       "pct_since_purchase": 0.00974784701841821
@@ -1772,7 +1784,7 @@
   ],
   "investment_committee_notes": [
     {
-      "created_at": "2026-09-07T18:34:15.446894+00:00",
+      "created_at": "2026-09-07T18:34:15.446894",
       "symbol": "VLUE",
       "asset_class": "etf",
       "expected_return_annualized": 0.06,
@@ -1788,7 +1800,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-09-07T18:34:15.446894+00:00",
+      "created_at": "2026-09-07T18:34:15.446894",
       "symbol": "QUAL",
       "asset_class": "etf",
       "expected_return_annualized": 0.08,
@@ -1805,7 +1817,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-09-07T18:34:15.446894+00:00",
+      "created_at": "2026-09-07T18:34:15.446894",
       "symbol": "USMV",
       "asset_class": "etf",
       "expected_return_annualized": 0.07,
@@ -1822,7 +1834,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-09-07T18:34:15.446893+00:00",
+      "created_at": "2026-09-07T18:34:15.446893",
       "symbol": "XLI",
       "asset_class": "etf",
       "expected_return_annualized": 0.06,
@@ -1839,7 +1851,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-09-07T18:34:15.446893+00:00",
+      "created_at": "2026-09-07T18:34:15.446893",
       "symbol": "MTUM",
       "asset_class": "etf",
       "expected_return_annualized": 0.07,
@@ -1856,7 +1868,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-09-07T18:34:15.446892+00:00",
+      "created_at": "2026-09-07T18:34:15.446892",
       "symbol": "XLV",
       "asset_class": "etf",
       "expected_return_annualized": 0.06,
@@ -1872,7 +1884,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-09-07T18:34:15.446892+00:00",
+      "created_at": "2026-09-07T18:34:15.446892",
       "symbol": "XLY",
       "asset_class": "etf",
       "expected_return_annualized": 0.06,
@@ -1888,7 +1900,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-09-07T18:34:15.446892+00:00",
+      "created_at": "2026-09-07T18:34:15.446892",
       "symbol": "XLP",
       "asset_class": "etf",
       "expected_return_annualized": 0.05,
@@ -1905,7 +1917,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-09-07T18:34:15.446891+00:00",
+      "created_at": "2026-09-07T18:34:15.446891",
       "symbol": "XLF",
       "asset_class": "etf",
       "expected_return_annualized": 0.07,
@@ -1922,7 +1934,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-09-07T18:34:15.446891+00:00",
+      "created_at": "2026-09-07T18:34:15.446891",
       "symbol": "XLE",
       "asset_class": "etf",
       "expected_return_annualized": 0.06,
@@ -1938,7 +1950,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-09-07T18:34:15.446890+00:00",
+      "created_at": "2026-09-07T18:34:15.446890",
       "symbol": "HON",
       "asset_class": "equity",
       "expected_return_annualized": 0.07,
@@ -1967,7 +1979,7 @@
       ]
     },
     {
-      "created_at": "2026-09-07T18:34:15.446890+00:00",
+      "created_at": "2026-09-07T18:34:15.446890",
       "symbol": "DIS",
       "asset_class": "equity",
       "expected_return_annualized": 0.06,
@@ -1996,7 +2008,7 @@
       ]
     },
     {
-      "created_at": "2026-09-07T18:34:15.446890+00:00",
+      "created_at": "2026-09-07T18:34:15.446890",
       "symbol": "XLK",
       "asset_class": "etf",
       "expected_return_annualized": 0.09,
@@ -2013,7 +2025,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-09-07T18:34:15.446889+00:00",
+      "created_at": "2026-09-07T18:34:15.446889",
       "symbol": "MCD",
       "asset_class": "equity",
       "expected_return_annualized": 0.09,
@@ -2043,7 +2055,7 @@
       ]
     },
     {
-      "created_at": "2026-09-07T18:34:15.446889+00:00",
+      "created_at": "2026-09-07T18:34:15.446889",
       "symbol": "CAT",
       "asset_class": "equity",
       "expected_return_annualized": 0.11,
@@ -2072,7 +2084,7 @@
       ]
     },
     {
-      "created_at": "2026-09-07T18:34:15.446888+00:00",
+      "created_at": "2026-09-07T18:34:15.446888",
       "symbol": "PG",
       "asset_class": "equity",
       "expected_return_annualized": 0.06,
@@ -2101,7 +2113,7 @@
       ]
     },
     {
-      "created_at": "2026-09-07T18:34:15.446888+00:00",
+      "created_at": "2026-09-07T18:34:15.446888",
       "symbol": "KO",
       "asset_class": "equity",
       "expected_return_annualized": 0.06,
@@ -2131,7 +2143,7 @@
       ]
     },
     {
-      "created_at": "2026-09-07T18:34:15.446888+00:00",
+      "created_at": "2026-09-07T18:34:15.446888",
       "symbol": "HD",
       "asset_class": "equity",
       "expected_return_annualized": 0.07,
@@ -2161,7 +2173,7 @@
       ]
     },
     {
-      "created_at": "2026-09-07T18:34:15.446887+00:00",
+      "created_at": "2026-09-07T18:34:15.446887",
       "symbol": "JNJ",
       "asset_class": "equity",
       "expected_return_annualized": 0.07,
@@ -2192,7 +2204,7 @@
       ]
     },
     {
-      "created_at": "2026-09-07T18:34:15.446887+00:00",
+      "created_at": "2026-09-07T18:34:15.446887",
       "symbol": "UNH",
       "asset_class": "equity",
       "expected_return_annualized": 0.06,
@@ -2219,7 +2231,7 @@
       ]
     },
     {
-      "created_at": "2026-09-07T18:34:15.446886+00:00",
+      "created_at": "2026-09-07T18:34:15.446886",
       "symbol": "XOM",
       "asset_class": "equity",
       "expected_return_annualized": 0.07,
@@ -2245,7 +2257,7 @@
       ]
     },
     {
-      "created_at": "2026-09-07T18:34:15.446886+00:00",
+      "created_at": "2026-09-07T18:34:15.446886",
       "symbol": "CVX",
       "asset_class": "equity",
       "expected_return_annualized": 0.07,
@@ -2275,7 +2287,7 @@
       ]
     },
     {
-      "created_at": "2026-09-07T18:34:15.446885+00:00",
+      "created_at": "2026-09-07T18:34:15.446885",
       "symbol": "BAC",
       "asset_class": "equity",
       "expected_return_annualized": 0.09,
@@ -2304,7 +2316,7 @@
       ]
     },
     {
-      "created_at": "2026-09-07T18:34:15.446885+00:00",
+      "created_at": "2026-09-07T18:34:15.446885",
       "symbol": "V",
       "asset_class": "equity",
       "expected_return_annualized": 0.11,
@@ -2328,7 +2340,7 @@
       ]
     },
     {
-      "created_at": "2026-09-07T18:34:15.446884+00:00",
+      "created_at": "2026-09-07T18:34:15.446884",
       "symbol": "GOOGL",
       "asset_class": "equity",
       "expected_return_annualized": 0.11,
@@ -2357,7 +2369,7 @@
       ]
     },
     {
-      "created_at": "2026-09-07T18:34:15.446884+00:00",
+      "created_at": "2026-09-07T18:34:15.446884",
       "symbol": "JPM",
       "asset_class": "equity",
       "expected_return_annualized": 0.08,
@@ -2386,7 +2398,7 @@
       ]
     },
     {
-      "created_at": "2026-09-07T18:34:15.446883+00:00",
+      "created_at": "2026-09-07T18:34:15.446883",
       "symbol": "NVDA",
       "asset_class": "equity",
       "expected_return_annualized": 0.14,
@@ -2416,7 +2428,7 @@
       ]
     },
     {
-      "created_at": "2026-09-07T18:34:15.446882+00:00",
+      "created_at": "2026-09-07T18:34:15.446882",
       "symbol": "MSFT",
       "asset_class": "equity",
       "expected_return_annualized": 0.11,
@@ -2445,7 +2457,7 @@
       ]
     },
     {
-      "created_at": "2026-09-07T18:34:15.446878+00:00",
+      "created_at": "2026-09-07T18:34:15.446878",
       "symbol": "AAPL",
       "asset_class": "equity",
       "expected_return_annualized": 0.08,
@@ -2505,8 +2517,8 @@
       }
     ],
     "return_decomposition": {
-      "beta_contribution": 0.0002119393816197334,
-      "skill_contribution": 0.009163060618380266
+      "beta_contribution": 0.0011519167085833333,
+      "skill_contribution": 0.008398183291416613
     }
   },
   "attribution": {
