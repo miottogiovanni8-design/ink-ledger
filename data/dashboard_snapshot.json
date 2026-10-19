@@ -1,6 +1,6 @@
 {
   "schema_version": 7,
-  "generated_at": "2026-10-19T19:39:18.181168+00:00",
+  "generated_at": "2026-10-19T20:22:55.970534+00:00",
   "is_sample_data": false,
   "equity_curve": [
     {
@@ -536,7 +536,7 @@
     "active_management_effect": -0.013629633348589413
   },
   "active_risk_profile": "balanced",
-  "rebalance_generated_at": "2026-10-19T19:39:17.005344+00:00",
+  "rebalance_generated_at": "2026-10-19T19:39:17.005344",
   "risk_profile_history": [
     {
       "date": "2026-08-22T10:45:28.987185",
@@ -569,7 +569,7 @@
       "skip_reason": null
     },
     {
-      "date": "2026-10-19T19:39:17.005344+00:00",
+      "date": "2026-10-19T19:39:17.005344",
       "active_risk_profile": "balanced",
       "executed": true,
       "skip_reason": null
@@ -2144,7 +2144,7 @@
   ],
   "investment_committee_notes": [
     {
-      "created_at": "2026-10-19T19:39:16.672845+00:00",
+      "created_at": "2026-10-19T19:39:16.672845",
       "symbol": "QUAL",
       "asset_class": "etf",
       "expected_return_annualized": 0.08,
@@ -2159,7 +2159,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-10-19T19:39:16.672845+00:00",
+      "created_at": "2026-10-19T19:39:16.672845",
       "symbol": "USMV",
       "asset_class": "etf",
       "expected_return_annualized": 0.06,
@@ -2175,7 +2175,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-10-19T19:39:16.672844+00:00",
+      "created_at": "2026-10-19T19:39:16.672844",
       "symbol": "MTUM",
       "asset_class": "etf",
       "expected_return_annualized": 0.07,
@@ -2190,7 +2190,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-10-19T19:39:16.672844+00:00",
+      "created_at": "2026-10-19T19:39:16.672844",
       "symbol": "VLUE",
       "asset_class": "etf",
       "expected_return_annualized": 0.06,
@@ -2205,7 +2205,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-10-19T19:39:16.672843+00:00",
+      "created_at": "2026-10-19T19:39:16.672843",
       "symbol": "XLP",
       "asset_class": "etf",
       "expected_return_annualized": 0.05,
@@ -2221,7 +2221,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-10-19T19:39:16.672843+00:00",
+      "created_at": "2026-10-19T19:39:16.672843",
       "symbol": "XLI",
       "asset_class": "etf",
       "expected_return_annualized": 0.07,
@@ -2238,7 +2238,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-10-19T19:39:16.672842+00:00",
+      "created_at": "2026-10-19T19:39:16.672842",
       "symbol": "XLV",
       "asset_class": "etf",
       "expected_return_annualized": 0.07,
@@ -2254,7 +2254,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-10-19T19:39:16.672842+00:00",
+      "created_at": "2026-10-19T19:39:16.672842",
       "symbol": "XLY",
       "asset_class": "etf",
       "expected_return_annualized": 0.07,
@@ -2269,7 +2269,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-10-19T19:39:16.672841+00:00",
+      "created_at": "2026-10-19T19:39:16.672841",
       "symbol": "XLF",
       "asset_class": "etf",
       "expected_return_annualized": 0.07,
@@ -2284,7 +2284,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-10-19T19:39:16.672841+00:00",
+      "created_at": "2026-10-19T19:39:16.672841",
       "symbol": "XLE",
       "asset_class": "etf",
       "expected_return_annualized": 0.05,
@@ -2299,7 +2299,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-10-19T19:39:16.672840+00:00",
+      "created_at": "2026-10-19T19:39:16.672840",
       "symbol": "DIS",
       "asset_class": "equity",
       "expected_return_annualized": 0.09,
@@ -2329,7 +2329,7 @@
       ]
     },
     {
-      "created_at": "2026-10-19T19:39:16.672840+00:00",
+      "created_at": "2026-10-19T19:39:16.672840",
       "symbol": "XLK",
       "asset_class": "etf",
       "expected_return_annualized": 0.09,
@@ -2345,7 +2345,7 @@
       "sources": []
     },
     {
-      "created_at": "2026-10-19T19:39:16.672839+00:00",
+      "created_at": "2026-10-19T19:39:16.672839",
       "symbol": "CAT",
       "asset_class": "equity",
       "expected_return_annualized": 0.09,
@@ -2374,7 +2374,7 @@
       ]
     },
     {
-      "created_at": "2026-10-19T19:39:16.672839+00:00",
+      "created_at": "2026-10-19T19:39:16.672839",
       "symbol": "HON",
       "asset_class": "equity",
       "expected_return_annualized": 0.08,
@@ -2403,7 +2403,7 @@
       ]
     },
     {
-      "created_at": "2026-10-19T19:39:16.672838+00:00",
+      "created_at": "2026-10-19T19:39:16.672838",
       "symbol": "HD",
       "asset_class": "equity",
       "expected_return_annualized": 0.03,
@@ -2432,7 +2432,7 @@
       ]
     },
     {
-      "created_at": "2026-10-19T19:39:16.672838+00:00",
+      "created_at": "2026-10-19T19:39:16.672838",
       "symbol": "MCD",
       "asset_class": "equity",
       "expected_return_annualized": 0.06,
@@ -2461,7 +2461,7 @@
       ]
     },
     {
-      "created_at": "2026-10-19T19:39:16.672837+00:00",
+      "created_at": "2026-10-19T19:39:16.672837",
       "symbol": "PG",
       "asset_class": "equity",
       "expected_return_annualized": 0.06,
@@ -2490,7 +2490,7 @@
       ]
     },
     {
-      "created_at": "2026-10-19T19:39:16.672837+00:00",
+      "created_at": "2026-10-19T19:39:16.672837",
       "symbol": "KO",
       "asset_class": "equity",
       "expected_return_annualized": 0.06,
@@ -2520,7 +2520,7 @@
       ]
     },
     {
-      "created_at": "2026-10-19T19:39:16.672836+00:00",
+      "created_at": "2026-10-19T19:39:16.672836",
       "symbol": "JNJ",
       "asset_class": "equity",
       "expected_return_annualized": 0.07,
@@ -2549,7 +2549,7 @@
       ]
     },
     {
-      "created_at": "2026-10-19T19:39:16.672836+00:00",
+      "created_at": "2026-10-19T19:39:16.672836",
       "symbol": "UNH",
       "asset_class": "equity",
       "expected_return_annualized": 0.06,
@@ -2578,7 +2578,7 @@
       ]
     },
     {
-      "created_at": "2026-10-19T19:39:16.672835+00:00",
+      "created_at": "2026-10-19T19:39:16.672835",
       "symbol": "XOM",
       "asset_class": "equity",
       "expected_return_annualized": 0.07,
@@ -2607,7 +2607,7 @@
       ]
     },
     {
-      "created_at": "2026-10-19T19:39:16.672835+00:00",
+      "created_at": "2026-10-19T19:39:16.672835",
       "symbol": "CVX",
       "asset_class": "equity",
       "expected_return_annualized": 0.09,
@@ -2636,7 +2636,7 @@
       ]
     },
     {
-      "created_at": "2026-10-19T19:39:16.672834+00:00",
+      "created_at": "2026-10-19T19:39:16.672834",
       "symbol": "BAC",
       "asset_class": "equity",
       "expected_return_annualized": 0.08,
@@ -2664,7 +2664,7 @@
       ]
     },
     {
-      "created_at": "2026-10-19T19:39:16.672834+00:00",
+      "created_at": "2026-10-19T19:39:16.672834",
       "symbol": "V",
       "asset_class": "equity",
       "expected_return_annualized": 0.11,
@@ -2694,7 +2694,7 @@
       ]
     },
     {
-      "created_at": "2026-10-19T19:39:16.672833+00:00",
+      "created_at": "2026-10-19T19:39:16.672833",
       "symbol": "JPM",
       "asset_class": "equity",
       "expected_return_annualized": 0.09,
@@ -2724,7 +2724,7 @@
       ]
     },
     {
-      "created_at": "2026-10-19T19:39:16.672832+00:00",
+      "created_at": "2026-10-19T19:39:16.672832",
       "symbol": "GOOGL",
       "asset_class": "equity",
       "expected_return_annualized": 0.12,
@@ -2753,7 +2753,7 @@
       ]
     },
     {
-      "created_at": "2026-10-19T19:39:16.672831+00:00",
+      "created_at": "2026-10-19T19:39:16.672831",
       "symbol": "NVDA",
       "asset_class": "equity",
       "expected_return_annualized": 0.18,
@@ -2781,7 +2781,7 @@
       ]
     },
     {
-      "created_at": "2026-10-19T19:39:16.672830+00:00",
+      "created_at": "2026-10-19T19:39:16.672830",
       "symbol": "MSFT",
       "asset_class": "equity",
       "expected_return_annualized": 0.1,
@@ -2810,7 +2810,7 @@
       ]
     },
     {
-      "created_at": "2026-10-19T19:39:16.672823+00:00",
+      "created_at": "2026-10-19T19:39:16.672823",
       "symbol": "AAPL",
       "asset_class": "equity",
       "expected_return_annualized": 0.1,
