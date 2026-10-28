@@ -1,6 +1,6 @@
 {
   "schema_version": 7,
-  "generated_at": "2026-10-27T00:26:09.958610+00:00",
+  "generated_at": "2026-10-28T00:32:04.373605+00:00",
   "is_sample_data": false,
   "equity_curve": [
     {
@@ -198,6 +198,10 @@
     {
       "t": "2026-10-27T00:26:09.940381",
       "equity": 101711.02
+    },
+    {
+      "t": "2026-10-28T00:32:04.350281",
+      "equity": 101798.43
     }
   ],
   "benchmark_curve": [
@@ -396,6 +400,10 @@
     {
       "t": "2026-10-27T00:26:09.940381",
       "equity": 100734.9012965014
+    },
+    {
+      "t": "2026-10-28T00:32:04.350281",
+      "equity": 99545.24724737767
     }
   ],
   "baseline_curve": [
@@ -594,18 +602,22 @@
     {
       "t": "2026-10-27T00:26:09.940381",
       "equity": 102402.81729305931
+    },
+    {
+      "t": "2026-10-28T00:32:04.350281",
+      "equity": 102714.4089125547
     }
   ],
   "performance_stats": {
-    "sharpe_ratio": 1.2441648178322304,
-    "sortino_ratio": 1.8663696006480341,
+    "sharpe_ratio": 1.2920878487233356,
+    "sortino_ratio": 1.938067777793618,
     "max_drawdown": 0.025478542689723247,
-    "total_return": 0.01711020000000004,
-    "alpha_annualized": 0.10052132799546347,
-    "beta": -0.20586903334589687,
-    "benchmark_total_return": 0.007349012965013972,
-    "baseline_total_return": 0.024028172930593138,
-    "active_management_effect": -0.006917972930593097
+    "total_return": 0.01798429999999993,
+    "alpha_annualized": 0.0906391572121732,
+    "beta": -0.19253306690005476,
+    "benchmark_total_return": -0.004547527526223275,
+    "baseline_total_return": 0.027144089125547034,
+    "active_management_effect": -0.009159789125547105
   },
   "active_risk_profile": "balanced",
   "rebalance_generated_at": "2026-10-26T19:44:07.549118",
@@ -860,7 +872,7 @@
       "symbol": "NVDA",
       "name": "NVIDIA Corporation",
       "weight": 0.13235,
-      "market_value_usd": 13461.453497,
+      "market_value_usd": 13473.0222105,
       "current_price": 216.395,
       "cost_basis": 214.7199999999999,
       "pct_since_purchase": 0.007800856929955744
@@ -869,7 +881,7 @@
       "symbol": "AAPL",
       "name": "Apple Inc.",
       "weight": 0.11259,
-      "market_value_usd": 11451.6437418,
+      "market_value_usd": 11461.4852337,
       "current_price": 344.53,
       "cost_basis": 310.8546907102312,
       "pct_since_purchase": 0.1083313531889401
@@ -878,7 +890,7 @@
       "symbol": "GOOGL",
       "name": "Alphabet Inc.",
       "weight": 0.09747,
-      "market_value_usd": 9913.7731194,
+      "market_value_usd": 9922.2929721,
       "current_price": 317.23,
       "cost_basis": 344.12908890022743,
       "pct_since_purchase": -0.0781656935372476
@@ -887,7 +899,7 @@
       "symbol": "MSFT",
       "name": "Microsoft Corporation",
       "weight": 0.08709,
-      "market_value_usd": 8858.0127318,
+      "market_value_usd": 8865.6252687,
       "current_price": 531.875,
       "cost_basis": 483.4786817343778,
       "pct_since_purchase": 0.10010021143437103
@@ -896,7 +908,7 @@
       "symbol": "V",
       "name": "Visa Inc.",
       "weight": 0.06255,
-      "market_value_usd": 6362.0243009999995,
+      "market_value_usd": 6367.491796499999,
       "current_price": 403.94,
       "cost_basis": 372.5980180397303,
       "pct_since_purchase": 0.0841174145937827
@@ -905,7 +917,7 @@
       "symbol": "XOM",
       "name": "Exxon Mobil Corporation",
       "weight": 0.04744,
-      "market_value_usd": 4825.1707888,
+      "market_value_usd": 4829.3175192,
       "current_price": 184.06,
       "cost_basis": 165.27497129535047,
       "pct_since_purchase": 0.11365924651156177
@@ -914,7 +926,7 @@
       "symbol": "JNJ",
       "name": "Johnson & Johnson",
       "weight": 0.04379,
-      "market_value_usd": 4453.9255658,
+      "market_value_usd": 4457.7532497,
       "current_price": 266.055,
       "cost_basis": 269.7810690673141,
       "pct_since_purchase": -0.013811454896356646
@@ -923,7 +935,7 @@
       "symbol": "CVX",
       "name": "Chevron Corporation",
       "weight": 0.04341,
-      "market_value_usd": 4415.2753782,
+      "market_value_usd": 4419.069846299999,
       "current_price": 231.895,
       "cost_basis": 209.40141344813733,
       "pct_since_purchase": 0.10741850392253291
@@ -932,7 +944,7 @@
       "symbol": "KO",
       "name": "The Coca-Cola Company",
       "weight": 0.04127,
-      "market_value_usd": 4197.6137954000005,
+      "market_value_usd": 4201.2212061,
       "current_price": 92.4806,
       "cost_basis": 90.83928010472687,
       "pct_since_purchase": 0.01806839390823971
@@ -941,7 +953,7 @@
       "symbol": "JPM",
       "name": "JPMorgan Chase & Co.",
       "weight": 0.04041,
-      "market_value_usd": 4110.1423182,
+      "market_value_usd": 4113.6745562999995,
       "current_price": 334.74,
       "cost_basis": 347.16391010715336,
       "pct_since_purchase": -0.03578687111606348
@@ -950,7 +962,7 @@
       "symbol": "PG",
       "name": "Procter & Gamble Company",
       "weight": 0.03138,
-      "market_value_usd": 3191.6918075999997,
+      "market_value_usd": 3194.4347333999995,
       "current_price": 159.64,
       "cost_basis": 145.5987966370789,
       "pct_since_purchase": 0.09643763332687665
@@ -959,7 +971,7 @@
       "symbol": "USMV",
       "name": "iShares MSCI USA Min Vol Factor ETF",
       "weight": 0.0226,
-      "market_value_usd": 2298.6690519999997,
+      "market_value_usd": 2300.6445179999996,
       "current_price": 103.315,
       "cost_basis": 101.49472679614408,
       "pct_since_purchase": 0.01793465790111446
@@ -968,7 +980,7 @@
       "symbol": "BAC",
       "name": "Bank of America Corporation",
       "weight": 0.02232,
-      "market_value_usd": 2270.1899664000002,
+      "market_value_usd": 2272.1409575999996,
       "current_price": 50.625,
       "cost_basis": 61.41276917060646,
       "pct_since_purchase": -0.17566003481519818
@@ -977,7 +989,7 @@
       "symbol": "HON",
       "name": "Honeywell International Inc.",
       "weight": 0.02207,
-      "market_value_usd": 2244.7622114,
+      "market_value_usd": 2246.6913501,
       "current_price": 219.98,
       "cost_basis": 214.8135359863765,
       "pct_since_purchase": 0.02405092393223833
@@ -986,7 +998,7 @@
       "symbol": "HD",
       "name": "The Home Depot Inc.",
       "weight": 0.02089,
-      "market_value_usd": 2124.7432078,
+      "market_value_usd": 2126.5692026999996,
       "current_price": 318.99,
       "cost_basis": 327.658606863438,
       "pct_since_purchase": -0.02645621595727204
@@ -995,7 +1007,7 @@
       "symbol": "UNH",
       "name": "UnitedHealth Group Incorporated",
       "weight": 0.01981,
-      "market_value_usd": 2014.8953062000003,
+      "market_value_usd": 2016.6268983,
       "current_price": 409.25,
       "cost_basis": 390.0900574853708,
       "pct_since_purchase": 0.04911671586335615
@@ -1004,7 +1016,7 @@
       "symbol": "XLV",
       "name": "Health Care Select Sector SPDR Fund",
       "weight": 0.01836,
-      "market_value_usd": 1867.4143272000001,
+      "market_value_usd": 1869.0191748,
       "current_price": 178.78,
       "cost_basis": 173.6748638400952,
       "pct_since_purchase": 0.029394790052089264
@@ -1013,7 +1025,7 @@
       "symbol": "MCD",
       "name": "McDonald's Corporation",
       "weight": 0.01786,
-      "market_value_usd": 1816.5588172000002,
+      "market_value_usd": 1818.1199598,
       "current_price": 250.09,
       "cost_basis": 262.1091314884951,
       "pct_since_purchase": -0.04585544738651224
@@ -1022,7 +1034,7 @@
       "symbol": "QUAL",
       "name": "iShares MSCI USA Quality Factor ETF",
       "weight": 0.01777,
-      "market_value_usd": 1807.4048254000002,
+      "market_value_usd": 1808.9581011,
       "current_price": 223.6,
       "cost_basis": 223.45218857671972,
       "pct_since_purchase": 0.0006614901568955746
@@ -1031,7 +1043,7 @@
       "symbol": "XLP",
       "name": "Consumer Staples Select Sector SPDR Fund",
       "weight": 0.01504,
-      "market_value_usd": 1529.7337408,
+      "market_value_usd": 1531.0483871999998,
       "current_price": 87.785,
       "cost_basis": 85.99,
       "pct_since_purchase": 0.020874520293057353
@@ -1040,7 +1052,7 @@
       "symbol": "CAT",
       "name": "Caterpillar Inc.",
       "weight": 0.01447,
-      "market_value_usd": 1471.7584594,
+      "market_value_usd": 1473.0232821,
       "current_price": 692.38,
       "cost_basis": 798.3823787386278,
       "pct_since_purchase": -0.13277144080522174
@@ -1049,7 +1061,7 @@
       "symbol": "DIS",
       "name": "The Walt Disney Company",
       "weight": 0.01412,
-      "market_value_usd": 1436.1596024,
+      "market_value_usd": 1437.3938315999999,
       "current_price": 110.53,
       "cost_basis": 108.44577526824519,
       "pct_since_purchase": 0.019219049581225254
@@ -1058,7 +1070,7 @@
       "symbol": "XLF",
       "name": "Financial Select Sector SPDR Fund",
       "weight": 0.01282,
-      "market_value_usd": 1303.9352764,
+      "market_value_usd": 1305.0558726,
       "current_price": 56.055,
       "cost_basis": 57.05438449887042,
       "pct_since_purchase": -0.017516348789814843
@@ -1067,7 +1079,7 @@
       "symbol": "XLI",
       "name": "Industrial Select Sector SPDR Fund",
       "weight": 0.01217,
-      "market_value_usd": 1237.8231134,
+      "market_value_usd": 1238.8868931,
       "current_price": 166.98,
       "cost_basis": 172.92106238634807,
       "pct_since_purchase": -0.03435707775767818
@@ -1076,7 +1088,7 @@
       "symbol": "VLUE",
       "name": "iShares MSCI USA Value Factor ETF",
       "weight": 0.00948,
-      "market_value_usd": 964.2204696000001,
+      "market_value_usd": 965.0491164,
       "current_price": 195.11,
       "cost_basis": 200.47511377791918,
       "pct_since_purchase": -0.026761993929393595
@@ -1085,7 +1097,7 @@
       "symbol": "XLE",
       "name": "Energy Select Sector SPDR Fund",
       "weight": 0.00932,
-      "market_value_usd": 947.9467064,
+      "market_value_usd": 948.7613676,
       "current_price": 69.55,
       "cost_basis": 65.19243638664241,
       "pct_since_purchase": 0.06684155179465613
@@ -1094,7 +1106,7 @@
       "symbol": "MTUM",
       "name": "iShares MSCI USA Momentum Factor ETF",
       "weight": 0.00694,
-      "market_value_usd": 705.8744788,
+      "market_value_usd": 706.4811042,
       "current_price": 295.32,
       "cost_basis": 310.343768193743,
       "pct_since_purchase": -0.04841008498796054
@@ -1103,7 +1115,7 @@
       "symbol": "XLK",
       "name": "Technology Select Sector SPDR Fund",
       "weight": 0.00356,
-      "market_value_usd": 362.0912312,
+      "market_value_usd": 362.4024107999999,
       "current_price": 186.78,
       "cost_basis": 192.69798998915525,
       "pct_since_purchase": -0.03071121805415978
@@ -1112,7 +1124,7 @@
       "symbol": "XLY",
       "name": "Consumer Discretionary Select Sector SPDR Fund",
       "weight": 0.00064,
-      "market_value_usd": 65.0950528,
+      "market_value_usd": 65.1509952,
       "current_price": 114.405,
       "cost_basis": 114.58,
       "pct_since_purchase": -0.001527317158317308
@@ -2963,8 +2975,8 @@
       }
     ],
     "return_decomposition": {
-      "beta_contribution": -0.0015129341951538899,
-      "skill_contribution": 0.01862313419515393
+      "beta_contribution": 0.0008755494214361863,
+      "skill_contribution": 0.01710875057856374
     }
   },
   "attribution": {
